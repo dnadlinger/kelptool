@@ -1,0 +1,24 @@
+<%= link_to_remote item_category.name, :url => item_category_path( item_category ), :method => :get %>
+
+<% if render_links -%>
+<span class="alignright">
+	<%= link_to icon_add_child, new_item_category_item_path( item_category ) %> 
+	<%= link_to icon_edit, edit_item_category_path( item_category ) %>
+	<%= link_to icon_delete, item_category, { :confirm => 'Soll "' + item_category.name + '" wirklich gelöscht werden?', :method => :delete } %>
+</span>
+
+<span class="alignright">
+	<% unless item_category.first? %>
+		<%= link_to icon_up, move_up_item_category_path( item_category ), :method => :put %>
+	<% end -%>
+	
+	<% unless item_category.last? %>
+		<%= link_to icon_down, move_down_item_category_path( item_category ), :method => :put %>
+	<% end -%>
+</span>
+<% end -%>
+
+<% if render_items -%>
+	<% items ||= item_category.items %>
+	<%= render :partial => 'items', :locals => { :items => items } -%>
+<% end -%>

@@ -1,0 +1,7 @@
+<% @page_title = @category.name + ' – Editieren' -%>
+
+<%= show_errors @category, 'die Kategorie zu ändern' %>
+<% form_for @category, item_category_path, :html => { :method => :put, :class => 'pretty' } do |f| %>
+	<%= render :partial => f %>
+	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
+<% end %>

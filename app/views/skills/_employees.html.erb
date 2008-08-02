@@ -1,0 +1,9 @@
+<div id="skill_employees" class="sublist">
+	<ol>
+	<% unless employees.empty? -%>
+		<%= render :partial => employees %>
+	<% else -%>
+		<li><em>Es sind noch keine Mitarbeiter mit dieser Fähigkeit gespeichert.</em></li>
+	<% end -%>
+	</ol>
+</div>

@@ -1,0 +1,8 @@
+# The try/catch block is needed because we will get an error if #current_category does not exist.
+page << 'try {'
+page[ :skill_employees ].remove
+page << '} catch(e) {}'
+
+page.insert_html :bottom, 'skill_' + @skill.id.to_s, :partial => 'employees', :object => @skill.employees
+
+page.select( '#skill_employees ol' ).first.visual_effect( :blind_down, :duration => appear_duration_for( @skill.employees ) )

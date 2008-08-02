@@ -1,0 +1,8 @@
+<%= render :partial => 'contacts/contact_fields', :locals => { :contact => @customer.contact, :render_phone_numbers => true } %>
+<fieldset>
+	<legend>Zusätzliche Informationen</legend>
+	<ol>
+		<li><%= form.label :discount, 'Preis: <em>*</em>' %> <%= form.text_field :discount %> Promille
+		<li><%= form.label :comment, 'Kommentar: ' %><%= form.text_area :comment, { :cols => 60, :rows => 15 } %></li>
+	</ol>
+</fieldset>

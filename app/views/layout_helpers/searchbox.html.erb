@@ -1,0 +1,33 @@
+<div id="searchbox">
+	<% unless @search_title.nil? || @search_url.nil? || @auto_complete_url.nil? %>
+		<% form_tag @search_url, :method => :get do %>
+			<fieldset>
+				<%= text_field_tag 'search_query' %>
+				<div id="search_query_auto_complete" class="auto_complete"></div>
+				<%= auto_complete_field 'search_query', :url => @auto_complete_url, :method => :get %>
+				
+				<button type="submit">
+					<%= icon_search %>
+				</button>
+				
+				<% if @advanced_search %>
+				<button type="submit" name="advanced_search" value="true">
+					...
+				</button>
+				<% else %>
+				<button type="submit" class="disabled" disabled="disabled">
+					...
+				</button>
+				<% end %>
+			</fieldset>
+		<% end %>
+	<% else %>
+		<input type="text" class="disabled" disabled="disabled" />
+		<button type="submit" class="disabled" disabled="disabled">
+			<%= icon_search %>
+		</button>
+		<button type="submit" class="disabled" disabled="disabled">
+					...
+		</button>
+	<% end %>
+</div>

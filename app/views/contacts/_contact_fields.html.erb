@@ -1,0 +1,24 @@
+<% path ||= contact %>
+<% fields_for path, contact do |c| %>
+<fieldset>
+	<legend>Kontaktinformationen</legend>
+	<ol>
+		<li><%= c.label :name, 'Name: <em>*</em>' %><%= c.text_field :name %></li>
+		<li><%= c.label :adress, 'Anschrift: <em>*</em>' %><%= c.text_field :adress %></li>
+		<li><%= c.label :postcode, 'PLZ: <em>*</em>' %><%= c.text_field :postcode %></li>
+		<li><%= c.label :place, 'Ort: <em>*</em>' %><%= c.text_field :place %></li>
+		<li><%= c.label :email, 'E-Mail: ' %><%= c.text_field :email %></li>
+		<li><%= c.label :uid, 'UID: ' %><%= c.text_field :uid %></li>
+	</ol>
+	
+	<% unless ( render_phone_numbers == false ) %>
+	<fieldset>
+		<legend>Telefonnummern</legend>
+		<ol id="phone_numbers">
+			<%= render :partial => 'contacts/phone_number', :collection => contact.phone_numbers, :locals => { :path => path } %>
+		</ol>
+		<%= add_phone_number_link( path ) %>
+	</fieldset>
+	<% end %>
+</fieldset>
+<% end %>

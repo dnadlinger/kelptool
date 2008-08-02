@@ -1,0 +1,2 @@
+use_select_menu = params[ :use_select_menu ] || false
+page.insert_html :bottom, :skills, :partial => 'skill_field', :object => Skill.new, :locals => { :use_select_menu => use_select_menu }

@@ -1,0 +1,7 @@
+<% @page_title = 'Neuen Kunden anlegen' %>
+<%= show_errors @customer.contact, 'die Kontaktinformationen zu speichern' %>
+<%= show_errors @customer, 'den Kunden anzulegen' %>
+<% form_for @customer, customer_path( @customer ), :html => { :class => 'pretty' } do |f| %>
+	<%= render :partial => f, :locals => { :render_contact_choose_link => true } %>
+	<p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück zur Übersicht', customers_path, { :class => 'navlink' } %></p>
+<% end %>

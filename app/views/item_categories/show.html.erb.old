@@ -1,0 +1,25 @@
+<% @page_title = @category.name -%>
+
+<% if @category.items.count > 0 -%>
+	<div class="biglist">
+		<ol>
+		<% for item in @category.items %>
+			<li><%= link_to item.full_name, item_category_item_path( item.item_category, item ) %>
+			<% if session[ :choosing_mode ] == 'item_rentals_choose_item' %>
+				<span class="alignright">
+					<%= link_to 'Auswählen', new_rental_action_item_rental_url( session[ :current_rental_action ], :item_id => item.id ) %>
+				</span>
+			<% end %>
+			</li>
+		<% end %>
+		</ol>
+	</div>
+<% else -%>
+	<p>In dieser Kategorie befinden sich derzeit keine Geräte.</p> 
+<% end -%>
+
+<div class="navlinks">
+	<p><%= link_to 'Gerät hinzufügen', new_item_category_item_path( @category ) %></p>
+	<p><%= link_to 'Kategorie bearbeiten', edit_item_category_path %> | <%= link_to 'Kategorie löschen', @category, { :confirm => 'Soll "' + @category.name + '" wirklich gelöscht werden?', :method => :delete } %></p>
+	<p><%= link_to 'Zurück zur Übersicht', item_categories_path %></p>
+</div>

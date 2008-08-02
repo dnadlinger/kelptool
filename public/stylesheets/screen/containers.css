@@ -1,0 +1,130 @@
+/* Outer wrapper box. */
+
+body {
+	text-align: center;
+}
+
+div#wrapper {
+	width: 864px;
+	height: 100%;
+	
+	margin: 0 auto;
+	
+	text-align: left;
+}
+
+
+/* Content wrapper box. Sets shadow background. */
+
+div#content {
+	width: 850px;
+	height: auto !important;
+	height: 100%;
+	min-height: 100%;
+	
+	padding: 0 7px 0 7px;
+	
+	float: left;
+	
+	background: url(../../images/layout/shadow.png) repeat-y top center;
+}
+
+
+/* Topmost one-line message strip. */
+
+div#topmessage {
+	width: 850px;
+	height: 25px;
+	
+	float: left;
+	clear: both;
+}
+
+div#topmessage p {
+	margin: 0;
+	padding: 0 10px;
+	
+	background-color: #002f76;
+	
+	color: #fff;	
+	font-size: 10px;
+	line-height: 25px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+div#topmessage p a {
+	color: #fff;
+}
+
+
+/* Header with logo and search box. */
+
+div#header {
+	height: 100px;
+	width: 850px;
+	
+	padding: 0 0 10px 0;
+	
+	position: relative;
+	
+	float: left;
+	clear: both;
+	
+	background-color: #fff;
+}
+
+
+/* Main content area. */
+
+div#main {
+	width: 810px !important;
+	
+	padding: 20px;
+	padding-bottom: 40px; /* -> footer position hack. */
+	
+	float: left;
+	clear: both;
+	
+	background-color: #fff;
+}
+
+div#menubar {
+	width: 850px;
+	
+	padding: 10px 0 0 0;
+	
+	float: left;
+	clear: both;
+	
+	background-color: #002f76;
+}
+
+
+/* Footer strip. */
+
+div#footer {
+	width: 850px;
+	height: 20px;
+	
+	margin: -20px 7px 0 7px;
+	
+	float: left;
+	clear: both;
+	
+	background-color: #002f76;
+}
+
+div#footer p {
+	height: 20px;
+	
+	margin: 0;
+	padding: 0;
+	
+	color: #fff;
+	font-size: 9px;
+	line-height: 20px;
+	
+	text-align: center;
+	vertical-align: middle;
+}

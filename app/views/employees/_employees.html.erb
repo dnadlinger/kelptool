@@ -1,0 +1,9 @@
+<% unless employees.empty? %>
+<div class="biglist">
+	<ol>
+		<%= render :partial => employees %>
+	</ol>
+</div>
+<% else %>
+<p><em>Keine Mitarbeiter gefunden.</em></p>
+<% end %>

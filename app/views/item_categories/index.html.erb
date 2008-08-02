@@ -1,0 +1,15 @@
+<% @page_title = 'Geräteübersicht' %>
+
+<div class="biglist">
+	<ol>
+	<% for item_category in @categories -%>
+		<% content_tag_for( :li, item_category ) do %>
+			<%= render :partial => item_category, :locals => { :render_links => true, :render_items => ( item_category == @category ) } %>
+		<% end %>
+	<% end -%>
+	</ol>
+</div>
+
+<div class="navlinks">
+	<p><%= link_to 'Kategorie hinzufügen', new_item_category_path %></p>
+</div>

@@ -1,0 +1,15 @@
+<% @page_title = @skill.name %>
+<p>Gespeicherte <%=h @skill.name%>:</p>
+
+<% unless @skill.employees.empty? %>
+	<ul>
+		<%= render :partial => 'employees/employee_summary', :collection => @skill.employees %>
+	</ul>
+<% else %>
+	<p><em>keine</em></p>
+<% end %>
+
+<div class="navlinks">
+	<p><%= link_to 'Mitarbeiter mit dieser Fähigkeit hinzufügen', new_employee_path( :skill_id => @skill.id ) %></p>
+	<p><%= link_to 'Zurück zur Fähigkeitenliste', skills_path %></p>
+</div>

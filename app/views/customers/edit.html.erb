@@ -1,0 +1,7 @@
+<% @page_title = @customer.contact.name + ' – Editieren' %>
+<%= show_errors @customer.contact, 'die Kontaktinformationen zu speichern' %>
+<%= show_errors @customer, 'die Kundendaten abzuändern' %>
+<% form_for @customer, customer_path( @customer ), :html => { :method => :put, :class => 'pretty' } do |f| %>
+	<%= render :partial => f %>
+	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', customer_path( @customer ), { :class => 'navlink' } %></p>
+<% end %>

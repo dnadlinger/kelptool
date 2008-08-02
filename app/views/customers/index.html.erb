@@ -1,0 +1,12 @@
+<% @page_title = 'Kundenübersicht' %>
+<div class="biglist">
+	<ol>
+	<% for customer in @customers %>
+		<li id="customer.<%= customer.id %>">
+			<%= link_to customer.contact.name, customer_path( customer ) %>
+			<%= choose_icon ChoosingMode::RentalActionsChooseCustomer, customer %>
+		</li>
+	<% end %>
+	</ol>
+</div>
+<div class="navlinks"><%= link_to 'Kunden hinzufügen', new_customer_path %></div>

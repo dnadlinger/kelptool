@@ -1,0 +1,28 @@
+<% @page_title = @employee.contact.name + ' – Details' %>
+
+<h2>Kontaktdaten</h2>
+<%= render :partial => @employee.contact %>
+
+<h2>Fähigkeiten</h2>
+<% unless @employee.skills.empty? %>
+	<ul>
+	<% for skill in @employee.skills %>
+		<li><%= link_to skill.name, skill_path( skill ) %></li>
+	<% end %>
+	</ul>
+<% else %>
+	<p><em>keine</em></p>
+<% end %>
+
+<h2>Kommentare</h2>
+<% unless @employee.comment.empty? %>
+	<%= textilize( @employee.comment )%>
+<% else %>
+	<p><em>keine</em></p>
+<% end %>
+
+
+<div class="navlinks">
+	<p><%= link_to 'Mitarbeiter bearbeiten', edit_employee_path %></p> 
+	<p><%= link_to 'Zurück zur Übersicht', employees_path %></p>
+</div>

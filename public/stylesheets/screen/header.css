@@ -1,0 +1,112 @@
+/* The main header box */
+
+div#header h1.title {
+	margin: 0;
+	padding: 0;
+	
+	position: absolute;
+	left: 20px;
+	top: 30px;
+	
+	color: #000;
+	font-family: "Myriad Pro", Tahoma, sans-serif;
+	font-size: 60px;
+}
+
+div#header h1.title span.light {
+	font-family: "Myriad Pro Light", Tahoma, sans-serif;
+}
+
+div#header div#searchbox {
+	width: 248px;
+	height: 22px;
+	
+	position: absolute;
+	right: 15px;
+	top: 55px;
+}
+
+div#header div#searchbox input {
+	width: 170px;
+	height: 16px;
+	
+	margin: 0;
+	padding: 2px;
+	
+	float: left;
+	
+	border: solid 1px #000;
+	
+	font-size: 13px;
+	font-family: Tahoma, sans-serif;
+	vertical-align: middle;
+}
+
+div#header div#searchbox button {
+	width: 30px;
+	height: 22px;
+	
+	margin: 0 0 0 6px;
+	padding: 0 0 0 3px;
+	
+	float: left;
+	
+	border: solid 1px #000;
+}
+
+div#header div#searchbox div.auto_complete {
+	width: 174px !important;
+}
+
+div#header div#searchbox div.auto_complete strong.highlight {
+	font-weight: normal;
+	color: #008;
+}
+
+
+/* The "tabbed" menu below the header. */
+
+div#menubar ul {
+	margin: 0;
+	padding: 0 7px;
+	list-style: none;
+}
+
+div#menubar ul li {
+	float: left;	
+}
+
+div#menubar ul li a {
+	width: 165px;
+	
+	margin: 2px 1px 0 1px;
+	padding: 0;
+	
+	display: block;
+	float: left;
+	
+	background-color: #b4c0d3;
+	border-bottom: 2px solid #002f76;
+	
+	font-family: Georgia, serif;
+	font-size: 20px;
+	color: #002f76;
+	
+	text-align: center;
+	text-decoration: none;
+}
+
+div#menubar ul li a:hover {
+	background-color: #fff;
+}
+
+div#menubar ul li.here a {
+	background-color: #fff;
+	border-bottom: 2px solid #fff;
+	
+	color: #ff9900;
+}
+
+div#menubar ul li.here a:hover {
+	text-decoration: none;
+}

@@ -1,0 +1,7 @@
+<ul id="menu">
+	<%= render :partial => 'layout_helpers/top_menu_item', :locals => { :name => 'Home', :url => '/' } %>
+	<%= render :partial => 'layout_helpers/top_menu_item', :locals => { :name => 'Gerätepark', :url => item_categories_path } %>
+	<%= render :partial => 'layout_helpers/top_menu_item', :locals => { :name => 'Vermietung', :url => rental_actions_path } %>
+	<%= render :partial => 'layout_helpers/top_menu_item', :locals => { :name => 'Kunden', :url => customers_path } %>
+	<%= render :partial => 'layout_helpers/top_menu_item', :locals => { :name => 'Mitarbeiter', :url => employees_path } %>
+</ul>

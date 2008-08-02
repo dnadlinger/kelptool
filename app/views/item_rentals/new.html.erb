@@ -1,0 +1,18 @@
+<% @page_title = 'Gerät zur Mietaktion hinzufügen' %>
+<%= show_errors @item_rental, 'das Gerät hinzuzufügen' %>
+<% form_for [ @rental_action, @item_rental ], rental_action_item_rentals_path, :html => { :class => 'pretty' } do |f| %>
+	<fieldset>
+		<legend>Mietaktion</legend>
+		<ol>
+			<li><%= f.label :rental_action_id, 'Mietaktion: ' %><%= f.hidden_field :rental_action_id %><%=h @rental_action.name %></li>
+		</ol>
+	</fieldset>
+	<fieldset>
+		<legend>Gerät</legend>
+		<ol>
+			<li><%= f.label :item_id, 'Gerät: ' %><%= f.hidden_field :item_id %><%=h @item_rental.item.name %></li>
+			<li><%= f.label :quantity, 'Anzahl: ' %><%= f.text_field :quantity %></li>
+		</ol>
+	</fieldset>
+	<p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück zur Übersicht', rental_action_item_rentals_path, { :class => 'navlink' } %></p>
+<% end %>

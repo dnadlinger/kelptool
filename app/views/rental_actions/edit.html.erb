@@ -1,0 +1,6 @@
+<% @page_title = @rental_action.name + ' – Bearbeiten' -%>
+<%= show_errors @rental_action, 'den Mietauftag zu bearbeiten' %>
+<% form_for @rental_action, rental_action_path, :html => { :method => :put, :class => 'pretty' } do |f| %>
+	<%= render :partial => f %>
+	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', @rental_action, { :class => 'navlink' } %></p>
+<% end %>

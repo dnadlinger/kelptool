@@ -1,0 +1,17 @@
+<% @page_title = @item.full_name + ' – Details' %>
+<p><strong>Kategorie: </strong><%=h @item.item_category.name %></p>
+<p><strong>Bezeichnung: </strong><%=h @item.full_name %></p>
+<p><strong>Anzahl gesamt: </strong><%=h @item.total_count %></p>
+<p><strong>Anzahl lagernd: </strong><%=h @item.num_in_stock %></p>
+<p><strong>Preis: </strong> <%= render :partial => @item.price_type.tableize.singularize, :object => @item.price %></p>
+
+<div class="navlinks">
+	<% if session[ :choosing_mode ] == 'item_rentals_choose_item' %>
+	<p>
+		<%= link_to 'Auswählen', new_rental_action_item_rental_url( session[ :current_rental_action ], :item_id => @item.id ) %>
+	</p>
+	<% end %>
+	<p><%= link_to 'Bearbeiten', edit_item_category_item_path, { :class => 'navlink' } %> |
+		<%= link_to 'Löschen', item_category_item_path, { :confirm => 'Soll dieses Gerät wirklich gelöscht werden?', :method => :delete, :class => 'navlink' } %></p>
+	<p><%= link_to 'Zurück zur Kategorie', item_category_items_path, { :class => 'navlink' } %></p>
+</div>

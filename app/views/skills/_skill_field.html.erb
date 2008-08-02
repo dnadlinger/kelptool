@@ -1,0 +1,14 @@
+<li class="skill">
+<%- fields_for 'employee[skills_attributes][]', skill_field do |skill_form| -%>
+	<% unless ( use_select_menu ||= false ) %>
+		<%- id_string = generate_unique_id( 'employee_skill_attributes_' ) + '_name' -%>
+		<%= label_tag id_string, 'Fähigkeit: ' %><%= skill_form.text_field :name, { :id => id_string, :index => nil } %>
+		<%= link_to_function 'entfernen', "this.up( '.skill' ).remove()" %>
+		<div class="auto_complete" id="<%= id_string %>_auto_complete"></div>
+		<%= auto_complete_field( id_string, { :url => { :controller => 'skills', :action => 'auto_complete_for_skill_name' }, :method => :get } ) %>
+	<% else %>
+		<%= skill_form.collection_select :name, Skill.all, :name, :name %>
+		<%= link_to_function 'entfernen', "this.up( '.skill' ).remove()" %>
+	<% end %>
+<%- end -%>
+</li>
