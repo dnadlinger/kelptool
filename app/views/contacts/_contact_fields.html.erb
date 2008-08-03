@@ -1,4 +1,10 @@
-<% path ||= contact -%>
+<%
+contact = contact_fields
+path ||= contact
+display ||= {}
+display[ :phone_numbers ] = true if display[ :phone_numbers ].nil?
+-%>
+
 <% fields_for path, contact do |c| %>
 <fieldset>
 	<legend>Kontaktinformationen</legend>
@@ -11,7 +17,7 @@
 		<li><%= c.label :uid, 'UID: ' %><%= c.text_field :uid %></li>
 	</ol>
 	
-	<% if render_phone_numbers -%>
+	<% if display[ :phone_numbers ] -%>
 	<fieldset>
 		<legend>Telefonnummern</legend>
 		<ol id="phone_numbers">

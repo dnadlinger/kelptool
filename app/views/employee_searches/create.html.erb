@@ -1,6 +1,6 @@
 <% @page_title = 'Ergebnisse' -%>
 
-<%= render_biglist 'Mitarbeiter', @search_model.employees %>
+<%= render_biglist @search_model.employees, 'Mitarbeiter' %>
 
 <div class="navlinks">
 	<p><%= link_to 'Zurück zur Übersicht', employees_path %></p>

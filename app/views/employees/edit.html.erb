@@ -2,7 +2,7 @@
 
 <%= show_errors @employee.contact, 'die Kontaktinformationen zu ändern' %>
 <%= show_errors @employee, 'den Mitarbeiter abzuändern' %>
-<% form_for @employee, customer_path( @employee ), :html => { :class => 'pretty' } do |f| %>
-	<%= render :partial => f, :locals => { :render_contact_choose_link => false } %>
+<% edit_form_for @employee do |f| %>
+	<%= render :partial => f %>
 	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück zur Übersicht', employees_path, { :class => 'navlink' } %></p>
 <% end %>

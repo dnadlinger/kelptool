@@ -1,7 +1,7 @@
 <% @page_title = 'Neue Fähigkeit anlegen' -%>
 
 <%= show_errors @skill, 'die Fähigkeit anzulegen' %>
-<% form_for @skill, :html => { :class => 'pretty' } do |f| %>
+<% pretty_form_for @skill do |f| %>
 	<%= render :partial => f %>
 	<p><%= f.submit 'Anlegen' %> <%= link_to 'Zurück zur Übersicht', skills_path, { :class => 'navlink' } %></p>
 <% end %>

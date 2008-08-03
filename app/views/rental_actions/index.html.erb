@@ -1,6 +1,6 @@
 <% @page_title = 'Übersicht Mietvorgänge' -%>
 
-<%= render_biglist 'Mietvorgänge', @rental_actions %>
+<%= render_biglist @rental_actions, 'Mietvorgänge' %>
 <div class="navlinks">
 	<p><%= link_to 'Neuer Mietvorgang', new_rental_action_path %></p>
 	<p><%= link_to 'Neuer Mietvorgang aus Vorlage', choose_template_rental_actions_path %></p>

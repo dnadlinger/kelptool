@@ -1,2 +1,2 @@
-page[ "item_rental_#{@item_rental.id}" ].select( '.item_rental_quantity' ).first.replace_html :partial => 'quantity_form', :locals => { :item_rental => @item_rental }
-page[ "item_rental_#{@item_rental.id}" ].select( '.item_rental_edit_button' ).first.replace_html ''
+page.get_member_element( @item_rental, 'quantity' ).replace_html :partial => 'quantity_form', :locals => { :item_rental => @item_rental }
+page.get_member_element( @item_rental, 'edit_button' ).replace_html ''

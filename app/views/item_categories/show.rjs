@@ -1,8 +1,1 @@
-# The try/catch block is needed because we will get an error if #current_category does not exist.
-page << 'try {'
-page[ :category_details ].remove
-page << '} catch(e) {}'
-
-page.insert_html :bottom, 'item_category_' + @category.id.to_s, :partial => 'items', :object => @category.items
-
-page.select( '#category_details ol' ).first.visual_effect( :blind_down, :duration => appear_duration_for( @category.items ) )
+page.show_sublist_for @category, :items, 'Gegenstände in dieser Kategorie'

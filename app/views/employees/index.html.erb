@@ -1,6 +1,6 @@
 <% @page_title = 'Mitarbeiterübersicht' -%>
 
-<%= render_biglist 'Mitarbeiter', @employees %>
+<%= render_biglist @employees, 'Mitarbeiter' %>
 
 <div class="navlinks">
 	<p><%= link_to 'Neuen Mitarbeiter hinzufügen', new_employee_path %></p>

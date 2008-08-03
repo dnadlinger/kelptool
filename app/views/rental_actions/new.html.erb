@@ -1,7 +1,7 @@
 <% @page_title = 'Neuen Mietvorgang erstellen' -%>
 
 <%= show_errors @rental_action, 'den Mietvorgang zu erstellen' %>
-<% form_for @rental_action, :html => { :class => 'pretty' } do |f| %>
+<% pretty_form_for @rental_action do |f| %>
 	<%= render :partial => f %>
 	
 	<% unless @template_action.nil? -%>

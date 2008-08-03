@@ -1,7 +1,7 @@
 <% @page_title = @phone_number_type.name + ' – Editieren' -%>
 
 <%= show_errors @phone_number_type, 'die Kategorie zu ändern' %>
-<% form_for @phone_number_type, :html => { :method => :put, :class => 'pretty' } do |f| %>
+<% edit_form_for @phone_number_type do |f| %>
 	<%= render :partial => f %>
 	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
 <% end %>

@@ -2,7 +2,7 @@
 
 <%= show_errors @customer.contact, 'die Kontaktinformationen zu speichern' %>
 <%= show_errors @customer, 'die Kundendaten abzuändern' %>
-<% form_for @customer, customer_path( @customer ), :html => { :method => :put, :class => 'pretty' } do |f| %>
+<% edit_form_for @customer do |f| %>
 	<%= render :partial => f %>
 	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', customer_path( @customer ), { :class => 'navlink' } %></p>
 <% end %>

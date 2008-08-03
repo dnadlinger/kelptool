@@ -1,7 +1,7 @@
 <% @page_title = 'Gerät zur Mietaktion hinzufügen' -%>
 
 <%= show_errors @item_rental, 'das Gerät hinzuzufügen' %>
-<% form_for [ @rental_action, @item_rental ], rental_action_item_rentals_path, :html => { :class => 'pretty' } do |f| %>
+<% pretty_form_for [ @rental_action, @item_rental ] do |f| %>
 	<fieldset>
 		<legend>Mietaktion</legend>
 		<ol>

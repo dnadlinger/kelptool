@@ -1,0 +1,9 @@
+<% full_path = [ item_rental.rental_action, item_rental ] -%>
+<% form_remote_for full_path, :method => :put do |f| %>
+	<%= f.text_field :quantity, :size => 2 %>
+	<%= f.submit 'Speichern' %>
+	<%= link_to_function 'Abbrechen' do |page|
+		page[ "item_rental_#{item_rental.id}" ].select( '.item_rental_quantity' ).first.replace_html h( item_rental.quantity )
+		page[ "item_rental_#{item_rental.id}" ].select( '.item_rental_edit_button' ).first.replace_html :partial => 'edit_button', :locals => { :full_path => full_path }
+	end %>
+<% end %>

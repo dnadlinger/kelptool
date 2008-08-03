@@ -18,7 +18,7 @@ class Item < ActiveRecord::Base
 	#validates_numericality_of :num_in_stock, :only_integer => true, :message => "Keine gültige Lagernd-Anzahl."
 	
 	def self.search( query )
-		if query
+		unless query.blank?
 			find( :all, :conditions => [ 'name LIKE ?', '%' + query + '%' ])
 		else
 			all

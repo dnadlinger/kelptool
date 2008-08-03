@@ -1,6 +1,12 @@
+<%-
+display ||= {}
+display[ :links ] = true if display[ :links ].nil?
+employees ||= skill.employees
+%>
+
 <%= link_to_remote h( skill.name ), :url => skill_path( skill ), :method => :get %>
 
-<% if render_links -%>
+<% if display[ :links ] -%>
 <span class="alignright">
 	<%= link_to icon_add_child, new_employee_path( :skill_id => skill.id ) %> 
 	<%= link_to icon_edit, edit_skill_path( skill ) %>
@@ -8,7 +14,6 @@
 </span>
 <% end -%>
 
-<% if render_employees -%>
-	<% employees ||= skill.employees -%>
+<% if display[ :employees ] -%>
 	<%= render :partial => 'employees', :object => employees %>
 <% end -%>

@@ -1,7 +1,7 @@
 <% @page_title = 'Neues Benutzerkonto anlegen' -%>
 
 <%= show_errors @user, 'das Benutzerkonto anzulegen' %>
-<% form_for @user, :html => { :class => 'pretty' } do |f| %>
+<% pretty_form_for @user do |f| %>
 	<%= render :partial => f %>
 	<p><%= f.submit 'Registrieren' %></p>
 <% end %>

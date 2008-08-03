@@ -4,11 +4,11 @@ module SearchConditions
 	end
 	
 	def conditions_clauses
-	  conditions_parts.map { |condition| condition.first }
+	  conditions_parts.collect { |condition| condition.first }
 	end
 	
 	def conditions_options
-	  conditions_parts.map { |condition| condition[ 1..-1 ] }.flatten
+	  conditions_parts.collect { |condition| condition[ 1..-1 ] }.flatten
 	end
 	
 	def conditions_parts
@@ -16,7 +16,7 @@ module SearchConditions
 	  if condition_methods.nil?
 	  	return nil
 	  else
-	  	condition_methods.map { |m| send(m) }.compact
+	  	condition_methods.collect { |m| send(m) }.compact
 	  end 
 	end
 end

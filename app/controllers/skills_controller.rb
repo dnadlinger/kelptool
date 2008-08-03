@@ -46,7 +46,7 @@ class SkillsController < ApplicationController
     @skill = Skill.find( params[ :id ] )
     @skill.destroy
     flash[ :notice ] = 'Fähigkeit gelöscht.'
-    redirect to skills_url
+    redirect_to skills_url
   end
 	
   def generate_skill_field

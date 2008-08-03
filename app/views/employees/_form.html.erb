@@ -1,5 +1,6 @@
-<%= render :partial => 'contacts/contact_fields', :locals => { :contact => @employee.contact, :path => 'employee[contact_attributes]', :render_phone_numbers => true } %>
-<% if render_contact_choose_link %>
+<% display ||= {} -%>
+<%= render :partial => 'contacts/contact_fields', :locals => { :contact => @employee.contact, :path => 'employee[contact_attributes]' } %>
+<% if display[ :contact_choose_link ] %>
 	<p><%= link_to 'Kontaktinformationen von Kunden übernehmen', choose_contact_template_employees_path %></p>
 <% end %>
 

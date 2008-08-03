@@ -5,7 +5,7 @@
 	<ol>
 	<% for skill in @skills %>
 		<% content_tag_for :li, skill do %>
-			<%= render :partial => skill, :locals => { :render_links => true, :render_employees => ( skill == @skill ) } %>
+			<%= render :partial => skill, :locals => { :display => { :employees => ( skill == @skill ) } } %>
 		<% end %>
 	<% end %>
 	</ol>

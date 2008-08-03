@@ -1,6 +1,12 @@
+<%
+display ||= {}
+display[ :links ] = true if display[ :links ].nil?
+items ||= item_category.items
+-%>
+
 <%= link_to_remote item_category.name, :url => item_category_path( item_category ), :method => :get %>
 
-<% if render_links -%>
+<% if display[ :links ] -%>
 <span class="alignright">
 	<%= link_to icon_add_child, new_item_category_item_path( item_category ) %> 
 	<%= link_to icon_edit, edit_item_category_path( item_category ) %>
@@ -18,7 +24,6 @@
 </span>
 <% end -%>
 
-<% if render_items -%>
-	<% items ||= item_category.items -%>
+<% if display[ :items ] -%>
 	<%= render :partial => 'items', :locals => { :items => items } -%>
 <% end -%>

@@ -1,5 +1,5 @@
 <% @page_title = 'Kundenübersicht' -%>
 
-<%= render_biglist 'Kunden', @customers %>
+<%= render_biglist @customers, 'Kunden' %>
 
 <div class="navlinks"><%= link_to 'Kunden hinzufügen', new_customer_path %></div>
