@@ -20,7 +20,7 @@ module FormHelper
     
     content_tag :div, :class => 'form_error' do
       content_tag( :p, 'Beim Versuch, ' + action_name + ', sind folgende Fehler aufgetreten:', :class => 'error' )
-      content_tag :ul, errors do
+      content_tag :ul do
         record.errors.each do |attribute, message|
           content_tag( :li, message )
         end
