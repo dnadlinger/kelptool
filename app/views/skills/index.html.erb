@@ -2,19 +2,19 @@
 
 <% unless @skills.empty? -%>
 <div class="biglist">
-	<ol>
-	<% for skill in @skills %>
-		<% content_tag_for :li, skill do %>
-			<%= render :partial => skill, :locals => { :display => { :employees => ( skill == @skill ) } } %>
-		<% end %>
-	<% end %>
-	</ol>
+  <ol>
+  <% for skill in @skills %>
+    <% content_tag_for :li, skill do %>
+      <%= render :partial => skill, :locals => { :display => { :employees => ( skill == @skill ) } } %>
+    <% end %>
+  <% end %>
+  </ol>
 </div>
 <% else -%>
 <p><em>keine</em></p>
 <% end -%>
 
 <div class="navlinks">
-	<p><%= link_to 'Neue Fähigkeit anlegen', new_skill_path %></p>
-	<p><%= link_to 'Zurück zur Mitarbeiterübersicht', employees_path %></p>
+  <p><%= link_to 'Neue Fähigkeit anlegen', new_skill_path %></p>
+  <p><%= link_to 'Zurück zur Mitarbeiterübersicht', employees_path %></p>
 </div>

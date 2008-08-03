@@ -7,8 +7,8 @@
 <p><strong>Preis: </strong> <%= render :partial => @item.price_type.tableize.singularize, :object => @item.price %></p>
 
 <div class="navlinks">
-	<%= choose_link ChoosingMode::ItemRentalsChooseItem, @item %>
-	<p><%= link_to 'Bearbeiten', edit_item_category_item_path, { :class => 'navlink' } %> |
-		<%= link_to 'Löschen', item_category_item_path, { :confirm => 'Soll dieses Gerät wirklich gelöscht werden?', :method => :delete, :class => 'navlink' } %></p>
-	<p><%= link_to 'Zurück zur Kategorie', item_category_items_path, { :class => 'navlink' } %></p>
+  <%= choose_link ChoosingMode::ItemRentalsChooseItem, @item %>
+  <p><%= link_to 'Bearbeiten', edit_item_category_item_path, { :class => 'navlink' } %> |
+    <%= link_to 'Löschen', item_category_item_path, { :confirm => 'Soll dieses Gerät wirklich gelöscht werden?', :method => :delete, :class => 'navlink' } %></p>
+  <p><%= link_to 'Zurück zur Kategorie', item_category_items_path, { :class => 'navlink' } %></p>
 </div>

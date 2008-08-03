@@ -2,6 +2,6 @@
 
 <%= show_errors @rental_action, 'den Mietauftag zu bearbeiten' %>
 <% edit_form_for @rental_action do |f| %>
-	<%= render :partial => f %>
-	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', @rental_action, { :class => 'navlink' } %></p>
+  <%= render :partial => f %>
+  <p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', @rental_action, { :class => 'navlink' } %></p>
 <% end %>

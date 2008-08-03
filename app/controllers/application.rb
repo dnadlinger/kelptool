@@ -2,9 +2,9 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-	# By default, a valid login is needed for the whole site.
-	include AuthenticatedSystem
-	before_filter :login_required
+  # By default, a valid login is needed for the whole site.
+  include AuthenticatedSystem
+  before_filter :login_required
   
   helper :all # include all helpers, all the time
 

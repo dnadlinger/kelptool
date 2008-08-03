@@ -20,11 +20,11 @@ class ChoosingMode
   end
   
   def has_source?
-  	return @source_name != nil
+    return @source_name != nil
   end
   
   def source_by_id( id )
-  	return nil unless @get_source_by_id
+    return nil unless @get_source_by_id
     @get_source_by_id.call( id )
   end
   

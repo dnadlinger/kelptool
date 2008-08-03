@@ -1,26 +1,26 @@
 <% @page_title = 'Telefonnummer-Typen' -%>
 
 <table>
-	<thead>
-		<tr>
-			<td>Name</td>
-			<td>Aktionen</td>
-		</tr>
-	</thead>
-	
-	<tbody>
-	<% for phone_number_type in @phone_number_types -%>
-		<tr>
-			<td><%=h phone_number_type.name %></td>
-			<td>
-				<%= link_to 'Bearbeiten', edit_phone_number_type_path(phone_number_type) %>
-				<%= link_to 'Löschen', phone_number_type, :confirm => "Soll der Typ '#{phone_number_type.name}' wirklich gelöscht werden?", :method => :delete %>
-			</td>
-		</tr>
-	<% end -%>
-	</tbody>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Aktionen</td>
+    </tr>
+  </thead>
+  
+  <tbody>
+  <% for phone_number_type in @phone_number_types -%>
+    <tr>
+      <td><%=h phone_number_type.name %></td>
+      <td>
+        <%= link_to 'Bearbeiten', edit_phone_number_type_path(phone_number_type) %>
+        <%= link_to 'Löschen', phone_number_type, :confirm => "Soll der Typ '#{phone_number_type.name}' wirklich gelöscht werden?", :method => :delete %>
+      </td>
+    </tr>
+  <% end -%>
+  </tbody>
 </table>
 
 <div class="navlinks">
-	<p><%= link_to 'Neuen Typ hinzufügen', new_phone_number_type_path %></p>
+  <p><%= link_to 'Neuen Typ hinzufügen', new_phone_number_type_path %></p>
 </div>

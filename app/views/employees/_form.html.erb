@@ -1,20 +1,20 @@
 <% display ||= {} -%>
 <%= render :partial => 'contacts/contact_fields', :locals => { :contact => @employee.contact, :path => 'employee[contact_attributes]' } %>
 <% if display[ :contact_choose_link ] %>
-	<p><%= link_to 'Kontaktinformationen von Kunden übernehmen', choose_contact_template_employees_path %></p>
+  <p><%= link_to 'Kontaktinformationen von Kunden übernehmen', choose_contact_template_employees_path %></p>
 <% end %>
 
 <fieldset>
-	<legend>Fähigkeiten</legend>
-	<ol id="skills">
-		<%= render :partial => 'skills/skill_field', :collection => @employee.skills %>
-	</ol>
-	<%= add_skill_link %>
+  <legend>Fähigkeiten</legend>
+  <ol id="skills">
+    <%= render :partial => 'skills/skill_field', :collection => @employee.skills %>
+  </ol>
+  <%= add_skill_link %>
 </fieldset>
 
 <fieldset>
-	<legend>Zusätzliche Informationen</legend>
-	<ol>
-		<li><%= form.label :comment, 'Kommentar: ' %><%= form.text_area :comment, { :cols => 60, :rows => 15 } %></li>
-	</ol>
+  <legend>Zusätzliche Informationen</legend>
+  <ol>
+    <li><%= form.label :comment, 'Kommentar: ' %><%= form.text_area :comment, { :cols => 60, :rows => 15 } %></li>
+  </ol>
 </fieldset>

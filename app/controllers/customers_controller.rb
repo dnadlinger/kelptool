@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
   def index
-  	@customers = Customer.find( :all )
+    @customers = Customer.find( :all )
   end
   
   def show
@@ -25,10 +25,10 @@ class CustomersController < ApplicationController
     @customer.create_contact( params[ :contact ] )
     
     if @customer.save
-    	flash[ :notice ] = 'Kunde angelegt.'
-    	redirect_to :action => 'index'
+      flash[ :notice ] = 'Kunde angelegt.'
+      redirect_to :action => 'index'
     else
-    	render :action => 'new'
+      render :action => 'new'
     end
   end
   
@@ -39,10 +39,10 @@ class CustomersController < ApplicationController
   def update
     @customer = Customer.find( params[ :id ] ) 
     if @customer.contact.update_attributes( params[ :contact ] ) and @customer.update_attributes( params[ :customer ] )
-    	flash[ :notice ] = 'Änderungen gespeichert.'
-    	redirect_to customer_path( @customer )
+      flash[ :notice ] = 'Änderungen gespeichert.'
+      redirect_to customer_path( @customer )
     else
-    	render :action => 'edit'
+      render :action => 'edit'
     end
   end
   

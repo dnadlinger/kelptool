@@ -26,7 +26,7 @@ module ChoosingSystem
     end
     
     def choosing_mode_active?( mode )
-    	return current_choosing_mode == mode 
+      return current_choosing_mode == mode 
     end
     
     def current_choosing_mode
@@ -43,14 +43,14 @@ module ChoosingSystem
     end
     
     def build_choose_path( mode, *params )
-    	if mode.has_source?
-    		params.unshift( get_source( mode ) )
-    	end
+      if mode.has_source?
+        params.unshift( get_source( mode ) )
+      end
       mode.choose_path( *params )
     end
     
     def build_source_path( mode )
-    	return nil unless mode.has_source?
+      return nil unless mode.has_source?
       source_path = mode.source_path
       
       # If the mode has no specific source_path, but a source_name,

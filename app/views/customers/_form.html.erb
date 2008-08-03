@@ -3,13 +3,13 @@ display ||= {}
 -%>
 <%= render :partial => 'contacts/contact_fields', :object => @customer.contact %>
 <% if display[ :contact_choose_link ] -%>
-	<p><%= link_to 'Kontaktinformationen von Mitarbeiter übernehmen', choose_contact_template_customers_path %></p>
+  <p><%= link_to 'Kontaktinformationen von Mitarbeiter übernehmen', choose_contact_template_customers_path %></p>
 <% end -%>
 
 <fieldset>
-	<legend>Zusätzliche Informationen</legend>
-	<ol>
-		<li><%= form.label :discount, 'Preis: <em>*</em>' %> <%= form.text_field :discount %> Promille
-		<li><%= form.label :comment, 'Kommentar: ' %><%= form.text_area :comment, { :cols => 60, :rows => 15 } %></li>
-	</ol>
+  <legend>Zusätzliche Informationen</legend>
+  <ol>
+    <li><%= form.label :discount, 'Preis: <em>*</em>' %> <%= form.text_field :discount %> Promille
+    <li><%= form.label :comment, 'Kommentar: ' %><%= form.text_area :comment, { :cols => 60, :rows => 15 } %></li>
+  </ol>
 </fieldset>

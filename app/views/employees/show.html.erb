@@ -5,24 +5,24 @@
 
 <h2>Fähigkeiten</h2>
 <% unless @employee.skills.empty? %>
-	<ul>
-	<% for skill in @employee.skills %>
-		<li><%= link_to skill.name, skill_path( skill ) %></li>
-	<% end %>
-	</ul>
+  <ul>
+  <% for skill in @employee.skills %>
+    <li><%= link_to skill.name, skill_path( skill ) %></li>
+  <% end %>
+  </ul>
 <% else %>
-	<p><em>keine</em></p>
+  <p><em>keine</em></p>
 <% end %>
 
 <h2>Kommentare</h2>
 <% unless @employee.comment.empty? %>
-	<%= textilize( @employee.comment )%>
+  <%= textilize( @employee.comment )%>
 <% else %>
-	<p><em>keine</em></p>
+  <p><em>keine</em></p>
 <% end %>
 
 <div class="navlinks">
-	<%= choose_link ChoosingMode::CustomersChooseContactTemplate, @employee.contact %>
-	<p><%= link_to 'Mitarbeiter bearbeiten', edit_employee_path %></p> 
-	<p><%= link_to 'Zurück zur Übersicht', employees_path %></p>
+  <%= choose_link ChoosingMode::CustomersChooseContactTemplate, @employee.contact %>
+  <p><%= link_to 'Mitarbeiter bearbeiten', edit_employee_path %></p> 
+  <p><%= link_to 'Zurück zur Übersicht', employees_path %></p>
 </div>

@@ -3,6 +3,6 @@
 <%= show_errors @employee.contact, 'die Kontaktinformationen zu ändern' %>
 <%= show_errors @employee, 'den Mitarbeiter abzuändern' %>
 <% edit_form_for @employee do |f| %>
-	<%= render :partial => f %>
-	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück zur Übersicht', employees_path, { :class => 'navlink' } %></p>
+  <%= render :partial => f %>
+  <p><%= f.submit 'Ändern' %> <%= link_to 'Zurück zur Übersicht', employees_path, { :class => 'navlink' } %></p>
 <% end %>

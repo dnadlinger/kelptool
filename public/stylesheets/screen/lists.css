@@ -1,99 +1,99 @@
 /* Styles for all kinds of lists. */
 
 table {
-	border: 0 none;
-	margin: 0;
+  border: 0 none;
+  margin: 0;
 }
 
 td {
-	padding: 5px;
+  padding: 5px;
 }
 
 thead {
-	font-weight: bold;
-	background-color: #eee;
+  font-weight: bold;
+  background-color: #eee;
 }
 
 tfoot {
-	background-color: #f4f4f4;
+  background-color: #f4f4f4;
 }
 
 ul {
-	list-style: disc;
-	padding: 0 0 0 15px;
+  list-style: disc;
+  padding: 0 0 0 15px;
 }
 
 ol {
-	list-style: decimal;
+  list-style: decimal;
 }
 
 div.biglist {
-	width: 100%;
+  width: 100%;
 }
 
 div.biglist ol {
-	margin: 20px 0;
-	padding: 0;
-	
-	overflow: hidden !important;
+  margin: 20px 0;
+  padding: 0;
+  
+  overflow: hidden !important;
 }
 
 div.biglist ol li {
-	min-height: 25px;
-	
-	margin: 2px 0;
-	padding: 6px 10px 0px 10px;
-	
-	display: block;
-	
-	background-color: #eee;
-	
-	border: 1px solid #ccc;
-	
-	color: #000;
-	list-style: none;
-	
-	font-size: 13px;
-	
-	overflow: hidden;
+  min-height: 25px;
+  
+  margin: 2px 0;
+  padding: 6px 10px 0px 10px;
+  
+  display: block;
+  
+  background-color: #eee;
+  
+  border: 1px solid #ccc;
+  
+  color: #000;
+  list-style: none;
+  
+  font-size: 13px;
+  
+  overflow: hidden;
 }
 
 div.biglist ol li a {
-	display: inline-block;
-	float: left;
-	
-	color: #000;
-	text-decoration: none;
+  display: inline-block;
+  float: left;
+  
+  color: #000;
+  text-decoration: none;
 }
 
 div.sublist {
-	margin: 35px -10px 0 -10px;
+  margin: 35px -10px 0 -10px;
 }
 
 div.sublist ol {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	
-	overflow: hidden !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  
+  overflow: hidden !important;
 }
 
 div.sublist ol li {
-	min-height: 15px;
-	height: 15px;
-	
-	margin: 0 0 3px 0;
-	padding: 5px 5px 5px 20px;
-	
-	display: block;
-	
-	background-color: #ccc;
-	list-style: none;
-	
-	font-size: 11px;
+  min-height: 15px;
+  height: 15px;
+  
+  margin: 0 0 3px 0;
+  padding: 5px 5px 5px 20px;
+  
+  display: block;
+  
+  background-color: #ccc;
+  list-style: none;
+  
+  font-size: 11px;
 }
 
 div.sublist ol li a {
-	display: inline-block;
-	float: left;
+  display: inline-block;
+  float: left;
 }

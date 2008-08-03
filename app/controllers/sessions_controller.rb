@@ -1,10 +1,10 @@
 # This controller handles the login/logout function of the site.
 class SessionsController < ApplicationController
-	# We have to exclude new and create from the global login requirement, otherwise these pages could never be reached. 
-	before_filter :login_required, :except => [ :new, :create ]
-	
+  # We have to exclude new and create from the global login requirement, otherwise these pages could never be reached. 
+  before_filter :login_required, :except => [ :new, :create ]
+  
   def new
-  	# Just render the template.
+    # Just render the template.
   end
 
   def create
@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
       redirect_back_or_default('/')
       flash[ :notice ] = 'Sie wurden erfolgreich angemeldet.'
     else
-    	flash[ :error ] = 'Anmeldung fehlgeschlagen.'
+      flash[ :error ] = 'Anmeldung fehlgeschlagen.'
       render :action => 'new'
     end
   end

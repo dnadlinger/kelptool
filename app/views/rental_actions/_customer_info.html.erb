@@ -1,17 +1,17 @@
 <% unless customer == nil -%>
-	<% unless customer.contact == nil -%>
-		<% contact = customer.contact -%>
-		<%= form_tag customer_path( customer ), :method => :get %>
-			<button type="submit">
-				<p><%= h contact.name %></p>
-				<p><%= h contact.adress %><br /><%= h contact.full_place %></p>
-				<p>Telefon: <%= h contact.phone_numbers.first %></p>
-				<p>UID: <%= h contact.uid %></p>
-			</button>
-		</form>
-	<% else -%>
-		<p><em>(keine Kontaktinformationen für diesen Kunden eingetragen)</em></p>
-	<% end -%>
+  <% unless customer.contact == nil -%>
+    <% contact = customer.contact -%>
+    <%= form_tag customer_path( customer ), :method => :get %>
+      <button type="submit">
+        <p><%= h contact.name %></p>
+        <p><%= h contact.adress %><br /><%= h contact.full_place %></p>
+        <p>Telefon: <%= h contact.phone_numbers.first %></p>
+        <p>UID: <%= h contact.uid %></p>
+      </button>
+    </form>
+  <% else -%>
+    <p><em>(keine Kontaktinformationen für diesen Kunden eingetragen)</em></p>
+  <% end -%>
 <% else -%>
-	<p><em>(kein Kunde ausgewählt)</em></p>
+  <p><em>(kein Kunde ausgewählt)</em></p>
 <% end -%>

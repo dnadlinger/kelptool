@@ -5,9 +5,9 @@
 
 <h2>Kommentare</h2>
 <% unless @customer.comment.empty? -%>
-	<%= textilize h( @customer.comment ) %>
+  <%= textilize h( @customer.comment ) %>
 <% else -%>
-	<p><em>keine</em></p>
+  <p><em>keine</em></p>
 <% end -%>
 
 <h2>Sonstiges</h2>
@@ -15,18 +15,18 @@
 
 <h2>Letzte Mietvorgänge</h2>
 <% unless @customer.rental_actions.empty? -%>
-	<ul>
-	<% for rental_action in @customer.rental_actions.all( :limit => 10 ) -%>
-		<li><%= link_to rental_action.name, rental_action_path( rental_action )%></li>
-	<% end -%>
-	</ul>
+  <ul>
+  <% for rental_action in @customer.rental_actions.all( :limit => 10 ) -%>
+    <li><%= link_to rental_action.name, rental_action_path( rental_action )%></li>
+  <% end -%>
+  </ul>
 <% else -%>
-	<p><em>keine</em></p>
+  <p><em>keine</em></p>
 <% end -%>
 
 <div class="navlinks">
-	<%= choose_link ChoosingMode::RentalActionsChooseCustomer, @customer %>
-	<%= choose_link ChoosingMode::EmployeesChooseContactTemplate, @customer.contact %>
-	<p><%= link_to 'Kunden bearbeiten', edit_customer_path %></p> 
-	<p><%= link_to 'Zurück zur Übersicht', customers_path %></p>
+  <%= choose_link ChoosingMode::RentalActionsChooseCustomer, @customer %>
+  <%= choose_link ChoosingMode::EmployeesChooseContactTemplate, @customer.contact %>
+  <p><%= link_to 'Kunden bearbeiten', edit_customer_path %></p> 
+  <p><%= link_to 'Zurück zur Übersicht', customers_path %></p>
 </div>

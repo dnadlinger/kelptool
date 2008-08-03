@@ -3,75 +3,75 @@
  * Credits for this go to Nick Rigby (http://alistapart.com/articles/prettyaccessibleforms).
  */
 form.pretty fieldset {
-	padding: 10px 30px 10px 10px;
-	margin: 0 0 10px 0;
-	border: 1px solid #ddd;
+  padding: 10px 30px 10px 10px;
+  margin: 0 0 10px 0;
+  border: 1px solid #ddd;
 }
 form.pretty fieldset legend {
-	padding: 0 2px;
-	font-weight: bold;
+  padding: 0 2px;
+  font-weight: bold;
 }
 form.pretty label {
-	display: inline-block;
-	vertical-align: top;
+  display: inline-block;
+  vertical-align: top;
 }
 form.pretty fieldset ol {
-	margin: 0;
-	padding: 0;
-	width: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 form.pretty fieldset li {
-	list-style: none;
-	padding: 5px;
-	margin: 0;
+  list-style: none;
+  padding: 5px;
+  margin: 0;
 }
 form.pretty fieldset fieldset {
-	border: 1px solid #ddd;
-	border-width: 1px 0 1px 0;
-	margin: 3px 0 0;
+  border: 1px solid #ddd;
+  border-width: 1px 0 1px 0;
+  margin: 3px 0 0;
 }
 form.pretty fieldset fieldset legend {
-	padding: 0 0 5px;
-	font-weight: normal;
-	font-style: italic;
+  padding: 0 0 5px;
+  font-weight: normal;
+  font-style: italic;
 }
 form.pretty fieldset fieldset label {
-	display: block;
-	width: auto;
+  display: block;
+  width: auto;
 }
 form.pretty em {
-	font-weight: bold;
-	font-style: normal;
-	color: #002f76;
+  font-weight: bold;
+  font-style: normal;
+  color: #002f76;
 }
 form.pretty.search em {
-	display: none;
+  display: none;
 }
 form.pretty label {
-	width: 120px;
+  width: 120px;
 }
 form.pretty input, form.pretty textarea {
-	border: solid 1px #000;
+  border: solid 1px #000;
 }
 
 
 /* Styles for disabled components. */
 button.disabled, input.disabled, button.disabled:hover, input.disabled:hover {
-	background-color: #e3e3e3;
+  background-color: #e3e3e3;
 }
 
 
 /* Styles for the automated rails input validation. */
 div.fieldWithErrors {
-	display: inline;
+  display: inline;
 }
 
 div.fieldWithErrors label {
-	color: #e44; 
+  color: #e44; 
 }
 
 div.fieldWithErrors input {
-	border: dashed 1px #e44;
+  border: dashed 1px #e44;
 }
 
 
@@ -85,13 +85,13 @@ button {
     background-color: #fff;
     border:1px solid #eee;
 
-	font-family: Tahoma, sans-serif;
+  font-family: Tahoma, sans-serif;
     font-size:100%;
     text-decoration:none;
-	text-align: left;
-	
+  text-align: left;
+  
     cursor:pointer;
-	
+  
     padding:5px 10px 6px 7px; /* Links */
 }
 button {
@@ -115,34 +115,34 @@ button img {
 }
 
 button:hover {
-	border-color: #ccc;
-	background-color: #f3f3f3;
+  border-color: #ccc;
+  background-color: #f3f3f3;
 }
 
 
 
 /* Auto Completion */
 div.auto_complete {
-	width: 350px;
-	background: #fff;
+  width: 350px;
+  background: #fff;
 }
 div.auto_complete ul {
-	border:1px solid #888;
-	margin:0;
-	padding:0;
-	width:100%;
-	list-style-type:none;
+  border:1px solid #888;
+  margin:0;
+  padding:0;
+  width:100%;
+  list-style-type:none;
 }
 div.auto_complete ul li {
-	font-size: 12px;
-	margin:0;
-	padding: 1px 3px;
+  font-size: 12px;
+  margin:0;
+  padding: 1px 3px;
 }
 div.auto_complete ul li.selected {
-	background-color: #ffb;
+  background-color: #ffb;
 }
 div.auto_complete ul strong.highlight {
-	color: #800; 
-	margin:0;
-	padding:0;
+  color: #800; 
+  margin:0;
+  padding:0;
 }

@@ -2,17 +2,17 @@
 
 <%= show_errors @item, 'die Details zum Gerät zu ändern' %>
 <% edit_form_for [ @item.item_category, @item ] do |f| %>
-	<fieldset>
-		<legend>Gerät:</legend>
-		<ol>
-			<li><%= f.label :name, 'Name: <em>*</em>' %><%= f.text_field :name %></li>
-			<li><%= f.label :item_category_id, 'Kategorie: <em>*</em>' %><%= f.collection_select :item_category_id, @categories, :id, :name%></li>
-		</ol>
-	</fieldset>
-	
-	<% fields_for @item.price do |price_fields| %>
-		<%= render :partial => 'simple_price_fields', :locals => { :f => price_fields } %>
-	<% end %>
-	
-	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
+  <fieldset>
+    <legend>Gerät:</legend>
+    <ol>
+      <li><%= f.label :name, 'Name: <em>*</em>' %><%= f.text_field :name %></li>
+      <li><%= f.label :item_category_id, 'Kategorie: <em>*</em>' %><%= f.collection_select :item_category_id, @categories, :id, :name%></li>
+    </ol>
+  </fieldset>
+  
+  <% fields_for @item.price do |price_fields| %>
+    <%= render :partial => 'simple_price_fields', :locals => { :f => price_fields } %>
+  <% end %>
+  
+  <p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
 <% end %>

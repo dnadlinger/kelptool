@@ -2,6 +2,6 @@
 
 <%= show_errors @skill, 'die Fähigkeit anzulegen' %>
 <% pretty_form_for @skill do |f| %>
-	<%= render :partial => f %>
-	<p><%= f.submit 'Anlegen' %> <%= link_to 'Zurück zur Übersicht', skills_path, { :class => 'navlink' } %></p>
+  <%= render :partial => f %>
+  <p><%= f.submit 'Anlegen' %> <%= link_to 'Zurück zur Übersicht', skills_path, { :class => 'navlink' } %></p>
 <% end %>

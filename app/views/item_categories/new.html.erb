@@ -2,6 +2,6 @@
 
 <%= show_errors @category, 'die Kategorie hinzuzufügen' %>
 <% pretty_form_for @category do |f| %>
-	<%= render :partial => f %>
-	<p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück zur Übersicht', item_categories_path, { :class => 'navlink' } %></p>
+  <%= render :partial => f %>
+  <p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück zur Übersicht', item_categories_path, { :class => 'navlink' } %></p>
 <% end %>

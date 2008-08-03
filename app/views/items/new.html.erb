@@ -2,17 +2,17 @@
 
 <%= show_errors @item, 'das Gerät hinzuzufügen' %>
 <% pretty_form_for [ @item.item_category, @item ] do |f| %>
-	<fieldset>
-		<legend>Gerät</legend>
-		<ol>
-			<li><%= f.label :name, 'Name: <em>*</em>' %><%= f.text_field :name %></li>
-			<li><%= f.label :item_category_id, 'Kategorie: ' %><%= f.hidden_field :item_category_id, :value => @item.item_category.id %>
-				<%= @item.item_category.name %></li>
-			<li><%= f.label :total_count, 'Anzahl: <em>*</em>' %><%= f.text_field :total_count %></li>
-		</ol>
-	</fieldset>
-	<% fields_for @item.price do |price_fields| %>
-		<%= render :partial => 'simple_price_fields', :locals => { :f => price_fields } %>
-	<% end %>
-	<p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
+  <fieldset>
+    <legend>Gerät</legend>
+    <ol>
+      <li><%= f.label :name, 'Name: <em>*</em>' %><%= f.text_field :name %></li>
+      <li><%= f.label :item_category_id, 'Kategorie: ' %><%= f.hidden_field :item_category_id, :value => @item.item_category.id %>
+        <%= @item.item_category.name %></li>
+      <li><%= f.label :total_count, 'Anzahl: <em>*</em>' %><%= f.text_field :total_count %></li>
+    </ol>
+  </fieldset>
+  <% fields_for @item.price do |price_fields| %>
+    <%= render :partial => 'simple_price_fields', :locals => { :f => price_fields } %>
+  <% end %>
+  <p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
 <% end %>

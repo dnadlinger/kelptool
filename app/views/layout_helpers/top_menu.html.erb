@@ -1,11 +1,11 @@
 <ul id="menu">
 <% [
-	[ 'Home', root_path ],
-	[ 'Gerätepark', item_categories_path ],
-	[ 'Vermietung', rental_actions_path ],
-	[ 'Kunden', customers_path ],
-	[ 'Mitarbeiter', employees_path ]
+  [ 'Home', root_path ],
+  [ 'Gerätepark', item_categories_path ],
+  [ 'Vermietung', rental_actions_path ],
+  [ 'Kunden', customers_path ],
+  [ 'Mitarbeiter', employees_path ]
 ].each do |name, path| -%>
-	<%= render :partial => 'layout_helpers/top_menu_item', :locals => { :name => name, :url => path } %>
+  <%= render :partial => 'layout_helpers/top_menu_item', :locals => { :name => name, :url => path } %>
 <% end -%>
 </ul>

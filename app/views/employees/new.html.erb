@@ -3,6 +3,6 @@
 <%= show_errors @employee.contact, 'die Kontaktinformationen zu speichern' %>
 <%= show_errors @employee, 'den Mitarbeiter anzulegen' %>
 <% pretty_form_for @employee do |f| %>
-	<%= render :partial => f, :locals => { :display { :contact_choose_link => true } } %>
-	<p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück zur Übersicht', employees_path, { :class => 'navlink' } %></p>
+  <%= render :partial => f, :locals => { :display { :contact_choose_link => true } } %>
+  <p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück zur Übersicht', employees_path, { :class => 'navlink' } %></p>
 <% end %>

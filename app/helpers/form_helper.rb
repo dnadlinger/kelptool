@@ -16,9 +16,9 @@ module FormHelper
   end
   
   def show_errors( record, action_name )
-  	return nil if record.errors.empty?
+    return nil if record.errors.empty?
     
-  	content_tag :div, :class => 'form_error' do
+    content_tag :div, :class => 'form_error' do
       content_tag( :p, 'Beim Versuch, ' + action_name + ', sind folgende Fehler aufgetreten:', :class => 'error' )
       content_tag :ul, errors do
         record.errors.each do |attribute, message|
