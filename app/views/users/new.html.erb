@@ -1,16 +1,7 @@
-<%= error_messages_for :user %>
-<% form_for :user, :url => users_path do |f| -%>
-<p><label for="login">Login</label><br/>
-<%= f.text_field :login %></p>
+<% @page_title = 'Neues Benutzerkonto anlegen' -%>
 
-<p><label for="email">Email</label><br/>
-<%= f.text_field :email %></p>
-
-<p><label for="password">Password</label><br/>
-<%= f.password_field :password %></p>
-
-<p><label for="password_confirmation">Confirm Password</label><br/>
-<%= f.password_field :password_confirmation %></p>
-
-<p><%= submit_tag 'Sign up' %></p>
-<% end -%>
+<%= show_errors @user, 'das Benutzerkonto anzulegen' %>
+<% form_for @user, :html => { :class => 'pretty' } do |f| %>
+	<%= render :partial => f %>
+	<p><%= f.submit 'Registrieren' %></p>
+<% end %>

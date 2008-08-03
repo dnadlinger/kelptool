@@ -1,6 +1,6 @@
 <% @page_title = 'Ergebnisse' -%>
 
-<%= render :partial => 'employees/employees', :object => @search_model.employees %>
+<%= render_biglist 'Mitarbeiter', @search_model.employees %>
 
 <div class="navlinks">
 	<p><%= link_to 'Zurück zur Übersicht', employees_path %></p>

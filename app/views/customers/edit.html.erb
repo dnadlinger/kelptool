@@ -1,4 +1,5 @@
-<% @page_title = @customer.contact.name + ' – Editieren' %>
+<% @page_title = @customer.contact.name + ' – Editieren' -%>
+
 <%= show_errors @customer.contact, 'die Kontaktinformationen zu speichern' %>
 <%= show_errors @customer, 'die Kundendaten abzuändern' %>
 <% form_for @customer, customer_path( @customer ), :html => { :method => :put, :class => 'pretty' } do |f| %>

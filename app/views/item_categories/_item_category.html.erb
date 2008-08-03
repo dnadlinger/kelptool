@@ -8,17 +8,17 @@
 </span>
 
 <span class="alignright">
-	<% unless item_category.first? %>
+	<% unless item_category.first? -%>
 		<%= link_to icon_up, move_up_item_category_path( item_category ), :method => :put %>
 	<% end -%>
 	
-	<% unless item_category.last? %>
+	<% unless item_category.last? -%>
 		<%= link_to icon_down, move_down_item_category_path( item_category ), :method => :put %>
 	<% end -%>
 </span>
 <% end -%>
 
 <% if render_items -%>
-	<% items ||= item_category.items %>
+	<% items ||= item_category.items -%>
 	<%= render :partial => 'items', :locals => { :items => items } -%>
 <% end -%>

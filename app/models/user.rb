@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
 
   validates_presence_of :login, :message => 'Bitte wählen Sie einen Benutzernamen.'
   validates_presence_of :email, :message => 'Bitte geben Sie ihre E-Mail-Adresse ein.'
-  validates_presence_of :password, :if => :password_required?, :message => 'Kein Passwort angegeben!'
+  validates_presence_of :password, :if => :password_required?, :message => 'Bitte geben Sie ein Passwort an.'
   validates_presence_of :password_confirmation, :if => :password_required?, :message => 'Bitte bestätigen Sie das Passwort.'
-  validates_length_of :password, :within => 4..40, :if => :password_required?, :message => 'Das Passwort muss zwischen 4 und 40 Zeichen lang sein.'
+  validates_length_of :password, :within => 4..40, :if => :password_required?, :too_short => 'Das Passwort muss mindestens 4 Zeichen lang sein.', :too_long => 'Das Passwort darf höchstens 40 Zeichen lang sein.'
   validates_confirmation_of :password, :if => :password_required?, :message => 'Bitte geben sie zur Bestätigung in das gleiche Feld das gleiche Passwort ein.'
-  validates_length_of :login, :within => 3..40, :message => 'Bitte wählen sie einen Benutzernamen zwischen 3 und 40 Zeichen.'
-  validates_length_of :email, :within => 3..100, :message => 'Die angegebene E-Mail-Adresse ist ungültig.'
+  validates_length_of :login, :within => 3..40, :too_short => 'Der Benutzername muss mindestens 3 Zeichen lang sein.', :too_long => 'Der Benutzername darf höchstens 40 Zeichen lang sein.'
+  validates_length_of :email, :within => 3..100, :too_short => 'Die angegebene E-Mail-Adresse ist ungültig.', :too_long => 'Die angegebene E-Mail-Adresse ist ungültig.'
   validates_uniqueness_of :login, :message => 'Der Benutzername ist bereits vergeben.'
   validates_uniqueness_of :email, :case_sensitive => false, :message => 'Die E-Mail-Adresse wird bereits verwendet.'
   before_save :encrypt_password

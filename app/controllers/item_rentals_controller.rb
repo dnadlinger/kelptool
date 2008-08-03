@@ -1,51 +1,70 @@
 class ItemRentalsController < ApplicationController
-	before_filter :get_rental_action
+  before_filter :get_rental_action
   
-	def index
-		@item_rentals = @rental_action.item_rentals
-	end
-	
-	def show
-	
-	end
-	
+  def index
+  	@item_rentals = @rental_action.item_rentals
+  end
+  
+  def show
+  
+  end
+  
   def choose_item
     start_choosing ChoosingMode::ItemRentalsChooseItem, @rental_action
     redirect_to item_categories_url
   end  
   
-	def new
-		end_choosing ChoosingMode::ItemRentalsChooseItem
-		
-		@item_rental = ItemRental.new
-		@item_rental.item = Item.find( params[ :item_id ] )
-		@item_rental.rental_action = @rental_action
-	end
-	
-	def create
-		@item_rental = ItemRental.new( params[ :item_rental ] )
-		
-		if @item_rental.save
-			flash[ :notice ] = 'Gerät hinzugefügt.'
-			redirect_to :action => 'index'
-		else
-			render :action => 'new'
-		end
-	end
+  def new
+  	end_choosing ChoosingMode::ItemRentalsChooseItem
+  	
+  	@item_rental = ItemRental.new
+  	@item_rental.item = Item.find( params[ :item_id ] )
+  	@item_rental.rental_action = @rental_action
+  end
+  
+  def create
+  	@item_rental = ItemRental.new( params[ :item_rental ] )
+  	
+  	if @item_rental.save
+  		flash[ :notice ] = 'Gerät hinzugefügt.'
+  		redirect_to rental_action_item_rentals_url
+  	else
+  		render :action => 'new'
+  	end
+  end
 	
 	def edit
     @item_rental = ItemRental.find( params[ :id ] )
-		respond_to do |format|
-      format.js  
+    respond_to do |format|
+      format.html do
+        @item_rentals = @rental_action.item_rentals
+        # Because @item_rental is set, the index view will display the correct
+        # item rental in editing mode.
+        render :action => 'index'
+      end
+      format.js
     end
 	end
 	
-	def update
-		
-	end
+  def update
+    @item_rental = ItemRental.find( params[ :id ] )
+    if @item_rental.update_attributes( params[ :item_rental ] )
+      respond_to do |format|
+        format.html do
+          redirect_to rental_action_item_rentals_url
+        end
+        format.js
+      end
+    else
+      redirect_to edit_rental_action_item_rental_url
+    end
+  end
 	
 	def destroy
-		
+		@item_rental = ItemRental.find( params[ :id ] )
+    @item_rental.destroy
+    flash[ :notice ] = 'Gerät aus der Liste entfernt.'
+    redirect_to rental_action_item_rentals_url
 	end
 	
 	def handed_out

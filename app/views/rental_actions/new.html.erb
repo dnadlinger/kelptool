@@ -1,13 +1,15 @@
-<% @page_title = 'Neuen Mietvorgang erstellen' %>
+<% @page_title = 'Neuen Mietvorgang erstellen' -%>
+
 <%= show_errors @rental_action, 'den Mietvorgang zu erstellen' %>
 <% form_for @rental_action, :html => { :class => 'pretty' } do |f| %>
 	<%= render :partial => f %>
-	<% unless @template_action.nil? %>
-	<fieldset>
-		<legend>Vorlage</legend>
-		<p>Der Mietvorgang wird auf der Grundlage von "<%= @template_action.name %>" erstellt.</p>
-		<%= hidden_field_tag 'template_action_id', @template_action.id %>
-	</fieldset>
-	<% end %>
+	
+	<% unless @template_action.nil? -%>
+		<fieldset>
+			<legend>Vorlage</legend>
+			<p>Der Mietvorgang wird auf der Grundlage von "<%= @template_action.name %>" erstellt.</p>
+			<%= hidden_field_tag 'template_action_id', @template_action.id %>
+		</fieldset>
+	<% end -%>
 	<p><%= f.submit 'Weiter' %> <%= link_to 'Zurück zur Übersicht', rental_actions_path, { :class => 'navlink' } %></p>
 <% end %>

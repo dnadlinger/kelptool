@@ -1,4 +1,4 @@
-<% @page_title = @employee.contact.name + ' – Details' %>
+<% @page_title = @employee.contact.name + ' – Details' -%>
 
 <h2>Kontaktdaten</h2>
 <%= render :partial => @employee.contact %>
@@ -21,8 +21,8 @@
 	<p><em>keine</em></p>
 <% end %>
 
-
 <div class="navlinks">
+	<%= choose_link ChoosingMode::CustomersChooseContactTemplate, @employee.contact %>
 	<p><%= link_to 'Mitarbeiter bearbeiten', edit_employee_path %></p> 
 	<p><%= link_to 'Zurück zur Übersicht', employees_path %></p>
 </div>

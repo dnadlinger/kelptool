@@ -1,6 +1,6 @@
-<% @page_title = 'Fähigkeiten' %>
+<% @page_title = 'Fähigkeiten' -%>
 
-<% unless @skills.empty? %>
+<% unless @skills.empty? -%>
 <div class="biglist">
 	<ol>
 	<% for skill in @skills %>
@@ -10,9 +10,9 @@
 	<% end %>
 	</ol>
 </div>
-<% else %>
+<% else -%>
 <p><em>keine</em></p>
-<% end %>
+<% end -%>
 
 <div class="navlinks">
 	<p><%= link_to 'Neue Fähigkeit anlegen', new_skill_path %></p>

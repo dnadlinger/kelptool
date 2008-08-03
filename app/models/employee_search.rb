@@ -14,7 +14,6 @@ class EmployeeSearch < ActiveRecord::BaseWithoutTable
 	 	else
 	 		Employee.all( :conditions => prepare_conditions, :include => :contact )
 	 	end
-	 	
 	end
 	
 	def comment_conditions
@@ -22,7 +21,6 @@ class EmployeeSearch < ActiveRecord::BaseWithoutTable
 	end
 	
 	def contact_conditions
-		logger.debug contact.get_conditions.inspect
 		contact.get_conditions unless contact.nil?
 	end
 end

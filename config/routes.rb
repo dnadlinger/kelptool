@@ -45,7 +45,10 @@ ActionController::Routing::Routes.draw do |map|
 			:choose_contact_template => :get
 		}
 	
-	map.resources :customers
+	map.resources :customers,
+    :collection => {
+      :choose_contact_template => :get
+    }
 	
 	map.resources :phone_number_types, :path_prefix => '/settings'
 	

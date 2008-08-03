@@ -21,7 +21,7 @@ class SkillsController < ApplicationController
   def create
   	@skill = Skill.new( params[ :skill ] )
   	if @skill.save
-  		flash[ :notice ] = 'Die Fähigkeit wurde definiert.'
+  		flash[ :notice ] = 'Fähigkeit definiert.'
   		redirect_to skills_path
   	else
   		render :action => 'new'
@@ -31,6 +31,23 @@ class SkillsController < ApplicationController
   def edit
   	@skill = Skill.find( params[ :id ] )
 	end
+  
+  def update
+    @skill = Skill.find( params[ :id ] ) 
+    if @skill.update_attributes( params[ :skill ] )
+      flash[ :notice ] = 'Änderungen gespeichert.'
+      redirect_to skills_url
+    else
+      render :action => 'edit'
+    end
+  end
+  
+  def destroy
+    @skill = Skill.find( params[ :id ] )
+    @skill.destroy
+    flash[ :notice ] = 'Fähigkeit gelöscht.'
+    redirect to skills_url
+  end
 	
   def generate_skill_field
     # Only render RJS template.

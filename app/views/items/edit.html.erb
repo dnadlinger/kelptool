@@ -1,4 +1,5 @@
-<% @page_title = @item.name + ' – Editieren' %>
+<% @page_title = @item.name + ' – Editieren' -%>
+
 <%= show_errors @item, 'die Details zum Gerät zu ändern' %>
 <% form_for [ @item.item_category, @item ], :html => { :method => :put, :class => 'pretty' } do |f| %>
 	<fieldset>

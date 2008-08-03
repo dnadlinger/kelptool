@@ -1,29 +1,35 @@
 <% content_tag :tr, :id => "item_rental_#{item_rental.id}" do %>
-	<%- full_path = [ item_rental.rental_action, item_rental ] -%>
-	<%# form_tag full_path, :method => :put do %>
-	<td class="item_rental_quantity"><%= h( item_rental.quantity ) %></td>
+	<% full_path = [ item_rental.rental_action, item_rental ] -%>
+	<td class="item_rental_quantity">
+		<% if item_rental == @item_rental -%>
+			<%= render :partial => 'quantity_form', :locals => { :item_rental => item_rental } %>
+		<% else -%>
+			<%=h item_rental.quantity %>
+		<% end -%>
+	</td>
 	<td><%= link_to h( item_rental.item.name ), item_category_item_path( item_rental.item.item_category, item_rental.item ) %></td>
-	<td><%= h item_rental.price %> €</td>
+	<td class="item_rental_price"><%=h item_rental.price %> €</td>
 	<td>
-		<% if item_rental.handed_out %>
+		<% if item_rental.handed_out -%>
 			ja
-		<% else %>
+		<% else -%>
 			<%= link_to 'nein', handed_out_rental_action_item_rental_path( *full_path ), :method => :put, :confirm => 'Das Gerät als ausgegeben kennzeichnen?' %>
-		<% end %>
+		<% end -%>
 	</td>
 	<td>
-		<% if item_rental.returned %>
+		<% if item_rental.returned -%>
 			ja
-		<% else %>
+		<% else -%>
 			<%= link_to 'nein', returned_rental_action_item_rental_path( *full_path ), :method => :put, :confirm => 'Das Gerät als zurückgebracht kennzeichnen?' %>
-		<% end %>
+		<% end -%>
 	</td>
 	<td>
-		<span class="item_rental_edit_actions">
-			<%= link_to_remote icon_edit, :url => edit_rental_action_item_rental_path( *full_path ), :method => :get %>			
+		<span class="item_rental_edit_button">
+			<% unless item_rental == @item_rental -%>
+				<%= render :partial => 'edit_button', :locals => { :full_path => full_path } %>		
+			<% end -%>
 		</span>
 		<%= link_to icon_reset, reset_state_rental_action_item_rental_path( *full_path ), :method => :put, :confirm => 'Die Informationen über den Verbleib des Gerätes zurücksetzen?' %>
 		<%= link_to icon_delete, full_path, :method => :delete, :confirm => 'Dieses Gerät wirklich aus der Liste entfernen?' %>
 	</td>
-	<%# end %>
 <% end %>

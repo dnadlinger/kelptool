@@ -5,13 +5,13 @@
 <p><strong>UID: </strong><%=h contact.uid %></p>
 <p>
 	<strong>Telefonnummern:</strong>
-	<% unless contact.phone_numbers.empty? %>
-	<ul>
-	<% for phone_number in contact.phone_numbers %>
-		<li><%= h phone_number.number %> <em>(<%= phone_number.type.name %>)</em></li>
-	<% end %>
-	</ul>
-	<% else %>
-	<em>keine</em>	
-	<% end %>
+	<% unless contact.phone_numbers.empty? -%>
+		<ul>
+		<% for phone_number in contact.phone_numbers %>
+			<li><%= h phone_number.number %> <em>(<%= phone_number.type.name %>)</em></li>
+		<% end %>
+		</ul>
+	<% else -%>
+		<em>keine</em>	
+	<% end -%>
 </p>

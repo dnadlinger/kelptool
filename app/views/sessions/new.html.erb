@@ -1,12 +1,13 @@
-<% @page_title='Anmeldung' -%>
+<% @page_title = 'Anmeldung' -%>
+
 <% form_tag session_path, :class => 'pretty' do %>
 	<fieldset>
 		<legend>Benutzerinformationen</legend>
 		<ol>
-			<li><label for="login">Benutzername:</label> <%= text_field_tag 'login' %></li>
-			<li><label for="password">Passwort:</label> <%= password_field_tag 'password' %></li>
-			<li><label for="remember_me">Informationen speichern:</label> <%= check_box_tag 'remember_me' %></li>
+			<li><label for="login">Benutzername: </label><%= text_field_tag 'login' %></li>
+			<li><label for="password">Passwort: </label><%= password_field_tag 'password' %></li>
+			<li><label for="remember_me">Informationen speichern: </label><%= check_box_tag 'remember_me' %></li>
 		</ol>
 	</fieldset>
 	<p><%= submit_tag 'Anmelden' %></p>
-<% end -%>
+<% end %>

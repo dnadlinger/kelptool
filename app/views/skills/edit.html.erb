@@ -1,2 +1,7 @@
-<h1>Skills#edit</h1>
-<p>Find me in app/views/skills/edit.html.erb</p>
+<% @page_title = @skill.name + ' – Editieren' -%>
+
+<%= show_errors @skill, 'die Kategorie zu ändern' %>
+<% form_for @skill, :html => { :method => :put, :class => 'pretty' } do |f| %>
+	<%= render :partial => f %>
+	<p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
+<% end %>

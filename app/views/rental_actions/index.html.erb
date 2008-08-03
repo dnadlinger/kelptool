@@ -1,18 +1,6 @@
 <% @page_title = 'Übersicht Mietvorgänge' -%>
-<div class="biglist">
-	<ol>
-	<% for rental_action in @rental_actions %>
-		<li>
-			<%= link_to rental_action.name, rental_action_path( rental_action ) %>
-			<% if session[ :choosing_mode ] == 'rental_actions_choose_template' -%>
-				<span class="alignright">
-					<%= link_to 'Auswählen', new_rental_action_path( :template_id => rental_action.id ) %>
-				</span>
-			<% end -%>
-		</li>
-	<% end %>
-	</ol>
-</div>
+
+<%= render_biglist 'Mietvorgänge', @rental_actions %>
 <div class="navlinks">
 	<p><%= link_to 'Neuer Mietvorgang', new_rental_action_path %></p>
 	<p><%= link_to 'Neuer Mietvorgang aus Vorlage', choose_template_rental_actions_path %></p>

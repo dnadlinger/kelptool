@@ -1,6 +1,6 @@
 module SearchConditions
 	def prepare_conditions
-	  [ conditions_clauses.join(' AND '), *conditions_options ]
+	  [ conditions_clauses.join(' AND '), *conditions_options ] unless conditions_clauses.empty?
 	end
 	
 	def conditions_clauses

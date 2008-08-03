@@ -8,14 +8,21 @@ class EmployeesController < ApplicationController
   end
 
   def new
+    end_choosing ChoosingMode::EmployeesChooseContactTemplate
+    
   	@employee = Employee.new
-  	@employee.contact = Contact.new
-  	# @employee.contact.phone_numbers.build
+    
+  	begin
+      @employee.contact = Contact.find( params[ :contact_id ] )
+    rescue ActiveRecord::RecordNotFound
+      @employee.contact = Contact.new
+    end
+    
   	unless params[ :skill_id ].nil?
   		@employee.skills << Skill.find( params[ :skill_id ] )
   	else
   		@employee.skills << Skill.new
-  	end
+    end
   end
   
   def create

@@ -1,7 +1,0 @@
-<span class="item_rental_edit_buttons">
-	<%= submit_tag 'Speichern' %>
-	<%= link_to_function 'Abbrechen' do |page|
-		page[ item_rental.id.to_s ].select( '.item_rental_quantity' ).first.replace_html( item_rental.quantity )
-		page[ item_rental.id.to_s ].select( '.item_rental_edit_buttons' ).first.remove()
-	end %>
-</span>

@@ -1,5 +1,6 @@
 <% @page_title = 'Geräte für "' + @rental_action.name + '"' -%>
-<% unless @item_rentals.count == 0 %>
+
+<% unless @item_rentals.empty? -%>
 	<table>
 		<thead>
 			<tr>
@@ -19,27 +20,27 @@
 			<td>Gesamt</td>
 			<td><%=h @rental_action.overall_price %> €</td>
 			<td>
-				<% if @item_rentals.reject( &:handed_out ).empty? %>
+				<% if @item_rentals.reject( &:handed_out ).empty? -%>
 					ja
-				<% else %>
+				<% else -%>
 					<%= link_to 'nein', all_handed_out_rental_action_item_rentals_path, :method => :put %>
-				<% end %>
+				<% end -%>
 			</td>
 			<td>
-				<% if @item_rentals.reject( &:returned ).empty? %>
+				<% if @item_rentals.reject( &:returned ).empty? -%>
 					ja
-				<% else %>
+				<% else -%>
 					<%= link_to 'nein', all_returned_rental_action_item_rentals_path, :method => :put %>
-				<% end %>
+				<% end -%>
 			</td>
-			<td>
-				
-			</td>
+			<td></td>
 		</tfoot>
 	</table>
 <% else -%>
 	<p><em>(keine)</em></p>
 <% end -%>
 
-<div class="navlinks"><p><%= link_to 'Gerät zur Liste hinzufügen', choose_item_rental_action_item_rentals_path %><br />
-<%= link_to 'Zurück zur Mietaktion', rental_action_path( @rental_action ) %></p></div>
+<div class="navlinks">
+	<p><%= link_to 'Gerät zur Liste hinzufügen', choose_item_rental_action_item_rentals_path %></p>
+	<p><%= link_to 'Zurück zur Mietaktion', rental_action_path( @rental_action ) %></p>
+</div>

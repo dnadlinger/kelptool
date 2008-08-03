@@ -1,1 +1,3 @@
-<li<% if @section_title == name %> class="here"<% end %>><%= link_to name, url %></li>
+<% content_tag :li, :class => ( 'here' if @section_title == name ) do %>
+	<%= link_to name, url %>
+<% end %>

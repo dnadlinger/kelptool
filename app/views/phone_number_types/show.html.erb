@@ -3,6 +3,6 @@
   <%=h @phone_number_type.name %>
 </p>
 
-
-<%= link_to 'Edit', edit_phone_number_type_path(@phone_number_type) %> |
-<%= link_to 'Back', phone_number_types_path %>
+<div class="navlinks">
+	<p><%= link_to 'Bearbeiten', edit_phone_number_type_path %> | <%= link_to 'Zurück', phone_number_types_path %></p>
+</div>

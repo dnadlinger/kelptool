@@ -1,30 +1,32 @@
-<% @page_title = @customer.contact.name + ' – Details' %>
+<% @page_title = @customer.contact.name + ' – Details' -%>
 
 <h2>Kontaktdaten</h2>
 <%= render :partial => @customer.contact %>
 
 <h2>Kommentare</h2>
-<% unless @customer.comment.empty? %>
-	<%= textilize( @customer.comment )%>
-<% else %>
+<% unless @customer.comment.empty? -%>
+	<%= textilize h( @customer.comment ) %>
+<% else -%>
 	<p><em>keine</em></p>
-<% end %>
+<% end -%>
 
 <h2>Sonstiges</h2>
 <p><strong>Üblicher Preis: </strong><%=h @customer.discount * 0.1 %> %</p>
 
 <h2>Letzte Mietvorgänge</h2>
-<% unless @customer.rental_actions.empty? %>
+<% unless @customer.rental_actions.empty? -%>
 	<ul>
-	<% for rental_action in @customer.rental_actions.all( :limit => 10 ) %>
+	<% for rental_action in @customer.rental_actions.all( :limit => 10 ) -%>
 		<li><%= link_to rental_action.name, rental_action_path( rental_action )%></li>
-	<% end %>
+	<% end -%>
 	</ul>
-<% else %>
+<% else -%>
 	<p><em>keine</em></p>
-<% end %>
+<% end -%>
 
 <div class="navlinks">
+	<%= choose_link ChoosingMode::RentalActionsChooseCustomer, @customer %>
+	<%= choose_link ChoosingMode::EmployeesChooseContactTemplate, @customer.contact %>
 	<p><%= link_to 'Kunden bearbeiten', edit_customer_path %></p> 
 	<p><%= link_to 'Zurück zur Übersicht', customers_path %></p>
 </div>

@@ -2,6 +2,7 @@ log/*.log
 tmp/**/*
 config/database.yml
 db/schema.rb
+db/*.sqlite*
 doc
 resource
 .loadpath

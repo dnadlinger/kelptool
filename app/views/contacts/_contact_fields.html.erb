@@ -1,4 +1,4 @@
-<% path ||= contact %>
+<% path ||= contact -%>
 <% fields_for path, contact do |c| %>
 <fieldset>
 	<legend>Kontaktinformationen</legend>
@@ -11,7 +11,7 @@
 		<li><%= c.label :uid, 'UID: ' %><%= c.text_field :uid %></li>
 	</ol>
 	
-	<% unless ( render_phone_numbers == false ) %>
+	<% if render_phone_numbers -%>
 	<fieldset>
 		<legend>Telefonnummern</legend>
 		<ol id="phone_numbers">
@@ -19,6 +19,6 @@
 		</ol>
 		<%= add_phone_number_link( path ) %>
 	</fieldset>
-	<% end %>
+	<% end -%>
 </fieldset>
 <% end %>

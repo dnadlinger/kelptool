@@ -75,4 +75,11 @@ class ChoosingMode
     lambda { |contact| '/employees/new?contact_id=' + contact.id.to_s },
     :get
   )
+  
+  CustomersChooseContactTemplate = ChoosingMode.new(
+    'customers_choose_contact_template',
+    'Navigieren sie zum Mitarbeiter, von dem Sie die Kontaktinformationen übernehmen wollen, und klicken Sie auf "Auswählen".',
+    lambda { |contact| '/customers/new?contact_id=' + contact.id.to_s },
+    :get
+  )
 end

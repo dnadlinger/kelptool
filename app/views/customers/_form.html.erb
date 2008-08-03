@@ -1,4 +1,8 @@
 <%= render :partial => 'contacts/contact_fields', :locals => { :contact => @customer.contact, :render_phone_numbers => true } %>
+<% if render_contact_choose_link -%>
+	<p><%= link_to 'Kontaktinformationen von Mitarbeiter übernehmen', choose_contact_template_customers_path %></p>
+<% end -%>
+
 <fieldset>
 	<legend>Zusätzliche Informationen</legend>
 	<ol>

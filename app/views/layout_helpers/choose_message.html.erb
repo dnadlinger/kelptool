@@ -1,14 +1,14 @@
-<% if currently_choosing? %>
+<% if currently_choosing? -%>
 <div class="flash" id="choose">
 	<%= icon_choose %>
 	<p>
 		<span class="message"><%= current_choosing_mode.message %></span>
 		<span class="alignright">
 			<%= link_to 'Abbrechen', cancel_choosing_path %>
-			<% unless current_choosing_mode.source_name.nil? %>
+			<% unless current_choosing_mode.source_name.nil? -%>
 				| <%= link_to current_choosing_mode.source_name, build_source_path( current_choosing_mode ), :method => current_choosing_mode.source_method %>
-			<% end %>
+			<% end -%>
 		</span>
 	</p>
 </div>
-<% end %>
+<% end -%>

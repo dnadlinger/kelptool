@@ -1,2 +1,2 @@
-page[ @item_rental.id.to_s ].select( '.item_rental_quantity' ).first.replace_html( :partial => 'quantity_field', :locals => { :item_rental => @item_rental } )
-page[ @item_rental.id.to_s ].select( '.item_rental_edit_actions' ).first.insert( render( :partial => 'buttons', :locals => { :item_rental => @item_rental } ) )
+page[ "item_rental_#{@item_rental.id}" ].select( '.item_rental_quantity' ).first.replace_html :partial => 'quantity_form', :locals => { :item_rental => @item_rental }
+page[ "item_rental_#{@item_rental.id}" ].select( '.item_rental_edit_button' ).first.replace_html ''

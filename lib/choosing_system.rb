@@ -58,11 +58,12 @@ module ChoosingSystem
       source_path ||= url_for( get_source( mode ) )
     end
     
+  private
     def get_source( mode )
       mode.source_by_id( session[ :choosing_source_id ] )
     end
     
-    # Inclusion hook (taken from AuthenticatedSystem)
+    # Inclusion hook for making the methods available in the views (taken from AuthenticatedSystem)
     def self.included( base )
       base.send :helper_method, :start_choosing, :end_choosing, :currently_choosing?, :current_choosing_mode, :build_choose_path, :build_source_path
     end

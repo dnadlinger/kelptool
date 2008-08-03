@@ -1,4 +1,5 @@
-<% @page_title = 'Mitarbeiter suchen' %>
+<% @page_title = 'Mitarbeiter suchen' -%>
+
 <%= show_errors @search_model, 'die Suchanfrage zu bearbeiten' %>
 <% form_for @search_model, :html => { :class => 'pretty search' } do |f| %>
 	<%= render :partial => 'contacts/contact_fields', :locals => { :contact => @search_model.contact, :path => 'contact_search', :render_phone_numbers => false } %>

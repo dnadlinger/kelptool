@@ -9,6 +9,6 @@
 <% end -%>
 
 <% if render_employees -%>
-	<% employees ||= skill.employees %>
-	<%= render :partial => 'employees', :object => employees -%>
+	<% employees ||= skill.employees -%>
+	<%= render :partial => 'employees', :object => employees %>
 <% end -%>

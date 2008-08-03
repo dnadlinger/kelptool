@@ -1,1 +1,4 @@
-<li><%= link_to h( employee.contact.name ), employee_path( employee ) %></li>
+<% content_tag_for :li, employee do %>
+	<%= link_to h( employee.contact.name ), employee_path( employee ) %>
+	<%= choose_icon ChoosingMode::CustomersChooseContactTemplate, employee.contact %>
+<% end %>
