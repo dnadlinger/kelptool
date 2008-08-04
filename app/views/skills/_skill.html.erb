@@ -14,6 +14,6 @@ employees ||= skill.employees
 </span>
 <% end -%>
 
-<% if display[ :employees ] -%>
-  <%= render :partial => 'employees', :object => employees %>
+<% if display[ :children ] -%>
+  <%= render_sublist skill, :employees, 'Mitarbeiter mit diser Fähigkeit', :collection => employees %>
 <% end -%>

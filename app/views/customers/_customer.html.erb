@@ -1,5 +1,3 @@
-<% content_tag_for( :li, customer ) do %>
-  <%= link_to customer.contact.name, customer_path( customer ) %>
-  <%= choose_icon ChoosingMode::RentalActionsChooseCustomer, customer %>
-  <%= choose_icon ChoosingMode::EmployeesChooseContactTemplate, customer.contact %>
-<% end %>
+<%= link_to customer.contact.name, customer_path( customer ) %>
+<%= choose_icon ChoosingMode::RentalActionsChooseCustomer, customer %>
+<%= choose_icon ChoosingMode::EmployeesChooseContactTemplate, customer.contact %>

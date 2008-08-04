@@ -1,4 +1,2 @@
-<li>
-  <%= link_to item.full_name, item_category_item_path( item.item_category, item ) %>
-  <%= choose_icon ChoosingMode::ItemRentalsChooseItem, item %>
-</li>
+<%= link_to item.full_name, item_category_item_path( item.item_category, item ) %>
+<%= choose_icon ChoosingMode::ItemRentalsChooseItem, item %>

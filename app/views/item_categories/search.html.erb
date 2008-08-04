@@ -1,17 +1,14 @@
 <% @page_title = 'Ergebnisse' -%>
 
-<div class="biglist">
-  <ol>
-  <% for item_category in @result_categories %>
-    <li id="category<%= item_category.id %>">
-      <%= render :partial => item_category %>
-      <% results_in_category = [] %>
-      <% @search_results.each { |item| results_in_category << item if ( item.item_category == item_category ) } %>
-      <%= render :partial => 'items', :locals => { :items => results_in_category } %>
-    </li>
-  <% end %>
-  </ol>
-</div>
+<%= render_biglist ItemCategory.all, 'Gegenstände',
+	:filter => lambda { |item_category| @result_categories.include?( item_category ) },
+	:locals => {
+		:display => {
+			:children => true,
+			:items => lambda { |item_category| @search_results.select { |item| item.item_category == item_category } }
+		}
+	}
+%>
 
 <div class="navlinks">
   <%= link_to 'Zurück zur Übersicht', item_categories_path %>
