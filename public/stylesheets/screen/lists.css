@@ -1,4 +1,4 @@
-/* Styles for all kinds of lists. */
+/* Styles for all kinds of tables and lists. */
 
 table {
   border: 0 none;
@@ -17,6 +17,12 @@ thead {
 tfoot {
   background-color: #f4f4f4;
 }
+
+td span.currency {
+  display: block;
+  text-align: right;
+}
+
 
 ul {
   list-style: disc;
