@@ -3,7 +3,7 @@
   <%= f.text_field :quantity, :size => 2 %>
   <%= f.submit 'Speichern' %>
   <%= link_to_function 'Abbrechen' do |page|
-    page[ "item_rental_#{item_rental.id}" ].select( '.item_rental_quantity' ).first.replace_html h( item_rental.quantity )
-    page[ "item_rental_#{item_rental.id}" ].select( '.item_rental_edit_button' ).first.replace_html :partial => 'edit_button', :locals => { :full_path => full_path }
+    page.get_member_element( item_rental, 'quantity' ).replace_html h( item_rental.quantity )
+    page.get_member_element( item_rental, 'edit_button' ).replace_html :partial => 'edit_button', :locals => { :full_path => full_path }
   end %>
 <% end %>
