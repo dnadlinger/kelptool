@@ -1,4 +1,4 @@
-<% @page_title = 'Ergebnisse' -%>
+<% @page_title = 'Geräte – Ergebnisse' -%>
 
 <%= render_biglist ItemCategory.all, 'Gegenstände',
 	:filter => lambda { |item_category| @result_categories.include?( item_category ) },
