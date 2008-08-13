@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_filter :get_item_category, :except => [ :index, :update ]
   
   def index
+    flash.keep
     redirect_to item_category_url( params[ :item_category_id ] )
   end
   
@@ -50,7 +51,7 @@ class ItemsController < ApplicationController
   def destroy
     @item = @category.items.find( params[ :id ] )
     if @item.rental_actions.count > 0
-      flash[ :error ] = 'Geräte können nur gelöscht werden, wenn sie noch nie vermietet wurden!'
+      flash[ :error ] = 'Das Gerät wurde bereits vermietet und kann deswegen nicht mehr gelöscht werden!'
       redirect_to item_category_items_url( @category )
     else
       @item.destroy
