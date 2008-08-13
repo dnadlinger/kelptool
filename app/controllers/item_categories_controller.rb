@@ -80,12 +80,5 @@ class ItemCategoriesController < ApplicationController
     if choosing_mode_active?( ChoosingMode::ItemRentalsChooseItem ) && @search_results.size == 1
       redirect_to build_choose_path( current_choosing_mode, @search_results.first )
     end
-    
-    @result_categories = []
-    for item in @search_results
-      @result_categories << item.item_category
-    end
-    
-    @result_categories.uniq!
   end
 end

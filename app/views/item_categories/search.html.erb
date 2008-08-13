@@ -1,7 +1,7 @@
 <% @page_title = 'Geräte – Ergebnisse' -%>
 
 <%= render_biglist ItemCategory.all, 'Gegenstände',
-	:filter => lambda { |item_category| @result_categories.include?( item_category ) },
+	:filter => lambda { |item_category| @search_results.collect( &:item_category ).uniq.include?( item_category ) },
 	:locals => {
 		:display => {
 			:children => true,
