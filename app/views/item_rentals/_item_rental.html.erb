@@ -13,14 +13,14 @@
     <% if item_rental.handed_out -%>
       ja
     <% else -%>
-      <%= link_to 'nein', handed_out_rental_action_item_rental_path( *full_path ), :method => :put, :confirm => 'Das Gerät als ausgegeben kennzeichnen?' %>
+      <%= link_to 'nein', handed_out_rental_action_item_rental_path( *full_path ), :method => :put %>
     <% end -%>
   </td>
   <td>
     <% if item_rental.returned -%>
       ja
     <% else -%>
-      <%= link_to 'nein', returned_rental_action_item_rental_path( *full_path ), :method => :put, :confirm => 'Das Gerät als zurückgebracht kennzeichnen?' %>
+      <%= link_to 'nein', returned_rental_action_item_rental_path( *full_path ), :method => :put %>
     <% end -%>
   </td>
   <td>
