@@ -18,7 +18,7 @@
     <tfoot>
       <td></td>
       <td>Gesamt</td>
-      <td><%=h @rental_action.overall_price %> €</td>
+      <td><%= format_currency @rental_action.overall_price %></td>
       <td>
         <% if @item_rentals.reject( &:handed_out ).empty? -%>
           ja

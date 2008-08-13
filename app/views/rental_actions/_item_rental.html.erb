@@ -1,5 +1,5 @@
 <tr>
   <td><%=h item_rental.quantity %></td>
   <td><%= link_to h( item_rental.item.name ), item_category_item_path( item_rental.item.item_category, item_rental.item ) %></td>
-  <td><%= h item_rental.price %> €</td>
+  <td><%= format_currency item_rental.price %></td>
 </tr>

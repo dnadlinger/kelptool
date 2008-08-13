@@ -8,16 +8,16 @@
     <% end -%>
   </td>
   <td><%= link_to h( item_rental.item.name ), item_category_item_path( item_rental.item.item_category, item_rental.item ) %></td>
-  <td class="item_rental_price"><%=h item_rental.price %> €</td>
+  <td class="item_rental_price"><%=format_currency item_rental.price %></td>
   <td>
-    <% if item_rental.handed_out -%>
+    <% if item_rental.handed_out? -%>
       ja
     <% else -%>
       <%= link_to 'nein', handed_out_rental_action_item_rental_path( *full_path ), :method => :put %>
     <% end -%>
   </td>
   <td>
-    <% if item_rental.returned -%>
+    <% if item_rental.returned? -%>
       ja
     <% else -%>
       <%= link_to 'nein', returned_rental_action_item_rental_path( *full_path ), :method => :put %>
