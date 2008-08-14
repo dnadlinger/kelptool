@@ -1,15 +1,8 @@
-<% @page_title = 'Mitarbeiter suchen' -%>
+<% @page_title = 'Kunden suchen' -%>
 
 <%= show_errors @search_model, 'die Suchanfrage zu bearbeiten' %>
 <% pretty_form_for @search_model, :html => { :class => 'search' } do |f| %>
   <%= render :partial => 'contacts/contact_fields', :object => @search_model.contact, :locals => { :path => 'contact_search', :display => { :phone_numbers => false } } %>
-  <fieldset>
-    <legend>Fähigkeiten</legend>
-    <ol id="skills">
-      <%= render :partial => 'skills/skill_field', :collection => @search_model.skills, :locals => { :use_select_menu => true } %>
-    </ol>
-    <%= add_skill_link( true ) %>
-  </fieldset>
   <fieldset>
     <legend>Zusätzliche Informationen</legend>
     <ol>

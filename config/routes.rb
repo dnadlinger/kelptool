@@ -45,6 +45,10 @@ ActionController::Routing::Routes.draw do |map|
       :choose_contact_template => :get
     }
   
+  map.resources :customer_searches, :as => 'search', :path_prefix => '/customers',
+    :collection => {
+      :auto_complete_for_contact_name => :get
+    }
   map.resources :customers,
     :collection => {
       :choose_contact_template => :get

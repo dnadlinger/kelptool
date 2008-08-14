@@ -1,6 +1,6 @@
-class EmployeeSearchesController < ApplicationController
+class CustomerSearchesController < ApplicationController
   def new
-    @search_model = EmployeeSearch.new
+    @search_model = CustomerSearch.new
     
     if params[ :search_query ]
       @search_model.contact = ContactSearch.new( :name => params[ :search_query ] )
@@ -10,28 +10,21 @@ class EmployeeSearchesController < ApplicationController
     end
     
     @search_model.contact ||= ContactSearch.new
-    @search_model.skills = []
   end
   
   def create
-    @search_model = EmployeeSearch.new( params[ :employee_search ] )
+    @search_model = CustomerSearch.new( params[ :customer_search ] )
     @search_model.contact = ContactSearch.new( params[ :contact_search ] )
-    @search_model.skills = []
-    if params[ :employee ]
-      params[ :employee ][ :skills_attributes ].each do |attributes|
-        @search_model.skills << Skill.find_by_name( attributes[ :name ] )
-      end
-    end
   end
 
   def auto_complete_for_contact_name
-    @employees = Employee.find( :all,
+    @customers = Customer.find( :all,
       :include => :contact,
       :conditions => [ 'LOWER(contacts.name) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
       :order => 'contacts.name ASC',
       :limit => 10 )
     
     @contacts = []
-    @employees.each { |employee| @contacts << employee.contact }
+    @customers.each { |customer| @contacts << customer.contact }
   end
 end

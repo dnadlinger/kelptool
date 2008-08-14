@@ -1,2 +1,8 @@
-<% @section_title = 'Kunden' -%>
+<%
+@section_title = 'Kunden' 
+@search_title = 'Kunden suchen'
+@search_url = { :controller => :customer_searches, :action => :new }
+@auto_complete_url = { :controller => :customer_searches, :action => :auto_complete_for_contact_name }
+@advanced_search = true
+-%>
 <%= render 'layouts/application' %>
