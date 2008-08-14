@@ -16,10 +16,10 @@ module ActiveRecord
         reset_column_information
       end
       
-      # Do not reset @columns
-      def reset_column_information
-        read_methods.each { |name| undef_method(name) }
-        @column_names = @columns_hash = @content_columns = @dynamic_methods_hash = @read_methods = nil
+      # Same as original, but do not reset @columns
+       def reset_column_information
+        generated_methods.each { |name| undef_method(name) }
+        @column_names = @columns_hash = @content_columns = @dynamic_methods_hash = @generated_methods = @inheritance_column = nil
       end
     end
   end

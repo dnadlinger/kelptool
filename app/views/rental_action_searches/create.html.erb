@@ -1,0 +1,7 @@
+<% @page_title = 'Mietvorgänge – Ergebnisse' -%>
+
+<%= render_biglist @search_model.rental_actions, 'Mietvorgänge' %>
+
+<div class="navlinks">
+  <p><%= link_to 'Zurück zur Übersicht', rental_actions_path %></p>
+</div>

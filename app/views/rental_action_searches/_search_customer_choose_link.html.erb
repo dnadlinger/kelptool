@@ -1,0 +1,7 @@
+<%
+  hidden ||= false
+-%>
+
+<% content_tag :span, :id => 'search_customer_choose_link', :style => ( 'display: none' if hidden ) do %>
+  <%= link_to 'Nach Kunde suchen', choose_customer_rental_action_searches_path %>
+<% end %>

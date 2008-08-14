@@ -11,6 +11,11 @@ ActionController::Routing::Routes.draw do |map|
     item_categories.resources :items
   end
   
+  map.resources :rental_action_searches, :as => 'search', :path_prefix => 'rental_actions',
+    :collection => {
+      :auto_complete_for_rental_action_name => :get,
+      :choose_customer => :get
+    }
   map.resources :rental_actions,
     :collection => {
       :choose_template => :get,
@@ -31,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
       }
   end
   
+  
   map.resources :skills, :path_prefix => '/employees',
     :collection => {
       :generate_skill_field => :get,
@@ -45,6 +51,7 @@ ActionController::Routing::Routes.draw do |map|
       :choose_contact_template => :get
     }
   
+  
   map.resources :customer_searches, :as => 'search', :path_prefix => '/customers',
     :collection => {
       :auto_complete_for_contact_name => :get
@@ -54,7 +61,6 @@ ActionController::Routing::Routes.draw do |map|
       :choose_contact_template => :get
     }
   
-  map.resources :phone_number_types, :path_prefix => '/settings'
   
   map.resources :users
   map.resource :session
@@ -63,9 +69,10 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.signup '/signup', :controller => 'users', :action => 'new'
   
+  
+  map.resources :phone_number_types, :path_prefix => '/settings'
+  
   map.cancel_choosing '/cancel_choosing', :controller => 'choosing_helper', :action => 'cancel_choosing'
 
   map.root :controller => 'home'
-  
-
 end

@@ -1,5 +1,6 @@
 class CustomerSearch < ActiveRecord::BaseWithoutTable
-  attr_accessor :contact, :comment
+  column :comment, :string
+  attr_accessor :contact
   
   def customers
     find_customers

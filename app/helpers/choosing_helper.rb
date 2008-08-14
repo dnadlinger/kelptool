@@ -15,7 +15,12 @@ module ChoosingHelper
       return nil
     end
     
-    result = link_to( ( useIcon ? icon_choose : 'Auswählen' ), build_choose_path( mode, *params ), :method => mode.choose_method )
+    options = {}
+    if mode.choose_method != :get
+      options[ :method ] = mode.choose_method
+    end
+    
+    result = link_to( ( useIcon ? icon_choose : 'Auswählen' ), build_choose_path( mode, *params ), options )
     
     yield result
   end

@@ -1,4 +1,5 @@
 module SearchConditions
+  # This is inspired by Ryan Bates' Railscast "Advanced Search Form."
   def prepare_conditions
     [ conditions_clauses.join(' AND '), *conditions_options ] unless conditions_clauses.empty?
   end

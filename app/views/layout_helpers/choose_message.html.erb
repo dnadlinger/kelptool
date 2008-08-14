@@ -6,7 +6,13 @@
     <span class="alignright">
       <%= link_to 'Abbrechen', cancel_choosing_path %>
       <% unless current_choosing_mode.source_name.nil? -%>
-        | <%= link_to current_choosing_mode.source_name, build_source_path( current_choosing_mode ), :method => current_choosing_mode.source_method %>
+      <%
+        options = {}
+        if current_choosing_mode.choose_method != :get
+          options[ :method ] = current_choosing_mode.choose_method
+        end
+      -%>
+        | <%= link_to current_choosing_mode.source_name, build_source_path( current_choosing_mode ), options %>
       <% end -%>
     </span>
   </p>

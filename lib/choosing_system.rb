@@ -45,6 +45,8 @@ module ChoosingSystem
     def build_choose_path( mode, *params )
       if mode.has_source?
         params.unshift( get_source( mode ) )
+        # If the source is nil, we also don't want to pass it.
+        params.compact!
       end
       mode.choose_path( *params )
     end

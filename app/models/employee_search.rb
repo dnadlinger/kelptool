@@ -1,5 +1,6 @@
 class EmployeeSearch < ActiveRecord::BaseWithoutTable
-  attr_accessor :contact, :skills, :comment
+  column :comment, :string
+  attr_accessor :contact, :skills
   
   def employees
     find_employees

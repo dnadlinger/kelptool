@@ -1,0 +1,45 @@
+<% @page_title = 'Mietvorgang suchen' -%>
+
+<%= show_errors @search_model, 'die Suchanfrage zu bearbeiten' %>
+<% pretty_form_for @search_model, :html => { :class => 'search' } do |f| %>
+  <fieldset>
+    <legend>Mietaktion</legend>
+    <ol id="search_options">
+      <li>
+        <%= f.label :name, 'Name: ' %><%= f.text_field :name %>
+      </li>
+      <li id="search_date">
+        <span id="search_date_show_link">
+          <%= link_to_function 'Nach Zeitraum suchen' do |page|
+            page.insert_html :top, :search_date, :partial => 'search_date_fields', :object => f
+            page[ :search_date_show_link ].hide
+            page[ :search_date_hide_link ].show
+          end %>
+        </span>
+        
+        <span id="search_date_hide_link" style="display: none">
+          <%= link_to_function 'entfernen' do |page|
+            page[ :search_date_fields ].remove
+            page[ :search_date_show_link ].show
+            page[ :search_date_hide_link ].hide
+          end %>
+        </span>
+      </li>
+      <li id="search_customer">
+        <% if @search_model.customer -%>
+          <span id="search_customer_info">
+            <%= f.label :customer_id, 'Kunde: '%>
+            <%= f.hidden_field :customer_id, :value => @search_model.customer.id %>
+            <%=h @search_model.customer.contact.name %>
+            <%= link_to_function 'entfernen' do |page|
+              page[ :search_customer_info ].remove
+              page[ :search_customer_choose_link ].show
+						end %>
+          </span>          
+        <% end -%>
+        <%= render :partial => 'search_customer_choose_link', :locals => { :hidden => !@search_model.customer.nil? } %>
+      </li>
+    </ol>
+  </fieldset>
+  <p><%= f.submit 'Suchen' %> <%= link_to 'Zurück zur Übersicht', rental_actions_path, { :class => 'navlink' } %></p>
+<% end %>

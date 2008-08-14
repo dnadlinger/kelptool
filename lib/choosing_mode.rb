@@ -46,8 +46,8 @@ class ChoosingMode
   
   ItemRentalsChooseItem = ChoosingMode.new(
     'item_rentals_choose_item',
-    'Navigieren sie zum Gerät, das Sie hinzufügen möchten, und klicken Sie auf "Auswählen".',
-    lambda { |source, item| '/rental_actions/' + source.id.to_s + '/item_rentals/new?item_id=' + item.id.to_s },
+    'Wählen Sie das Gerät, das Sie hinzufügen möchten.',
+    lambda { |source, item| "/rental_actions/#{ source.id }/item_rentals/new?item_id=#{ item.id }" },
     :get,
     lambda { |id| RentalAction.find( id ) },
     'Zurück zur Mietaktion'
@@ -55,8 +55,8 @@ class ChoosingMode
     
   RentalActionsChooseCustomer = ChoosingMode.new(
     'rental_actions_choose_customer',
-    'Navigieren sie zu den Kundeninformationen für den Auftrag und klicken Sie auf "Auswählen".',
-    lambda { |source, customer| '/rental_actions/' + source.id.to_s + '/set_customer?customer_id=' + customer.id.to_s },
+    'Wählen Sie die Kundeninformationen für den Mietvorgang.',
+    lambda { |source, customer| "/rental_actions/#{ source.id }/set_customer?customer_id=#{ customer.id }" },
     :put,
     lambda { |id| RentalAction.find( id ) },
     'Zurück zur Mietaktion'
@@ -64,22 +64,32 @@ class ChoosingMode
   
   RentalActionsChooseTemplate = ChoosingMode.new(
     'rental_actions_choose_template',
-    'Navigieren sie zum Gerät, das Sie hinzufügen möchten, und klicken Sie auf "Auswählen".',
-    lambda { |rental_action| '/rental_actions/new?template_id=' + rental_action.id },
+    'Wählen Sie die Vorlage für die neue Mietaktion.',
+    lambda { |rental_action| "/rental_actions/new?template_id=#{ rental_action.id }" },
     :get
   )
   
   EmployeesChooseContactTemplate = ChoosingMode.new(
     'employees_choose_contact_template',
-    'Navigieren sie zum Kunden, von dem Sie die Kontaktinformationen übernehmen wollen, und klicken Sie auf "Auswählen".',
-    lambda { |contact| '/employees/new?contact_id=' + contact.id.to_s },
+    'Wählen Sie den Kunden, von dem Sie die Kontaktinformationen übernehmen wollen.',
+    lambda { |contact| "/employees/new?contact_id=#{ contact.id }" },
     :get
   )
   
   CustomersChooseContactTemplate = ChoosingMode.new(
     'customers_choose_contact_template',
-    'Navigieren sie zum Mitarbeiter, von dem Sie die Kontaktinformationen übernehmen wollen, und klicken Sie auf "Auswählen".',
-    lambda { |contact| '/customers/new?contact_id=' + contact.id.to_s },
+    'Wählen Sie den Mitarbeiter, von dem Sie die Kontaktinformationen übernehmen wollen.',
+    lambda { |contact| "/customers/new?contact_id=#{ contact.id }" },
     :get
+  )
+  
+  RentalActionSearchesChooseCustomer = ChoosingMode.new(
+    'rental_action_searches_choose_customer',
+    'Wählen Sie den Kunden, in dessen Aufträgen Sie suchen möchten.',
+    lambda { |customer| "/rental_actions/search/new?customer_id=#{ customer.id }" },
+    :get,
+    nil,
+    'Zurück zur Suche',
+    lambda { '/rental_actions/search/new' }
   )
 end

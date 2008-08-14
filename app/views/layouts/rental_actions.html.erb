@@ -1,2 +1,8 @@
-<% @section_title = 'Vermietung' -%>
+<%
+@section_title = 'Vermietung' 
+@search_title = 'Mietvorgang suchen'
+@search_url = { :controller => :rental_action_searches, :action => :new }
+@auto_complete_url = { :controller => :rental_action_searches, :action => :auto_complete_for_rental_action_name }
+@advanced_search = true
+-%>
 <%= render 'layouts/application' %>
