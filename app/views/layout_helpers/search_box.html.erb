@@ -8,14 +8,14 @@
       <button type="submit"><%= icon_search %></button>
       
       <% if @advanced_search -%>
-        <button type="submit" name="advanced_search" value="true">...</button>
+        <button type="submit" name="advanced_search" value="true"><%= icon_advanced_search %></button>
       <% else -%>
-        <button type="submit" class="disabled" disabled="disabled">...</button>
+        <button type="submit" class="disabled" disabled="disabled"><%= icon_advanced_search %></button>
       <% end -%>
     </fieldset>
   <% end %>
 <% else -%>
   <input type="text" class="disabled" disabled="disabled" />
   <button type="submit" class="disabled" disabled="disabled"><%= icon_search %></button>
-  <button type="submit" class="disabled" disabled="disabled">...</button>
+  <button type="submit" class="disabled" disabled="disabled"><%= icon_advanced_search %></button>
 <% end -%>

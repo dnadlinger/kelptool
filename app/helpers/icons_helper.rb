@@ -8,7 +8,7 @@ module IconsHelper
   end
   
   def icon_add_child
-    image_tag( 'icons/add.png' )
+    image_tag( 'icons/add.png', :alt => 'Hinzufügen' )
   end
   
   def icon_edit
@@ -36,7 +36,11 @@ module IconsHelper
   end
   
   def icon_search
-    image_tag( 'icons/find.png', :alt => 'Suchen' )
+    image_tag( 'icons/magnifier.png', :alt => 'Suchen' )
+  end
+  
+  def icon_advanced_search
+    image_tag( 'icons/application_form_magnify.png', :alt => 'Erweiterte Suche' )
   end
   
   def icon_warning
