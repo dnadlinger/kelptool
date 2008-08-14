@@ -22,7 +22,6 @@ class CustomersController < ApplicationController
   
   def create
     @customer = Customer.new( params[ :customer ] )
-    @customer.create_contact( params[ :contact ] )
     
     if @customer.save
       flash[ :notice ] = 'Kunde angelegt.'
@@ -38,7 +37,7 @@ class CustomersController < ApplicationController
   
   def update
     @customer = Customer.find( params[ :id ] ) 
-    if @customer.contact.update_attributes( params[ :contact ] ) and @customer.update_attributes( params[ :customer ] )
+    if @customer.update_attributes( params[ :customer ] )
       flash[ :notice ] = 'Änderungen gespeichert.'
       redirect_to customer_path( @customer )
     else

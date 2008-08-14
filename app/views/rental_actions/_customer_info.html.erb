@@ -9,7 +9,7 @@
       <button type="submit">
         <p><%= h contact.name %></p>
         <p><%= h contact.adress %><br /><%= h contact.full_place %></p>
-        <p>Telefon: <%= h contact.phone_numbers.first %></p>
+        <p>Telefon: <%= h contact.phone_numbers.first.number %></p>
         <p>UID: <%= h contact.uid %></p>
       </button>
     </form>
