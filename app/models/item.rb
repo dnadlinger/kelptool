@@ -14,7 +14,7 @@ class Item < ActiveRecord::Base
   validates_presence_of :item_category_id, :message => 'Das Gerät muss einer Kategorie angehören.'
   
   validates_numericality_of :total_count, :only_integer => true, :message => 'Keine gültige Gesamtanzahl.'
-  # We don't need to validate the number of the items in stock because the user can't directly mess around with it anyway.
+  # We don't need to validate the number of the items in stock since the user can't mess around with it anyway.
   #validates_numericality_of :num_in_stock, :only_integer => true, :message => "Keine gültige Lagernd-Anzahl."
   
   def self.search( query )
@@ -27,5 +27,41 @@ class Item < ActiveRecord::Base
   
   def full_name
     return name
+  end
+  
+  def num_available_for( start_date, end_date )
+    available = self.num_in_stock
+    logger.debug( available )
+    available += ItemRental.sum(
+      :quantity,
+      :include => [ :rental_action ],
+      :conditions => [
+        'handed_out = ? AND returned = ? AND item_id = ? AND rental_actions.end_date < ?',
+        true, false, self.id, start_date
+      ]
+    )
+    logger.debug( available )
+    if ( available > self.total_count )
+      available = total_count
+      # TODO: Generate warning message for user?
+      logger.warn( "After counting non-returned ItemRentals, the number of available items (id: #{self.id}) is bigger than the total_count." )
+    end
+    
+    available -= ItemRental.sum(
+      :quantity,
+      :include => [ :rental_action ],
+      :conditions => [
+        'handed_out = ? AND item_id = ? AND rental_actions.start_date <= ? AND rental_actions.end_date >= ?',
+        false, self.id, end_date, start_date
+      ]
+    )
+    logger.debug( available )
+    if ( available < 0 )
+      available = 0
+      # TODO: Generate warning message for user?
+      logger.warn( "After counting overlapping ItemRentals, the number of available items (id: #{self.id}) is below zero." )
+    end
+    
+    return available
   end
 end
