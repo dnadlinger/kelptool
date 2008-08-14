@@ -12,11 +12,14 @@
     <legend>Gerät</legend>
     <ol>
       <li><%= f.label :item_id, 'Gerät: ' %><%= f.hidden_field :item_id %><%=h @item_rental.item.name %></li>
-      <li><%= f.label :quantity, 'Anzahl: ' %><%= f.text_field :quantity %></li>
+      <li><%= f.label :quantity, 'Anzahl: ' %><%= f.text_field :quantity, :size => 2 %></li>
       <li>
         <% num_available = @item_rental.quantity_available -%>
         <% if num_available > 0 -%>
-          Voraussichtlich verfügbar: <%=h num_available %> Stück.
+          Voraussichtlich verfügbar: <%=h num_available %> Stück
+          <%= link_to_function '(alle)' do |page|
+        		page.select( 'form input#item_rental_quantity' ).first.value = num_available
+        	end %>
         <% else -%>
           <strong class="warning">Es sind voraussichtlich keine Geräte mehr verfügbar!</strong>
         <% end -%>

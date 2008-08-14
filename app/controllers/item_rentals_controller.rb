@@ -14,7 +14,7 @@ class ItemRentalsController < ApplicationController
     end_choosing ChoosingMode::ItemRentalsChooseItem
     
     item = Item.find( params[ :item_id ] )
-    existing_item_rental = @rental_action.item_rentals.select { |ir| ir.item == item }
+    existing_item_rental = @rental_action.item_rentals.detect { |ir| ir.item == item }
     
     if existing_item_rental
       flash[ :notice ] = 'Dieses Gerät ist bereits Teil der Mietaktion. Bitte bearbeiten sie stattdessen die Anzahl.'

@@ -1,7 +1,9 @@
 <% full_path = [ item_rental.rental_action, item_rental ] -%>
 <% form_remote_for full_path, :method => :put do |f| %>
   <%= f.text_field :quantity, :size => 2 %>
-  <%= "(#{item_rental.quantity_available})"%>
+  <%= link_to_function "(#{item_rental.quantity_available})" do |page|
+		page.get_member_element( item_rental, 'quantity' ).select( 'form input#item_rental_quantity' ).first.value = item_rental.quantity_available
+	end %>
   <%= f.submit 'Speichern' %>
   <%= link_to_function 'Abbrechen' do |page|
     page.get_member_element( item_rental, 'quantity' ).replace_html h( item_rental.quantity )
