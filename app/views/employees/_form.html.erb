@@ -1,8 +1,12 @@
-<% display ||= {} -%>
-<%= render :partial => 'contacts/contact_fields', :locals => { :contact => @employee.contact, :path => 'employee[contact_attributes]' } %>
-<% if display[ :contact_choose_link ] %>
+<%
+  display ||= {}
+  display[ :contact_choose_link ] ||= false
+-%>
+
+<%= render :partial => 'contacts/contact_fields', :object => @employee.contact, :locals => { :path => 'employee[contact_attributes]' } %>
+<% if display[ :contact_choose_link ] -%>
   <p><%= link_to 'Kontaktinformationen von Kunden übernehmen', choose_contact_template_employees_path %></p>
-<% end %>
+<% end -%>
 
 <fieldset>
   <legend>Fähigkeiten</legend>

@@ -1,3 +1,3 @@
-page.get_member_element( @item_rental, 'quantity' ).replace_html :partial => 'quantity_text', :locals => { :item_rental => @item_rental }
+page.get_member_element( @item_rental, 'quantity' ).replace_html :partial => 'quantity_text', :object => @item_rental
 page.get_member_element( @item_rental, 'price' ).replace_html format_currency( @item_rental.price )
 page.get_member_element( @item_rental, 'edit_button' ).replace_html :partial => 'edit_button', :locals => { :full_path => [ @item_rental.rental_action, @item_rental ] }

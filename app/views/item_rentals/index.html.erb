@@ -13,7 +13,9 @@
       </tr>
     </thead>
     <tbody>
-      <%= render :partial => 'item_rentals/item_rental', :collection => @item_rentals %>
+      <% for item_rental in @item_rentals -%>
+        <%= render :partial => item_rental, :locals => { :display => { :edit_form => item_rental == @item_rental } } %>
+      <% end -%>
     </tbody>
     <tfoot>
       <td></td>

@@ -1,7 +1,9 @@
 <%
-display ||= {}
-display[ :links ] = true if display[ :links ].nil?
-items ||= item_category.items
+  display ||= {}
+  display[ :links ] = true if display[ :links ].nil?
+  display[ :children ] ||= false
+
+  items ||= item_category.items
 -%>
 
 <%= link_to_remote item_category.name, :url => item_category_path( item_category ), :method => :get %>

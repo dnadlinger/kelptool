@@ -1,5 +1,5 @@
 <tr>
-  <td><%= render :partial => 'item_rentals/quantity_text', :locals => { :item_rental => item_rental } %></td>
+  <td><%= render :partial => 'item_rentals/quantity_text', :object => item_rental %></td>
   <td><%= link_to h( item_rental.item.name ), item_category_item_path( item_rental.item.item_category, item_rental.item ) %></td>
   <td><%= format_currency item_rental.price %></td>
 </tr>

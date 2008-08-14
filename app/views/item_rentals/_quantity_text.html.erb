@@ -1,3 +1,7 @@
+<%
+  item_rental = quantity_text
+-%>
+
 <%=h item_rental.quantity %>
 <% unless item_rental.check_availabilty -%>
   <%= icon_warning %>

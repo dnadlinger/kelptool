@@ -8,12 +8,12 @@
 </div>
 <div>
   <h2>Kunde:</h2>
-  <%= render :partial => 'customer_info', :locals => { :customer => @rental_action.customer } %>
+  <%= render :partial => 'customer_info', :object => @rental_action.customer %>
   <p><%= link_to 'Kundeninformationen wählen', choose_customer_rental_action_path %></p>
 </div>
 <div>
   <h2>Geräte:</h2>
-  <%= render :partial => 'item_rentals', :locals => { :item_rentals => @rental_action.item_rentals } %>
+  <%= render :partial => 'item_rentals', :object => @rental_action.item_rentals } %>
 </div>
 
 <div class="navlinks">

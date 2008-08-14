@@ -1,8 +1,10 @@
-<%-
-display ||= {}
-display[ :links ] = true if display[ :links ].nil?
-employees ||= skill.employees
-%>
+<%
+  display ||= {}
+  display[ :links ] = true if display[ :links ].nil?
+  display[ :children ] ||= false
+
+  employees ||= skill.employees
+-%>
 
 <%= link_to_remote h( skill.name ), :url => skill_path( skill ), :method => :get %>
 

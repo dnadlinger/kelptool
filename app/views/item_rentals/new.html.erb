@@ -18,8 +18,8 @@
         <% if num_available > 0 -%>
           Voraussichtlich verfügbar: <%=h num_available %> Stück
           <%= link_to_function '(alle)' do |page|
-        		page.select( 'form input#item_rental_quantity' ).first.value = num_available
-        	end %>
+            page.select( 'form input#item_rental_quantity' ).first.value = num_available
+          end %>
         <% else -%>
           <strong class="warning">Es sind voraussichtlich keine Geräte mehr verfügbar!</strong>
         <% end -%>

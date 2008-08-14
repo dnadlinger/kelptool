@@ -1,10 +1,15 @@
-<% content_tag :tr, :id => "item_rental_#{item_rental.id}" do %>
+<%
+  display ||= {}
+  display[ :edit_form ] ||= false
+-%>
+
+<% content_tag_for :tr, item_rental do %>
   <% full_path = [ item_rental.rental_action, item_rental ] -%>
   <td class="item_rental_quantity">
-    <% if item_rental == @item_rental -%>
-      <%= render :partial => 'quantity_form', :locals => { :item_rental => item_rental } %>
+    <% if display[ :edit_form ] -%>
+      <%= render :partial => 'quantity_form', :object => item_rental %>
     <% else -%>
-      <%= render :partial => 'quantity_text', :locals => { :item_rental => item_rental } %>
+      <%= render :partial => 'quantity_text', :object => item_rental %>
     <% end -%>
   </td>
   <td><%= link_to h( item_rental.item.name ), item_category_item_path( item_rental.item.item_category, item_rental.item ) %></td>
@@ -25,7 +30,7 @@
   </td>
   <td>
     <span class="item_rental_edit_button">
-      <% unless item_rental == @item_rental -%>
+      <% unless display[ :edit_form ] -%>
         <%= render :partial => 'edit_button', :locals => { :full_path => full_path } %>   
       <% end -%>
     </span>

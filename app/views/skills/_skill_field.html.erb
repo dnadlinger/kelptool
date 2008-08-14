@@ -1,6 +1,10 @@
+<%
+  use_select_menu ||= false
+-%>
+
 <li class="skill">
 <% fields_for 'employee[skills_attributes][]', skill_field do |skill_form| %>
-  <% unless ( use_select_menu ||= false ) -%>
+  <% unless use_select_menu -%>
     <% id_string = generate_unique_id( 'employee_skill_attributes_' ) + '_name' -%>
     <%= label_tag id_string, 'Fähigkeit: ' %><%= skill_form.text_field :name, { :id => id_string, :index => nil } %>
     <%= link_to_function 'entfernen', "this.up( '.skill' ).remove()" %>

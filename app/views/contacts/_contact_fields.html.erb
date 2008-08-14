@@ -1,8 +1,9 @@
 <%
-contact = contact_fields
-path ||= contact
-display ||= {}
-display[ :phone_numbers ] = true if display[ :phone_numbers ].nil?
+  display ||= {}
+  display[ :phone_numbers ] = true if display[ :phone_numbers ].nil?
+
+  contact = contact_fields
+  path ||= contact
 -%>
 
 <% fields_for path, contact do |c| %>

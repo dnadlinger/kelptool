@@ -1,5 +1,9 @@
-<% unless customer == nil -%>
-  <% unless customer.contact == nil -%>
+<%
+  customer = customer_info
+-%>
+
+<% if customer -%>
+  <% if customer.contact -%>
     <% contact = customer.contact -%>
     <%= form_tag customer_path( customer ), :method => :get %>
       <button type="submit">

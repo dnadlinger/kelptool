@@ -1,3 +1,7 @@
+<%
+  path ||= phone_number
+-%>
+
 <li class="phone_number">
 <% fields_for_phone_number path, phone_number do |phone_form| %>
   <%= phone_form.text_field :number %>
