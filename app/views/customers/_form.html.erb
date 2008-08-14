@@ -9,9 +9,13 @@
 <% end -%>
 
 <fieldset>
-  <legend>Zusätzliche Informationen</legend>
+  <legend>Geschäftliches</legend>
   <ol>
-    <li><%= form.label :discount, 'Preis: <em>*</em>' %> <%= form.text_field :discount %> Promille
-    <li><%= form.label :comment, 'Kommentar: ' %><%= form.text_area :comment, { :cols => 60, :rows => 15 } %></li>
+    <li><%= form.label :discount, 'Preis: <em>*</em>' %> <%= form.text_field :discount %> Promille</li>
+  </ol>
+</fieldset>
+<fieldset>
+  <legend>Notizen</legend>
+    <li><%= form.text_area :comment, { :cols => 60, :rows => 15 } %></li>
   </ol>
 </fieldset>

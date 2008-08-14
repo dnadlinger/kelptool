@@ -3,15 +3,15 @@
 <h2>Kontaktdaten</h2>
 <%= render :partial => @customer.contact %>
 
+<h2>Geschäftliches</h2>
+<p><strong>Üblicher Preis: </strong><%=h @customer.discount * 0.1 %> %</p>
+
 <h2>Kommentare</h2>
 <% unless @customer.comment.empty? -%>
   <%= textilize h( @customer.comment ) %>
 <% else -%>
   <p><em>keine</em></p>
 <% end -%>
-
-<h2>Sonstiges</h2>
-<p><strong>Üblicher Preis: </strong><%=h @customer.discount * 0.1 %> %</p>
 
 <h2>Letzte Mietvorgänge</h2>
 <% unless @customer.rental_actions.empty? -%>
