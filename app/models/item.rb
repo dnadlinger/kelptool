@@ -29,14 +29,22 @@ class Item < ActiveRecord::Base
     return name
   end
   
-  def num_available_for( start_date, end_date )
+  def num_available_between( start_date, end_date, exclude_rental_actions = nil )
+    if exclude_rental_actions
+      exclude_rental_actions = [ exclude_rental_actions ] if exclude_rental_actions.class == RentalAction
+      rental_action_ids = exclude_rental_actions.collect( &:id )
+      exclude_condition = " AND rental_actions.id NOT IN( #{ rental_action_ids.join( ', ' ) } )"
+    else
+      exclude_condition = ''
+    end
+    
     available = self.num_in_stock
     logger.debug( available )
     available += ItemRental.sum(
       :quantity,
       :include => [ :rental_action ],
       :conditions => [
-        'handed_out = ? AND returned = ? AND item_id = ? AND rental_actions.end_date < ?',
+        'handed_out = ? AND returned = ? AND item_id = ? AND rental_actions.end_date < ?' + exclude_condition,
         true, false, self.id, start_date
       ]
     )
@@ -51,7 +59,7 @@ class Item < ActiveRecord::Base
       :quantity,
       :include => [ :rental_action ],
       :conditions => [
-        'handed_out = ? AND item_id = ? AND rental_actions.start_date <= ? AND rental_actions.end_date >= ?',
+        'handed_out = ? AND item_id = ? AND rental_actions.start_date <= ? AND rental_actions.end_date >= ?' + exclude_condition,
         false, self.id, end_date, start_date
       ]
     )
@@ -63,5 +71,9 @@ class Item < ActiveRecord::Base
     end
     
     return available
+  end
+  
+  def num_available_for( rental_action )
+    num_available_between( rental_action.start_date, rental_action.end_date, rental_action )
   end
 end

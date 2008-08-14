@@ -8,6 +8,14 @@ class ItemRental < ActiveRecord::Base
     self.item.price.get_price_for( self.rental_action.duration ) * self.quantity
   end
   
+  def quantity_available
+    self.item.num_available_for( self.rental_action )
+  end
+  
+  def check_availabilty
+    return self.quantity <= self.quantity_available
+  end
+  
   def mark_as_handed_out!
     return false if self.handed_out?
     

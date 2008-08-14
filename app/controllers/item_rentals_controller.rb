@@ -13,9 +13,17 @@ class ItemRentalsController < ApplicationController
   def new
     end_choosing ChoosingMode::ItemRentalsChooseItem
     
-    @item_rental = ItemRental.new
-    @item_rental.item = Item.find( params[ :item_id ] )
-    @item_rental.rental_action = @rental_action
+    item = Item.find( params[ :item_id ] )
+    existing_item_rental = @rental_action.item_rentals.select { |ir| ir.item == item }
+    
+    if existing_item_rental
+      flash[ :notice ] = 'Dieses Gerät ist bereits Teil der Mietaktion. Bitte bearbeiten sie stattdessen die Anzahl.'
+      redirect_to edit_rental_action_item_rental_url( @rental_action, existing_item_rental )
+    else
+      @item_rental = ItemRental.new
+      @item_rental.item = item
+      @item_rental.rental_action = @rental_action
+    end
   end
   
   def create

@@ -1,6 +1,7 @@
 <% full_path = [ item_rental.rental_action, item_rental ] -%>
 <% form_remote_for full_path, :method => :put do |f| %>
   <%= f.text_field :quantity, :size => 2 %>
+  <%= "(#{item_rental.quantity_available})"%>
   <%= f.submit 'Speichern' %>
   <%= link_to_function 'Abbrechen' do |page|
     page.get_member_element( item_rental, 'quantity' ).replace_html h( item_rental.quantity )

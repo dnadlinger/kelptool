@@ -38,4 +38,8 @@ module IconsHelper
   def icon_search
     image_tag( 'icons/find.png', :alt => 'Suchen' )
   end
+  
+  def icon_warning
+    image_tag( 'icons/error.png', :alt => 'Warnung' )
+  end
 end

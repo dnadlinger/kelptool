@@ -4,7 +4,7 @@
     <% if item_rental == @item_rental -%>
       <%= render :partial => 'quantity_form', :locals => { :item_rental => item_rental } %>
     <% else -%>
-      <%=h item_rental.quantity %>
+      <%= render :partial => 'quantity_text', :locals => { :item_rental => item_rental } %>
     <% end -%>
   </td>
   <td><%= link_to h( item_rental.item.name ), item_category_item_path( item_rental.item.item_category, item_rental.item ) %></td>
