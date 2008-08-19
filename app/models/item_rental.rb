@@ -4,17 +4,23 @@ class ItemRental < ActiveRecord::Base
   
   validates_numericality_of :quantity, :greater_than => 0, :message => 'Ungültige Anzahl (muss mindestens 1 sein).'
   
+  
   def price
-    self.item.price.get_price_for( self.rental_action.duration ) * self.quantity
+    price_without_discount * self.rental_action.customer.price_factor
+  end
+  
+  def price_without_discount
+    @price_without_discount ||= self.item.price.get_price_for( self.rental_action.duration ) * self.quantity
   end
   
   def quantity_available
     self.item.num_available_for( self.rental_action )
   end
   
-  def check_availabilty
+  def available?
     return self.quantity <= self.quantity_available
   end
+  
   
   def mark_as_handed_out!
     return false if self.handed_out?

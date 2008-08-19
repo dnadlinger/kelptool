@@ -13,7 +13,12 @@
     <% end -%>
   </td>
   <td><%= link_to h( item_rental.item.name ), item_category_item_path( item_rental.item.item_category, item_rental.item ) %></td>
-  <td class="item_rental_price"><%=format_currency item_rental.price %></td>
+  <td class="item_rental_price_without_discount">
+    <%= format_currency item_rental.price_without_discount %>
+  </td>
+  <td class="item_rental_price">
+    <%=format_currency item_rental.price %>
+  </td>
   <td>
     <% if item_rental.handed_out? -%>
       ja

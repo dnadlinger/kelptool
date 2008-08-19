@@ -11,9 +11,23 @@
       <%= render :partial => 'item_rental', :collection => item_rentals %>
     </tbody>
     <tfoot>
-      <td></td>
-      <td>Gesamt</td>
-      <td><%= format_currency @rental_action.overall_price %></td>
+      <% unless @rental_action.overall_discount == 0 -%>
+        <tr>
+          <td></td>
+          <td>Zwischensumme</td>
+          <td><%= format_currency( @rental_action.overall_price_without_discount ) %></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Rabatt</td>
+          <td><%= format_currency( -@rental_action.overall_discount ) %></td>
+        </tr>
+      <% end -%>
+      <tr>
+        <td></td>
+        <td>Gesamt</td>
+        <td><%= format_currency( @rental_action.overall_price ) %></td>
+      </tr>
     </tfoot>
   </table>
 <% else -%>

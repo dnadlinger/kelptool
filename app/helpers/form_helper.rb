@@ -19,10 +19,12 @@ module FormHelper
     return nil if record.errors.empty?
     
     content_tag :div, :class => 'form_error' do
-      content_tag( :p, 'Beim Versuch, ' + action_name + ', sind folgende Fehler aufgetreten:', :class => 'error' )
-      content_tag :ul do
-        record.errors.each do |attribute, message|
-          content_tag( :li, message )
+      returning content = '' do |content| 
+        content << content_tag( :p, 'Beim Versuch, ' + action_name + ', sind folgende Fehler aufgetreten:', :class => 'error' )
+        content << content_tag( :ul ) do
+          record.errors.collect do |attribute, message|
+            content_tag( :li, message )
+          end
         end
       end
     end

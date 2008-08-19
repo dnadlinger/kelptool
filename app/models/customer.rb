@@ -3,7 +3,7 @@ class Customer < ActiveRecord::Base
   has_many :rental_actions
   
   validates_associated :contact, :message => 'Kontaktinformationen sind ungültig.'
-  validates_numericality_of :discount, :message => 'Preis (in Promille) ist ungültig. Geben Sie für normale Preisgestaltung 1000 ein.'
+  validates_numericality_of :price_factor, :greater_than_or_equal_to => 0, :message => 'Preisfaktor ist ungültig. 1 entspricht einer normalen Preisgestaltung.'
   
   after_update :save_contact
   

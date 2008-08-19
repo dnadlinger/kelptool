@@ -20,19 +20,33 @@ class RentalAction < ActiveRecord::Base
   def duration
     self.end_date - self.start_date
   end
-  
-  def duration_formatted
-    string = ( duration.to_f / 1.day.to_f ).ceil.to_s
-    string += ' Tag'
-    string += 'e' if duration > 1.day
-    return string
- end
- 
- 
+   
   def overall_price
+    @overall_price ||= calculate_overall_price
+  end
+  
+  def overall_price_without_discount
+    @overall_price_without_discount ||= calculate_overall_price_without_discount
+  end
+  
+  def overall_discount
+    overall_price_without_discount - overall_price
+  end
+  
+  protected
+  
+  def calculate_overall_price
     sum = 0
     self.item_rentals.each do |item_rental|
       sum += item_rental.price
+    end
+    return sum
+  end
+  
+  def calculate_overall_price_without_discount
+    sum = 0
+    self.item_rentals.each do |item_rental|
+      sum += item_rental.price_without_discount
     end
     return sum
   end

@@ -54,6 +54,10 @@ div#header div#searchbox button {
   border: solid 1px #000;
 }
 
+div#header div#searchbox input.disabled, div#header div#searchbox button.disabled {
+  border: solid 1px #777;
+}
+
 div#header div#searchbox div.auto_complete {
   width: 174px !important;
 }

@@ -43,6 +43,8 @@ a, a:visited {
 
 div.navlinks {
   margin: 20px 0 0 0;
+  
+  clear: both;
 }
 
 div.navlinks p {

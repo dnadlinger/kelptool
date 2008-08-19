@@ -3,6 +3,6 @@
 -%>
 
 <%=h item_rental.quantity %>
-<% unless item_rental.check_availabilty -%>
+<% unless item_rental.available? -%>
   <%= icon_warning %>
 <% end -%>

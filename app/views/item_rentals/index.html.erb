@@ -6,6 +6,7 @@
       <tr>
         <td>Anzahl</td>
         <td>Gerätename</td>
+        <td>Preis o. R.</td>
         <td>Preis</td>
         <td>Ausgegeben</td>
         <td>Zurückgebracht</td>
@@ -20,7 +21,12 @@
     <tfoot>
       <td></td>
       <td>Gesamt</td>
-      <td><%= format_currency @rental_action.overall_price %></td>
+      <td id="overall_price_without_discount">
+        <%= format_currency @rental_action.overall_price_without_discount %>
+      </td>
+      <td id="overall_price">
+        <%= format_currency @rental_action.overall_price %>
+      </td>
       <td>
         <% if @item_rentals.reject( &:handed_out ).empty? -%>
           ja

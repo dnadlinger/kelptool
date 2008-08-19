@@ -1,3 +1,7 @@
 page.get_member_element( @item_rental, 'quantity' ).replace_html :partial => 'quantity_text', :object => @item_rental
+page.get_member_element( @item_rental, 'price_without_discount' ).replace_html format_currency( @item_rental.price_without_discount )
 page.get_member_element( @item_rental, 'price' ).replace_html format_currency( @item_rental.price )
 page.get_member_element( @item_rental, 'edit_button' ).replace_html :partial => 'edit_button', :locals => { :full_path => [ @item_rental.rental_action, @item_rental ] }
+
+page[ 'overall_price' ].replace_html format_currency( @rental_action.overall_price )
+page[ 'overall_price_without_discount' ].replace_html format_currency( @rental_action.overall_price_without_discount )

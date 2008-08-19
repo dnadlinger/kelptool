@@ -17,18 +17,24 @@ module ListHelper
 #        end
 #      end
 #    end
-    html_string = ''
-    collection.each do |element|
-      unless options[ :filter ] && !( options[ :filter ].call( element ) )
-        html_string << '<li id="' + dom_id( element ) + '">'
-        html_string << render( :partial => element, :locals => parse_locals_option( options[ :locals ], element ) )
-        html_string << '</li>'
+
+    if options[ :filter ]
+      filter = options[ :filter ]
+    else
+      filter = lambda { |element| true }
+    end
+    
+    content_tag :div, :class => 'biglist' do
+      content_tag :ol do
+        collection.collect do |element|
+          if filter.call( element )
+            content_tag :li, :id => dom_id( element ) do
+              render :partial => element, :locals => parse_locals_option( options[ :locals ], element )
+            end
+          end
+        end
       end
     end
-    html_string = content_tag :ol, html_string
-    html_string = content_tag :div, html_string, :class => 'biglist'
-    
-    return html_string
   end
   
   def render_sublist( object, collection_attribute, name, *args )
@@ -37,21 +43,19 @@ module ListHelper
     container_id = "#{dom_class( object )}_#{collection_attribute}"
     collection = options[ :collection ] || object.send( collection_attribute )
     
-    html_string = ''
-    unless collection.empty?
-      collection.each do |element|
-        html_string << '<li id="' + dom_id( element ) + '">'
-        html_string << render( :partial => element )
-        html_string << '</li>'
+    content_tag :div, :class => 'sublist', :id => container_id do
+      content_tag :ol do
+        unless collection.empty?
+          collection.collect do |element|
+            content_tag( :li, :id => dom_id( element ) ) do
+              render :partial => element
+            end
+          end
+        else
+          content_tag( :li, "<em>Keine #{name} gefunden.</em>" )
+        end
       end
-    else
-      html_string << content_tag( :li, "<em>Keine #{name} gefunden.</em>" )
     end
-    
-    html_string = content_tag :ol, html_string
-    html_string = content_tag :div, html_string, :class => 'sublist', :id => container_id
-    
-    return html_string
   end
   
   def show_sublist_for( object, collection_attribute, name )
