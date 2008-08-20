@@ -13,6 +13,9 @@ module FormattingHelper
     end
   end
   
+  def format_date( date )
+    date.strftime "%d.%m.%Y"
+  end
   
   def format_days( duration )
     string = ( duration.to_f / 1.day.to_f ).ceil.to_s

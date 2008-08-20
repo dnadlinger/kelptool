@@ -15,7 +15,7 @@ class Item < ActiveRecord::Base
   
   validates_numericality_of :total_count, :only_integer => true, :message => 'Keine gültige Gesamtanzahl.'
   # We don't need to validate the number of the items in stock since the user can't mess around with it anyway.
-  #validates_numericality_of :num_in_stock, :only_integer => true, :message => "Keine gültige Lagernd-Anzahl."
+  
   
   def self.search( query )
     unless query.blank?
