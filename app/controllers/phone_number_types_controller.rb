@@ -44,7 +44,7 @@ class PhoneNumberTypesController < ApplicationController
 
     respond_to do |format|
       if @phone_number_type.save
-        flash[:notice] = 'PhoneNumberType was successfully created.'
+        flash[:notice] = 'Telefonnummer-Typ hinzugefügt.'
         format.html { redirect_to phone_number_types_url }
         format.xml  { render :xml => @phone_number_type, :status => :created, :location => @phone_number_type }
       else
@@ -61,7 +61,7 @@ class PhoneNumberTypesController < ApplicationController
 
     respond_to do |format|
       if @phone_number_type.update_attributes(params[:phone_number_type])
-        flash[:notice] = 'PhoneNumberType was successfully updated.'
+        flash[:notice] = 'Änderungen gespeichert.'
         format.html { redirect_to phone_number_types_url }
         format.xml  { head :ok }
       else
