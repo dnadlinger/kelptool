@@ -30,11 +30,11 @@
 
 <div class="showbox left w100">
   <h2>Verlauf</h2>
-  <div class="smalllist">
-    <ol class="item_events">
-      <% for event in @item.events %>
+  <div class="small_list">
+    <ol class="event_list">
+      <% for event in @item.events -%>
           <%= render :partial => 'items/events/' + event.class.table_name.singularize, :object => event %>
-      <% end %>
+      <% end -%>
     </ol>
   </div>
   <div class="navlinks">

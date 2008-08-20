@@ -22,7 +22,7 @@ module IconsHelper
     :minus => { :file => 'icons/delete.png', :alt => 'Minus' },
     
     :note => { :file => 'icons/note.png', :alt => 'Notiz' },
-    :out_for_rental => { :file => 'icons/arrow_refresh.png', :alt => 'Vermietet' }
+    :rental_action => { :file => 'icons/arrow_refresh.png', :alt => 'Vermietet' }
   }
   
   def icon( id, options = {} )

@@ -1,5 +1,5 @@
 class ItemNotesController < ApplicationController
-  before_filter :get_item
+  before_filter :get_item, :except => [ :index ]
   
   def index
     flash.keep

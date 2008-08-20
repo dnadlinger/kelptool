@@ -24,7 +24,7 @@ module ListHelper
       filter = lambda { |element| true }
     end
     
-    content_tag :div, :class => 'biglist' do
+    content_tag :div, :class => 'big_list' do
       content_tag :ol do
         collection.collect do |element|
           if filter.call( element )
@@ -43,7 +43,7 @@ module ListHelper
     container_id = "#{dom_class( object )}_#{collection_attribute}"
     collection = options[ :collection ] || object.send( collection_attribute )
     
-    content_tag :div, :class => 'sublist', :id => container_id do
+    content_tag :div, :class => 'sub_list', :id => container_id do
       content_tag :ol do
         unless collection.empty?
           collection.collect do |element|

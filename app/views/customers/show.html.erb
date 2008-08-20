@@ -1,32 +1,45 @@
 <% @page_title = @customer.contact.name + ' – Details' -%>
 
-<h2>Kontaktdaten</h2>
-<%= render :partial => @customer.contact %>
-
-<h2>Geschäftliches</h2>
-<p><strong>Üblicher Preis: </strong><%= format_percent @customer.price_factor %> %</p>
-
-<h2>Kommentare</h2>
-<% unless @customer.comment.empty? -%>
-  <%= textilize h( @customer.comment ) %>
-<% else -%>
-  <p><em>keine</em></p>
-<% end -%>
-
-<h2>Letzte Mietvorgänge</h2>
-<% unless @customer.rental_actions.empty? -%>
-  <ul>
-  <% for rental_action in @customer.rental_actions.all( :limit => 10 ) -%>
-    <li><%= link_to rental_action.name, rental_action_path( rental_action )%></li>
+<div class="showbox left w50">
+  <h2>Kontaktdaten</h2>
+  <%= render :partial => @customer.contact %>
+  
+  <h2>Geschäftliches</h2>
+  <p><strong>Üblicher Preis: </strong><%= format_percent @customer.price_factor %> %</p>
+  
+  <h2>Notizen</h2>
+  <% unless @customer.comment.empty? -%>
+    <%= textilize h( @customer.comment ) %>
+  <% else -%>
+    <p><em>keine</em></p>
   <% end -%>
-  </ul>
-<% else -%>
-  <p><em>keine</em></p>
-<% end -%>
+
+  <div class="navlinks">
+      <p><%= link_to 'Kunden bearbeiten', edit_customer_path %></p>
+  </div>
+</div>
+
+<div class="showbox right w50">
+  <h2>Letzte Mietvorgänge</h2>
+  <div class="small_list">
+    <% unless @customer.rental_actions.empty? -%>
+      <ol class="event_list">
+        <% for rental_action in @customer.rental_actions -%>
+          <li class="rental_action">
+            <span class="date"><%= format_date rental_action.start_date %></span>
+            <span class="icon"><%= icon :rental_action %></span>
+            <span><%=link_to h( rental_action.name ), rental_action %></span>
+          </li>
+        <% end -%>
+      </ol>
+    <% else -%>
+      <p><em>keine</em></p>
+    <% end -%>
+  </div>
+</div>
 
 <div class="navlinks">
   <%= choose_link ChoosingMode::RentalActionsChooseCustomer, @customer %>
   <%= choose_link ChoosingMode::EmployeesChooseContactTemplate, @customer.contact %>
-  <p><%= link_to 'Kunden bearbeiten', edit_customer_path %></p> 
   <p><%= link_to 'Zurück zur Übersicht', customers_path %></p>
 </div>

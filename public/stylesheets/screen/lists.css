@@ -38,18 +38,18 @@ ol {
 
 /* Big box list and child list. Prepared for use with RJS. */
 
-div.biglist {
+div.big_list {
   width: 100%;
 }
 
-div.biglist ol {
+div.big_list ol {
   margin: 5px 0;
   padding: 0;
   
   overflow: hidden !important;
 }
 
-div.biglist ol li {
+div.big_list ol li {
   min-height: 25px;
   
   margin: 2px 0;
@@ -68,7 +68,7 @@ div.biglist ol li {
   overflow: hidden;
 }
 
-div.biglist ol li a {
+div.big_list ol li a {
   display: inline-block;
   float: left;
   
@@ -76,11 +76,11 @@ div.biglist ol li a {
   text-decoration: none;
 }
 
-div.sublist {
+div.sub_list {
   margin: 35px -10px 0 -10px;
 }
 
-div.sublist ol {
+div.sub_list ol {
   width: 100%;
   margin: 0;
   padding: 0;
@@ -88,7 +88,7 @@ div.sublist ol {
   overflow: hidden !important;
 }
 
-div.sublist ol li {
+div.sub_list ol li {
   min-height: 15px;
   height: 15px;
   
@@ -104,7 +104,7 @@ div.sublist ol li {
   font-size: 11px;
 }
 
-div.sublist ol li a {
+div.sub_list ol li a {
   display: inline-block;
   float: left;
 }
@@ -112,17 +112,17 @@ div.sublist ol li a {
 
 /* Small box list. */
 
-div.smalllist {
+div.small_list {
   width: 100%;
 }
 
-div.smalllist ol {
+div.small_list ol {
   margin: 5px 0;
   padding: 0;
   width: 100%;
 }
 
-div.smalllist ol li {
+div.small_list ol li {
   height: 16px;
   
   margin: 1px 0;
@@ -143,7 +143,7 @@ div.smalllist ol li {
   overflow: hidden;
 }
 
-div.smalllist ol li span {
+div.small_list ol li span {
   display: inline-block;
   float: left;
   
@@ -151,15 +151,15 @@ div.smalllist ol li span {
   text-decoration: none;
 }
 
-div.smalllist ol li span.alignright {
+div.small_list ol li span.alignright {
   float: right;
   margin: 0;
   padding: 0;
   line-height: 1;
 }
 
-/* Special styles for the item events list. */
-ol.item_events span.date {
+/* Special styles for event/history lists. */
+ol.event_list span.date {
   margin: 0 2px 0 0;
   
   color: #555;
@@ -168,21 +168,21 @@ ol.item_events span.date {
   vertical-align: middle;
 }
 
-ol.item_events span.icon {
+ol.event_list span.icon {
   margin: 0 5px 0 0;
 }
 
-ol.item_events li.item_note {
+ol.event_list li.item_note {
   background-color: #ffc;
   border-color: #dd9;
 }
 
-ol.item_events li.item_quantity_change_plus {
+ol.event_list li.item_quantity_change_plus {
   border-color: #9d9;
   background-color: #cfc;
 }
 
-ol.item_events li.item_quantity_change_minus {
+ol.event_list li.item_quantity_change_minus {
   border-color: #d99;
   background-color: #fcc;
 }
