@@ -44,6 +44,7 @@ a, a:visited {
 div.navlinks {
   margin: 20px 0 0 0;
   
+  float: left;
   clear: both;
 }
 
@@ -119,6 +120,26 @@ span.alignright {
   
   display: inline;
   float: right;
-  
+
   text-align: right;
+}
+
+div.showbox {
+  
+}
+
+div.showbox.w40 {
+  width: 40%;
+}
+
+div.showbox.w60 {
+  width: 60%;
+}
+
+div.showbox.left {
+  float: left;
+}
+
+div.showbox.right {
+  float: right;
 }

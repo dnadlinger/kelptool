@@ -128,3 +128,7 @@ div#footer p {
   text-align: center;
   vertical-align: middle;
 }
+
+div#footer a {
+  color: #fff;
+}

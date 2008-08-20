@@ -1,0 +1,8 @@
+<li class="item_note">
+  <span class="date"><%= format_date item_note.event_date %></span>
+  <span class="alignright">
+    <%= link_to icon_edit, edit_item_category_item_item_note_path( item_note.item.item_category, item_note.item, item_note ) %>  
+    <%= link_to icon_delete, [ item_note.item.item_category, item_note.item, item_note ], :method => :delete %>
+  </span>
+  <span><%= item_note.content %></span>
+</li>

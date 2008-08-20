@@ -11,7 +11,7 @@
   </fieldset>
   
   <% fields_for @item.price do |price_fields| %>
-    <%= render :partial => 'simple_price_fields', :locals => { :f => price_fields } %>
+    <%= render :partial => 'items/prices/simple_price_fields', :locals => { :f => price_fields } %>
   <% end %>
   
   <p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>

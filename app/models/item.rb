@@ -4,6 +4,8 @@ class Item < ActiveRecord::Base
   has_many :item_rentals, :dependent => :destroy
   has_many :rental_actions, :through => :item_rentals
   
+  has_many :item_notes, :dependent => :destroy
+  
   belongs_to :price, :polymorphic => true
   
   validates_associated :price, :message => 'Preis ist ungültig.'
@@ -27,6 +29,19 @@ class Item < ActiveRecord::Base
   
   def full_name
     return name
+  end
+  
+  def events
+    result = []
+    result.concat( item_rentals )
+    result.concat( item_notes )
+    
+    # Sort on event_date DESC.
+    result.sort! do |a, b|
+      b.event_date <=> a.event_date
+    end
+    
+    return result
   end
   
   def num_available_between( start_date, end_date, exclude_rental_actions = nil )

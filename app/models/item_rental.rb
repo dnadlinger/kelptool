@@ -21,6 +21,9 @@ class ItemRental < ActiveRecord::Base
     return self.quantity <= self.quantity_available
   end
   
+  def event_date
+    self.rental_action.start_date
+  end
   
   def mark_as_handed_out!
     return false if self.handed_out?

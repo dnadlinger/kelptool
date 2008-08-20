@@ -1,10 +1,27 @@
 <% @page_title = @item.full_name + ' – Details' %>
 
-<p><strong>Kategorie: </strong><%=h @item.item_category.name %></p>
-<p><strong>Bezeichnung: </strong><%=h @item.full_name %></p>
-<p><strong>Anzahl gesamt: </strong><%=h @item.total_count %></p>
-<p><strong>Anzahl lagernd: </strong><%=h @item.num_in_stock %></p>
-<p><strong>Preis: </strong> <%= render :partial => @item.price_type.tableize.singularize, :object => @item.price %></p>
+<div class="showbox left w40">
+  <h2>Gerät</h2>
+  <p><strong>Kategorie: </strong><%=h @item.item_category.name %></p>
+  <p><strong>Bezeichnung: </strong><%=h @item.full_name %></p>
+  <p><strong>Anzahl gesamt: </strong><%=h @item.total_count %></p>
+  <p><strong>Anzahl lagernd: </strong><%=h @item.num_in_stock %></p>
+  <p><strong>Preis: </strong> <%= render :partial => 'items/prices/' + @item.price_type.tableize.singularize, :object => @item.price %></p>
+</div>
+
+<div class="showbox right w60">
+  <h2>Ereignisse</h2>
+  <div class="smalllist">
+    <ol class="item_events">
+      <% for event in @item.events %>
+          <%= render :partial => 'items/events/' + event.class.table_name.singularize, :object => event %>
+      <% end %>
+    </ol>
+  </div>
+  <div class="navlinks">
+    <%= link_to 'Notiz hinzufügen', new_item_category_item_item_note_path( @item.item_category, @item ) %>
+  </div>
+</div>
 
 <div class="navlinks">
   <%= choose_link ChoosingMode::ItemRentalsChooseItem, @item %>

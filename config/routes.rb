@@ -8,7 +8,9 @@ ActionController::Routing::Routes.draw do |map|
       :move_up => :put,
       :move_down => :put
     } do |item_categories|
-    item_categories.resources :items
+    item_categories.resources :items do |items|
+      items.resources :item_notes, :as => 'notes'
+    end
   end
   
   map.resources :rental_action_searches, :as => 'search', :path_prefix => 'rental_actions',
@@ -74,5 +76,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.cancel_choosing '/cancel_choosing', :controller => 'choosing_helper', :action => 'cancel_choosing'
 
+
   map.root :controller => 'home'
+  map.about '/about', :controller => 'home', :action => 'about'
 end

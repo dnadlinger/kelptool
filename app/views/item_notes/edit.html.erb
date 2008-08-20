@@ -1,0 +1,7 @@
+<% @page_title = @item_note.item.name + ' – Notiz bearbeiten' -%>
+
+<%= show_errors @item_note, 'die Notiz zu speichern' %>
+<% edit_form_for [ @item_note.item.item_category, @item_note.item, @item_note ] do |f| %>
+  <%= render :partial => f %>
+  <p><%= f.submit 'Speichern' %> <%= link_to 'Zurück zum Gerät', item_category_item_item_notes_path, { :class => 'navlink' } %></p>
+<% end %>

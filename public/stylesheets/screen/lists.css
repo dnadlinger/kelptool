@@ -1,4 +1,4 @@
-/* Styles for all kinds of tables and lists. */
+/* Basic table styles. */
 
 table {
   border: 0 none;
@@ -24,6 +24,8 @@ td span.currency {
 }
 
 
+/* Basic list styles. */
+
 ul {
   list-style: disc;
   padding: 0 0 0 15px;
@@ -33,12 +35,15 @@ ol {
   list-style: decimal;
 }
 
+
+/* Big box list and child list. Prepared for use with RJS. */
+
 div.biglist {
   width: 100%;
 }
 
 div.biglist ol {
-  margin: 20px 0;
+  margin: 5px 0;
   padding: 0;
   
   overflow: hidden !important;
@@ -53,13 +58,12 @@ div.biglist ol li {
   display: block;
   
   background-color: #eee;
-  
   border: 1px solid #ccc;
   
   color: #000;
-  list-style: none;
-  
   font-size: 13px;
+  
+  list-style: none;
   
   overflow: hidden;
 }
@@ -94,6 +98,7 @@ div.sublist ol li {
   display: block;
   
   background-color: #ccc;
+  
   list-style: none;
   
   font-size: 11px;
@@ -102,4 +107,67 @@ div.sublist ol li {
 div.sublist ol li a {
   display: inline-block;
   float: left;
+}
+
+
+/* Small box list. */
+
+div.smalllist {
+  width: 100%;
+}
+
+div.smalllist ol {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+div.smalllist ol li {
+  min-height: 15px;
+  
+  margin: 1px 0;
+  padding: 5px 5px 5px 5px;
+  
+  display: block;
+  
+  background-color: #eee;
+  
+  border: 1px solid #ccc;
+  
+  color: #000;
+  list-style: none;
+  
+  font-size: 12px;
+  
+  overflow: hidden;
+}
+
+div.smalllist ol li span {
+  display: inline-block;
+  float: left;
+  
+  color: #000;
+  text-decoration: none;
+}
+
+div.smalllist ol li span.alignright {
+  float: right;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Special styles for the item events list. */
+ol.item_events span.date {
+  margin: 0 5px 0 0;
+  
+  color: #555;
+  font-size: 10px;
+  line-height: 19px;
+  vertical-align: middle;
+}
+
+ol.item_events li.item_note {
+  background-color: #ffc;
+  border-color: #dd9;
 }
