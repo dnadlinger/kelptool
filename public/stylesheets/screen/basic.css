@@ -136,10 +136,18 @@ div.showbox.w60 {
   width: 60%;
 }
 
+div.showbox.w100 {
+  width: 100%;
+}
+
 div.showbox.left {
   float: left;
 }
 
 div.showbox.right {
   float: right;
+}
+
+div.showbox div.navlinks {
+  margin: 6px 0 0 0;  
 }

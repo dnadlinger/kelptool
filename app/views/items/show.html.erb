@@ -1,16 +1,35 @@
-<% @page_title = @item.full_name + ' – Details' %>
+<%
+  @page_title = @item.full_name + ' – Details'
 
-<div class="showbox left w40">
+  full_path = [ @item.item_category, @item ]
+-%>
+
+<div class="showbox left w60">
   <h2>Gerät</h2>
   <p><strong>Kategorie: </strong><%=h @item.item_category.name %></p>
   <p><strong>Bezeichnung: </strong><%=h @item.full_name %></p>
   <p><strong>Anzahl gesamt: </strong><%=h @item.total_count %></p>
-  <p><strong>Anzahl lagernd: </strong><%=h @item.num_in_stock %></p>
+  <p><strong>Derzeit lagernd: </strong><%=h @item.num_in_stock %></p>
   <p><strong>Preis: </strong> <%= render :partial => 'items/prices/' + @item.price_type.tableize.singularize, :object => @item.price %></p>
+
+  <div class="navlinks">
+    <p>
+      <%= link_to 'Bearbeiten', edit_item_category_item_path, { :class => 'navlink' } %> |
+      <%= link_to 'Löschen', full_path, { :confirm => 'Soll dieses Gerät wirklich gelöscht werden?', :method => :delete } %>
+    </p>
+  </div>
 </div>
 
-<div class="showbox right w60">
-  <h2>Ereignisse</h2>
+<div class="showbox right w40">
+  <h2>Statistik</h2>
+  <p><strong>Einsätze gesamt: </strong><%=h @item.rentals_overall %></p>
+  <p><strong>Einsätze/Stück: </strong><%= number_with_precision( @item.rentals_per_piece, 3 ) %></p>
+  <p><strong>Umsatz gesamt: </strong><%=format_currency @item.revenue_overall %></p>
+  <p><strong>Umsatz/Stück: </strong><%=format_currency @item.revenue_per_piece %></p>  
+</div>
+
+<div class="showbox left w100">
+  <h2>Verlauf</h2>
   <div class="smalllist">
     <ol class="item_events">
       <% for event in @item.events %>
@@ -19,13 +38,14 @@
     </ol>
   </div>
   <div class="navlinks">
-    <%= link_to 'Notiz hinzufügen', new_item_category_item_item_note_path( @item.item_category, @item ) %>
+    <p>
+      <%= link_to 'Notiz hinzufügen', new_item_category_item_item_note_path( *full_path ) %> |
+      <%= link_to 'Bestand ändern', new_item_category_item_item_quantity_change_path( *full_path ) %>
+    </p>
   </div>
 </div>
 
 <div class="navlinks">
   <%= choose_link ChoosingMode::ItemRentalsChooseItem, @item %>
-  <p><%= link_to 'Bearbeiten', edit_item_category_item_path, { :class => 'navlink' } %> |
-    <%= link_to 'Löschen', item_category_item_path, { :confirm => 'Soll dieses Gerät wirklich gelöscht werden?', :method => :delete, :class => 'navlink' } %></p>
   <p><%= link_to 'Zurück zur Kategorie', item_category_items_path, { :class => 'navlink' } %></p>
 </div>

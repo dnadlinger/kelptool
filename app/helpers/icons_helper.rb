@@ -1,49 +1,37 @@
 module IconsHelper
-  def icon_up
-    image_tag( 'icons/arrow_up.png', :alt => 'Hinauf' )
-  end
+  Icons = {
+    :ok => { :file => 'icons/tick.png', :alt => 'Ok' },
+    :warning => { :file => 'icons/error.png', :alt => 'Warnung' },
+    :error => { :file => 'icons/exclamation.png', :alt => 'Fehler' },
+    
+    :edit => { :file => 'icons/pencil.png', :alt => 'Bearbeiten' },
+    :delete => { :file => 'icons/bin_closed.png', :alt => 'Löschen' },
+    :reset => { :file => 'icons/arrow_undo.png', :alt => 'Zurücksetzen' },    
+    
+    :up => { :file => 'icons/arrow_up.png', :alt => 'Hinauf' },
+    :down => { :file => 'icons/arrow_down.png', :alt => 'Hinunter' },
+    
+    :add_child => { :file => 'icons/add.png', :alt => 'Hinzufügen' },
+    
+    :choose => { :file => 'icons/anchor.png', :alt => 'Wählen' },
+    
+    :search => { :file => 'icons/magnifier.png', :alt => 'Suchen' },
+    :advanced_search => { :file => 'icons/application_form_magnify.png', :alt => 'Erweiterte Suche' },
+    
+    :plus => { :file => 'icons/add.png', :alt => 'Plus' },
+    :minus => { :file => 'icons/delete.png', :alt => 'Minus' },
+    
+    :note => { :file => 'icons/note.png', :alt => 'Notiz' },
+    :out_for_rental => { :file => 'icons/arrow_refresh.png', :alt => 'Vermietet' }
+  }
   
-  def icon_down
-    image_tag( 'icons/arrow_down.png', :alt => 'Hinunter' )
-  end
-  
-  def icon_add_child
-    image_tag( 'icons/add.png', :alt => 'Hinzufügen' )
-  end
-  
-  def icon_edit
-    image_tag( 'icons/pencil.png', :alt => 'Bearbeiten' )
-  end
-  
-  def icon_delete
-    image_tag( 'icons/bin_closed.png', :alt => 'Löschen' )
-  end
-  
-  def icon_reset
-    image_tag( 'icons/arrow_undo.png', :alt => 'Zurücksetzen' )
-  end
-  
-  def icon_ok
-    image_tag( 'icons/tick.png', :alt => 'Ok' )
-  end
-  
-  def icon_error
-    image_tag( 'icons/exclamation.png', :alt => 'Fehler' )
-  end
-  
-  def icon_choose
-    image_tag( 'icons/anchor.png', :alt => 'Wählen' )
-  end
-  
-  def icon_search
-    image_tag( 'icons/magnifier.png', :alt => 'Suchen' )
-  end
-  
-  def icon_advanced_search
-    image_tag( 'icons/application_form_magnify.png', :alt => 'Erweiterte Suche' )
-  end
-  
-  def icon_warning
-    image_tag( 'icons/error.png', :alt => 'Warnung' )
+  def icon( id, options = {} )
+    icon_data = Icons[ id ]
+    return nil unless icon_data
+    
+    options = options.reverse_merge( icon_data )
+    file = options.delete( :file )
+    
+    image_tag( file, options )
   end
 end

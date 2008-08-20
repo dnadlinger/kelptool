@@ -1,8 +1,8 @@
 <%
   item_rental = quantity_form
+  full_path = [ item_rental.rental_action, item_rental ]
 -%>
 
-<% full_path = [ item_rental.rental_action, item_rental ] -%>
 <% form_remote_for full_path, :method => :put do |f| %>
   <%= f.text_field :quantity, :size => 2 %>
   <%= link_to_function "(#{item_rental.quantity_available})" do |page|

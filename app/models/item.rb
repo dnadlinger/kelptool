@@ -5,6 +5,7 @@ class Item < ActiveRecord::Base
   has_many :rental_actions, :through => :item_rentals
   
   has_many :item_notes, :dependent => :destroy
+  has_many :item_quantity_changes, :dependent => :destroy
   
   belongs_to :price, :polymorphic => true
   
@@ -27,6 +28,7 @@ class Item < ActiveRecord::Base
     end
   end
   
+  
   def full_name
     return name
   end
@@ -35,6 +37,7 @@ class Item < ActiveRecord::Base
     result = []
     result.concat( item_rentals )
     result.concat( item_notes )
+    result.concat( item_quantity_changes )
     
     # Sort on event_date DESC.
     result.sort! do |a, b|
@@ -42,6 +45,28 @@ class Item < ActiveRecord::Base
     end
     
     return result
+  end
+  
+  def revenue_overall
+    sum = 0
+    
+    self.item_rentals.each do |ir|
+      sum += ir.price
+    end
+    
+    return sum
+  end
+  
+  def revenue_per_piece
+    revenue_overall.to_f / self.total_count.to_f
+  end
+  
+  def rentals_overall
+    self.item_rentals.sum( :quantity )
+  end
+  
+  def rentals_per_piece
+    rentals_overall.to_f / self.total_count.to_f
   end
   
   def num_available_between( start_date, end_date, exclude_rental_actions = nil )

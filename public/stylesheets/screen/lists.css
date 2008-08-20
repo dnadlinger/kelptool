@@ -117,16 +117,16 @@ div.smalllist {
 }
 
 div.smalllist ol {
-  margin: 0;
+  margin: 5px 0;
   padding: 0;
   width: 100%;
 }
 
 div.smalllist ol li {
-  min-height: 15px;
+  height: 16px;
   
   margin: 1px 0;
-  padding: 5px 5px 5px 5px;
+  padding: 6px;
   
   display: block;
   
@@ -138,6 +138,7 @@ div.smalllist ol li {
   list-style: none;
   
   font-size: 12px;
+  line-height: 16px;
   
   overflow: hidden;
 }
@@ -159,15 +160,29 @@ div.smalllist ol li span.alignright {
 
 /* Special styles for the item events list. */
 ol.item_events span.date {
-  margin: 0 5px 0 0;
+  margin: 0 2px 0 0;
   
   color: #555;
   font-size: 10px;
-  line-height: 19px;
+  line-height: 16px;
   vertical-align: middle;
+}
+
+ol.item_events span.icon {
+  margin: 0 5px 0 0;
 }
 
 ol.item_events li.item_note {
   background-color: #ffc;
   border-color: #dd9;
+}
+
+ol.item_events li.item_quantity_change_plus {
+  border-color: #9d9;
+  background-color: #cfc;
+}
+
+ol.item_events li.item_quantity_change_minus {
+  border-color: #d99;
+  background-color: #fcc;
 }

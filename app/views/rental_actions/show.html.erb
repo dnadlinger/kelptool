@@ -1,17 +1,19 @@
 <% @page_title = @rental_action.name + ' – Details ' -%>
 
-<div>
-  <h2>Mietvorgang:</h2>
+<div class="showbox left w40">
+  <h2>Mietvorgang</h2>
   <p><strong>Name: </strong><%=h @rental_action.name %></p>
   <p><strong>Zeitraum: </strong><%=format_date @rental_action.start_date.to_date %> bis <%=format_date @rental_action.end_date.to_date %> (<%= format_days @rental_action.duration %>)</p>
   <p><%= link_to 'Bearbeiten', edit_rental_action_path %></p>
 </div>
-<div>
-  <h2>Geräte:</h2>
+
+<div class="showbox right w60">
+  <h2>Geräte</h2>
   <%= render :partial => 'item_rentals', :object => @rental_action.item_rentals %>
 </div>
-<div>
-  <h2>Kunde:</h2>
+
+<div class="showbox left w40">
+  <h2>Kunde</h2>
   <%= render :partial => 'customer_info', :object => @rental_action.customer %>
   <p><%= link_to 'Kundeninformationen wählen', choose_customer_rental_action_path %></p>
 </div>

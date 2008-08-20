@@ -1,0 +1,14 @@
+<%
+  full_path = [ item_quantity_change.item.item_category, item_quantity_change.item, item_quantity_change ]
+
+  positive = item_quantity_change.amount > 0
+
+	css_class = 'item_quantity_change_'
+  css_class << ( positive  ? 'plus' : 'minus' )
+-%>
+
+<% content_tag :li, :class => css_class do %>
+  <span class="date"><%= format_date item_quantity_change.event_date %></span>
+  <span class="icon"><%= icon( positive ? :plus : :minus ) %></span>
+  <span><%= item_quantity_change.amount.abs %> Stück <%=h item_quantity_change.reason %></span>
+<% end %>

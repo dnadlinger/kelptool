@@ -5,17 +5,17 @@
       <div id="search_query_auto_complete" class="auto_complete"></div>
       <%= auto_complete_field 'search_query', :url => @auto_complete_url, :method => :get -%>   
       
-      <button type="submit"><%= icon_search %></button>
+      <button type="submit"><%= icon( :search ) %></button>
       
       <% if @advanced_search -%>
-        <button type="submit" name="advanced_search" value="true"><%= icon_advanced_search %></button>
+        <button type="submit" name="advanced_search" value="true"><%= icon( :advanced_search ) %></button>
       <% else -%>
-        <button type="submit" class="disabled" disabled="disabled"><%= icon_advanced_search %></button>
+        <button type="submit" class="disabled" disabled="disabled"><%= icon( :advanced_search ) %></button>
       <% end -%>
     </fieldset>
   <% end %>
 <% else -%>
   <input type="text" class="disabled" disabled="disabled" />
-  <button type="submit" class="disabled" disabled="disabled"><%= icon_search %></button>
-  <button type="submit" class="disabled" disabled="disabled"><%= icon_advanced_search %></button>
+  <button type="submit" class="disabled" disabled="disabled"><%= icon( :search ) %></button>
+  <button type="submit" class="disabled" disabled="disabled"><%= icon( :advanced_search ) %></button>
 <% end -%>

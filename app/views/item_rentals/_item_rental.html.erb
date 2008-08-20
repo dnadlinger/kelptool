@@ -1,10 +1,11 @@
 <%
   display ||= {}
   display[ :edit_form ] ||= false
+
+  full_path = [ item_rental.rental_action, item_rental ]
 -%>
 
 <% content_tag_for :tr, item_rental do %>
-  <% full_path = [ item_rental.rental_action, item_rental ] -%>
   <td class="item_rental_quantity">
     <% if display[ :edit_form ] -%>
       <%= render :partial => 'quantity_form', :object => item_rental %>
@@ -39,7 +40,7 @@
         <%= render :partial => 'edit_button', :locals => { :full_path => full_path } %>   
       <% end -%>
     </span>
-    <%= link_to icon_reset, reset_state_rental_action_item_rental_path( *full_path ), :method => :put, :confirm => 'Die Informationen über den Verbleib des Gerätes zurücksetzen?' %>
-    <%= link_to icon_delete, full_path, :method => :delete, :confirm => 'Dieses Gerät wirklich aus der Liste entfernen?' %>
+    <%= link_to icon( :reset ), reset_state_rental_action_item_rental_path( *full_path ), :method => :put, :confirm => 'Die Informationen über den Verbleib des Gerätes zurücksetzen?' %>
+    <%= link_to icon( :delete ), full_path, :method => :delete, :confirm => 'Dieses Gerät wirklich aus der Liste entfernen?' %>
   </td>
 <% end %>

@@ -4,5 +4,5 @@
 
 <%=h item_rental.quantity %>
 <% unless item_rental.available? -%>
-  <%= icon_warning %>
+  <%= icon( :warning ) %>
 <% end -%>

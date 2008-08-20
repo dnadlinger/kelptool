@@ -1,0 +1,7 @@
+<% @page_title = @item_quantity_change.item.name + ' – Bestand ändern' -%>
+
+<%= show_errors @item_quantity_change, 'den Bestand zu ändern' %>
+<% pretty_form_for [ @item_quantity_change.item.item_category, @item_quantity_change.item, @item_quantity_change ] do |f| %>
+  <%= render :partial => f %>
+  <p><%= f.submit 'Speichern' %> <%= link_to 'Zurück zum Gerät', item_category_item_item_notes_path, { :class => 'navlink' } %></p>
+<% end %>

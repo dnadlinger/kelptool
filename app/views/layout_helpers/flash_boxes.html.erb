@@ -1,6 +1,6 @@
 <% unless flash[ :error ].nil? -%>
-  <div class="flash" id="error"><%= icon_error %><p><%= flash[ :error ] %></p></div>
+  <div class="flash" id="error"><%= icon( :error ) %><p><%= flash[ :error ] %></p></div>
 <% end -%>
 <% unless flash[ :notice ].nil? -%>
-  <div class="flash" id="notice"><%= icon_ok %><p><%= flash[ :notice ] %></p></div>
+  <div class="flash" id="notice"><%= icon( :ok ) %><p><%= flash[ :notice ] %></p></div>
 <% end -%>
