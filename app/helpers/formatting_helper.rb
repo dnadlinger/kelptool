@@ -2,6 +2,7 @@ module FormattingHelper
   def format_number( number )
     number_with_delimiter( number, '&thinsp;', ',' )
   end
+  alias_method :n, :format_number
   
   def format_percent( factor )
     format_number( factor * 100 )
