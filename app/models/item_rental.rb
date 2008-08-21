@@ -4,13 +4,15 @@ class ItemRental < ActiveRecord::Base
   
   validates_numericality_of :quantity, :greater_than => 0, :message => 'Ungültige Anzahl (muss mindestens 1 sein).'
   
+  named_scope :deactivated, :include => [ :rental_action ], :conditions => [ 'rental_actions.deactivated = ?', true ]
+  named_scope :active, :include => [ :rental_action ], :conditions => [ 'rental_actions.deactivated = ?', false ]
   
   def price
     price_without_discount * self.rental_action.customer.price_factor
   end
   
   def price_without_discount
-    @price_without_discount ||= self.item.price.get_price_for( self.rental_action.duration ) * self.quantity
+    self.item.price.get_price_for( self.rental_action.duration ) * self.quantity
   end
   
   def quantity_available

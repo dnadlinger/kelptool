@@ -8,6 +8,10 @@ class RentalAction < ActiveRecord::Base
   validates_presence_of :start_date, :message => 'Bitte wählen Sie das Datum aus, an dem die Aktion beginnen soll.'
   validates_presence_of :end_date, :message => 'Bitte wählen Sie das Datum aus, an dem die Aktion enden soll.'
   
+  named_scope :deactivated, :conditions => { :deactivated => true }
+  named_scope :active, :conditions => { :deactivated => false }
+  
+  
   def start_date
     self.attributes[ 'start_date' ].to_time if attributes[ 'start_date' ]
   end

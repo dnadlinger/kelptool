@@ -35,7 +35,12 @@ class Item < ActiveRecord::Base
   
   def events
     result = []
-    result.concat( item_rentals )
+    result.concat(
+      item_rentals.all(
+        :include => [ :rental_action ],
+        :conditions => [ 'rental_actions.deactivated = ?', false ]
+      )
+    )
     result.concat( item_notes )
     result.concat( item_quantity_changes )
     
@@ -79,31 +84,34 @@ class Item < ActiveRecord::Base
     end
     
     available = self.num_in_stock
-    logger.debug( available )
-    available += ItemRental.sum(
+    
+    # The "|| 0"-clause on this and the following sum call should not be needed.
+    # But due to a bug in Rails 2.1.0, which is already fixed in edge, calling
+    # sum on an association returns nil instead of 0.
+    available += self.item_rentals.active.sum(
       :quantity,
       :include => [ :rental_action ],
       :conditions => [
-        'handed_out = ? AND returned = ? AND item_id = ? AND rental_actions.end_date < ?' + exclude_condition,
-        true, false, self.id, start_date
+        'handed_out = ? AND returned = ? AND rental_actions.end_date < ?' + exclude_condition,
+        true, false, start_date
       ]
-    )
-    logger.debug( available )
+    ) || 0
+    
     if ( available > self.total_count )
       available = total_count
       # TODO: Generate warning message for user?
       logger.warn( "After counting non-returned ItemRentals, the number of available items (id: #{self.id}) is bigger than the total_count." )
     end
     
-    available -= ItemRental.sum(
+    available -= self.item_rentals.active.sum(
       :quantity,
       :include => [ :rental_action ],
       :conditions => [
-        'handed_out = ? AND item_id = ? AND rental_actions.start_date <= ? AND rental_actions.end_date >= ?' + exclude_condition,
-        false, self.id, end_date, start_date
+        'handed_out = ? AND rental_actions.start_date <= ? AND rental_actions.end_date >= ?' + exclude_condition,
+        false, end_date, start_date
       ]
-    )
-    logger.debug( available )
+    ) || 0
+    
     if ( available < 0 )
       available = 0
       # TODO: Generate warning message for user?

@@ -1,2 +1,5 @@
 <%= link_to rental_action.name, rental_action_path( rental_action ) %>
+<% if rental_action.deactivated -%>
+  <span class="tag"><em class="deactivated">[gestorben]</em></span>
+<% end -%>
 <%= choose_icon ChoosingMode::RentalActionsChooseTemplate, rental_action %>

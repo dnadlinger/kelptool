@@ -124,6 +124,12 @@ span.alignright {
   text-align: right;
 }
 
+em.deactivated {
+  color: #800;
+  font-style: normal;
+}
+
+
 div.showbox {
   
 }

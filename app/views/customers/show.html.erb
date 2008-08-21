@@ -24,13 +24,7 @@
   <div class="small_list">
     <% unless @customer.rental_actions.empty? -%>
       <ol class="event_list">
-        <% for rental_action in @customer.rental_actions -%>
-          <li class="rental_action">
-            <span class="date"><%= format_date rental_action.start_date %></span>
-            <span class="icon"><%= icon :rental_action %></span>
-            <span><%=link_to h( rental_action.name ), rental_action %></span>
-          </li>
-        <% end -%>
+        <%= render :partial => 'rental_action', :collection => @customer.rental_actions %>
       </ol>
     <% else -%>
       <p><em>keine</em></p>

@@ -1,0 +1,8 @@
+<li class="rental_action">
+  <span class="date"><%= format_date rental_action.start_date %></span>
+  <span class="icon"><%= icon :rental_action %></span>
+  <% if rental_action.deactivated -%>
+    <span class="tag"><em class="deactivated">[gestorben]</em></span>
+  <% end -%>
+  <span><%=link_to h( rental_action.name ), rental_action %></span>
+</li>

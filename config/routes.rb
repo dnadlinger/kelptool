@@ -27,6 +27,8 @@ ActionController::Routing::Routes.draw do |map|
       :choose_template => :get,
     },
     :member => {
+      :deactivate => :put,
+      :activate => :put,
       :choose_customer => :get,
       :set_customer => :put
     } do |rental_actions|

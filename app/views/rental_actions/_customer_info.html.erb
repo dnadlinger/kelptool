@@ -6,12 +6,14 @@
   <% if customer.contact -%>
     <% contact = customer.contact -%>
     <%= form_tag customer_path( customer ), :method => :get %>
+      <fieldset>
       <button type="submit">
         <p><%= h contact.name %></p>
         <p><%= h contact.adress %><br /><%= h contact.full_place %></p>
         <p>Telefon: <%= h contact.phone_numbers.first.number %></p>
         <p>UID: <%= h contact.uid %></p>
       </button>
+      </fieldset>
     </form>
   <% else -%>
     <p><em>(keine Kontaktinformationen für diesen Kunden eingetragen)</em></p>
