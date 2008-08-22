@@ -16,7 +16,7 @@
       <li>
         <% num_available = @item_rental.quantity_available -%>
         <% if num_available > 0 -%>
-          Voraussichtlich verfügbar: <%=h num_available %> Stück
+          Voraussichtlich verfügbar: <%=n num_available %> Stück
           <%= link_to_function '(alle)' do |page|
             page.select( 'form input#item_rental_quantity' ).first.value = num_available
           end %>

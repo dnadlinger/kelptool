@@ -8,8 +8,8 @@
   <%= link_to_function "(#{item_rental.quantity_available})" do |page|
     page.get_member_element( item_rental, 'quantity' ).select( 'form input#item_rental_quantity' ).first.value = item_rental.quantity_available
   end %>
-  <%= f.submit 'Speichern' %>
-  <%= link_to_function 'Abbrechen' do |page|
+  <%= f.submit 'Ändern' %>
+  <%= link_to_function 'Zurück' do |page|
     page.get_member_element( item_rental, 'quantity' ).replace_html :partial => 'quantity_text', :object => item_rental
     page.get_member_element( item_rental, 'edit_button' ).replace_html :partial => 'edit_button', :locals => { :full_path => full_path }
   end %>

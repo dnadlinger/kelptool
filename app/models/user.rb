@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :if => :password_required?, :message => 'Bitte geben Sie ein Passwort an.'
   validates_presence_of :password_confirmation, :if => :password_required?, :message => 'Bitte bestätigen Sie das Passwort.'
   validates_length_of :password, :within => 4..40, :if => :password_required?, :too_short => 'Das Passwort muss mindestens 4 Zeichen lang sein.', :too_long => 'Das Passwort darf höchstens 40 Zeichen lang sein.'
-  validates_confirmation_of :password, :if => :password_required?, :message => 'Bitte geben sie zur Bestätigung in das gleiche Feld das gleiche Passwort ein.'
+  validates_confirmation_of :password, :if => :password_required?, :message => 'Bitte geben Sie zur Bestätigung das Passwort noch einmal ein.'
   validates_length_of :login, :within => 3..40, :too_short => 'Der Benutzername muss mindestens 3 Zeichen lang sein.', :too_long => 'Der Benutzername darf höchstens 40 Zeichen lang sein.'
   validates_length_of :email, :within => 3..100, :too_short => 'Die angegebene E-Mail-Adresse ist ungültig.', :too_long => 'Die angegebene E-Mail-Adresse ist ungültig.'
   validates_uniqueness_of :login, :message => 'Der Benutzername ist bereits vergeben.'

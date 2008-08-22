@@ -12,12 +12,13 @@ class ItemsController < ApplicationController
   
   def new
     @item = Item.new
-    @item.item_category = ItemCategory.find( params[ :item_category_id ] )
+    @item.item_category = @category
     @item.price = SimplePrice.new
   end
  
   def create
     @item = Item.new( params[ :item ] )
+    @item.item_category = @category
     @item.price = SimplePrice.new( params[ :simple_price ] )
     @item.num_in_stock = @item.total_count
     

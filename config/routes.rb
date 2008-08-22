@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :rental_actions,
     :collection => {
-      :choose_template => :get,
+      :choose_template => :get
     },
     :member => {
       :deactivate => :put,
@@ -42,13 +42,18 @@ ActionController::Routing::Routes.draw do |map|
         :returned => :put,
         :reset_state => :put
       }
+    rental_actions.resources :bills,
+      :collection => {
+        :new_step_2 => :post,
+        :generate_serial_number => :get
+      }
   end
   
   
   map.resources :skills, :path_prefix => '/employees',
     :collection => {
       :generate_skill_field => :get,
-      :auto_complete_for_skill_name => :get,
+      :auto_complete_for_skill_name => :get
     }
     
   map.resources :employee_searches, :as => 'search', :path_prefix => '/employees',

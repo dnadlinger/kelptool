@@ -1,0 +1,12 @@
+<% @page_title = "#{@bill.rental_action.name} – Rechnung hinzufügen" -%>
+<p><em>Wählen Sie die Art der Rechnung.</em></p>
+
+<% form_tag new_step_2_rental_action_bills_path, :class => 'pretty' do %>
+  <% for type in @types -%>
+    <p><%= submit_tag type.name, :name => 'bill_type' %></p>
+  <% end -%>
+<% end %>
+
+<div class="navlinks">
+  <p><%= link_to 'Zurück zum Mietvorgang', @bill.rental_action %></p>
+</div>

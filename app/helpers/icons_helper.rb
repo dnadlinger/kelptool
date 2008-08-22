@@ -22,7 +22,11 @@ module IconsHelper
     :minus => { :file => 'icons/delete.png', :alt => 'Minus' },
     
     :note => { :file => 'icons/note.png', :alt => 'Notiz' },
-    :rental_action => { :file => 'icons/arrow_refresh.png', :alt => 'Vermietet' }
+    :rental_action => { :file => 'icons/arrow_refresh.png', :alt => 'Vermietet' },
+    
+    :bid => { :file => 'icons/table_gear.png', :alt => 'Angebot' },
+    :invoice => { :file => 'icons/table_go.png', :alt => 'Rechnung' },
+    :delivery_note => { :file => 'icons/lorry.png', :alt => 'Lieferschein' }
   }
   
   def icon( id, options = {} )
@@ -30,6 +34,8 @@ module IconsHelper
     return nil unless icon_data
     
     options = options.reverse_merge( icon_data )
+    options[ :title ] = options[ :alt ]
+    
     file = options.delete( :file )
     
     image_tag( file, options )

@@ -1,0 +1,22 @@
+<%
+  full_path = [ bill.rental_action, bill ]
+
+  icon_type = case bill.bill_type
+    when BillType::Bid
+      :bid
+    when BillType::Invoice
+      :invoice
+    when BillType::DeliveryNote
+      :delivery_note
+  end
+-%>
+
+<li class="bill">
+  <span class="date"><%= format_date bill.created_at %></span>
+  <span class="icon"><%= icon icon_type %></span>
+  <span class="alignright">
+    <%= link_to icon( :edit ), edit_rental_action_bill_path( *full_path ) %>  
+    <%= link_to icon( :delete ), full_path, :confirm => 'Möchten Sie die Rechung wirklich löschen? Damit wird auch die archivierte Kopie der Datei gelöscht.', :method => :delete %>
+  </span>  
+  <span><%= link_to bill.reference, full_path %></span>
+</li>

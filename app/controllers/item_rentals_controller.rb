@@ -17,7 +17,7 @@ class ItemRentalsController < ApplicationController
     existing_item_rental = @rental_action.item_rentals.detect { |ir| ir.item == item }
     
     if existing_item_rental
-      flash[ :notice ] = 'Dieses Gerät ist bereits Teil der Mietaktion. Bitte bearbeiten sie stattdessen die Anzahl.'
+      flash[ :notice ] = 'Dieses Gerät ist bereits Teil der Mietaktion. Bitte bearbeiten Sie stattdessen die Anzahl.'
       redirect_to edit_rental_action_item_rental_url( @rental_action, existing_item_rental )
     else
       @item_rental = ItemRental.new

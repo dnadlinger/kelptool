@@ -1,0 +1,33 @@
+<% @page_title = "#{@bill.rental_action.name} – Rechnung bearbeiten" -%>
+
+<%= show_errors @bill, 'die Rechnung zu speichern' %>
+<% pretty_form_for [ @bill.rental_action, @bill ], :html => { :multipart => true } do |f| %>
+  <fieldset>
+    <legend>Rechnung</legend>
+    <ol>
+      <li>
+        <%= f.label :rental_action_id, 'Mietvorgang: ' %>
+        <%= f.hidden_field :rental_action_id, :value => @bill.rental_action.id %>
+        <%=h @bill.rental_action.name %>
+      </li>
+      <li>
+        <%= f.label :bill_type, 'Art: ' %>
+        <%= f.hidden_field :bill_type, :value => @bill.bill_type.key %>
+        <%=h @bill.bill_type.name %>
+      </li>
+      <li>
+        <%= f.label :serial_number, 'Zeichen: ' %>
+        <%= f.hidden_field :serial_number, :value => @bill.serial_number %>
+        <%=h @bill.reference %>
+      </li>
+      <li>
+        <%= f.label :uploaded_data, 'Datei: ' %>
+        <%= f.file_field :uploaded_data %>
+      </li>
+      <li>
+        <%= link_to 'Aus Mietaktion erzeugen', formatted_edit_rental_action_bill_path( @bill.rental_action, @bill, :xlsx ) %>
+      </li>
+    </ol>
+  </fieldset>
+  <p><%= f.submit 'Speichern' %> <%= link_to 'Zurück zum Mietvorgang', @bill.rental_action, { :class => 'navlink' } %></p>
+<% end %>

@@ -1,0 +1,9 @@
+<div class="small_list">
+  <% unless bills.empty? -%>
+    <ol class="event_list">
+      <%= render :partial => 'bill', :collection => bills %>
+    </ol>
+  <% else -%>
+    <p><em>keine</em></p>
+  <% end -%>
+</div>

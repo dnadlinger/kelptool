@@ -5,7 +5,7 @@
   <%= render :partial => @customer.contact %>
   
   <h2>Geschäftliches</h2>
-  <p><strong>Üblicher Preis: </strong><%= format_percent @customer.price_factor %> %</p>
+  <p><strong>Üblicher Preis: </strong><%= format_percent @customer.price_factor %></p>
   
   <h2>Notizen</h2>
   <% unless @customer.comment.empty? -%>

@@ -6,7 +6,7 @@
     <legend>Gerät:</legend>
     <ol>
       <li><%= f.label :name, 'Name: <em>*</em>' %><%= f.text_field :name %></li>
-      <li><%= f.label :item_category_id, 'Kategorie: <em>*</em>' %><%= f.collection_select :item_category_id, @categories, :id, :name%></li>
+      <li><%= f.label :item_category_id, 'Kategorie: <em>*</em>' %><%= f.collection_select :item_category_id, @categories, :id, :name %></li>
     </ol>
   </fieldset>
   

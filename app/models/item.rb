@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
   
   validates_associated :price, :message => 'Preis ist ungültig.'
     
-  validates_presence_of :name, :message => 'Der Name darf nicht leer sein.'
+  validates_presence_of :name, :message => 'Bitte geben Sie einen Namen für das Gerät ein.'
   validates_uniqueness_of :name, :message => 'Der Name muss eindeutig sein.'
   
   validates_presence_of :item_category_id, :message => 'Das Gerät muss einer Kategorie angehören.'
@@ -35,12 +35,7 @@ class Item < ActiveRecord::Base
   
   def events
     result = []
-    result.concat(
-      item_rentals.all(
-        :include => [ :rental_action ],
-        :conditions => [ 'rental_actions.deactivated = ?', false ]
-      )
-    )
+    result.concat( item_rentals.active )
     result.concat( item_notes )
     result.concat( item_quantity_changes )
     

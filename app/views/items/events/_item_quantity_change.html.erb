@@ -10,5 +10,5 @@
 <% content_tag :li, :class => css_class do %>
   <span class="date"><%= format_date item_quantity_change.event_date %></span>
   <span class="icon"><%= icon( positive ? :plus : :minus ) %></span>
-  <span><%= item_quantity_change.amount.abs %> Stück <%=h item_quantity_change.reason %></span>
+  <span><%=n item_quantity_change.amount.abs %> Stück <%=h item_quantity_change.reason %></span>
 <% end %>

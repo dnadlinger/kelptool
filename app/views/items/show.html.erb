@@ -8,8 +8,8 @@
   <h2>Gerät</h2>
   <p><strong>Kategorie: </strong><%=h @item.item_category.name %></p>
   <p><strong>Bezeichnung: </strong><%=h @item.full_name %></p>
-  <p><strong>Anzahl gesamt: </strong><%=h @item.total_count %></p>
-  <p><strong>Derzeit lagernd: </strong><%=h @item.num_in_stock %></p>
+  <p><strong>Anzahl gesamt: </strong><%=n @item.total_count %></p>
+  <p><strong>Derzeit lagernd: </strong><%=n @item.num_in_stock %></p>
   <p><strong>Preis: </strong> <%= render :partial => 'items/prices/' + @item.price_type.tableize.singularize, :object => @item.price %></p>
 
   <div class="navlinks">
@@ -22,10 +22,10 @@
 
 <div class="showbox right w40">
   <h2>Statistik</h2>
-  <p><strong>Einsätze gesamt: </strong><%=h @item.rentals_overall %></p>
-  <p><strong>Einsätze/Stück: </strong><%= number_with_precision( @item.rentals_per_piece, 3 ) %></p>
-  <p><strong>Umsatz gesamt: </strong><%=format_currency @item.revenue_overall %></p>
-  <p><strong>Umsatz/Stück: </strong><%=format_currency @item.revenue_per_piece %></p>  
+  <p><strong>Einsätze gesamt: </strong><%=n @item.rentals_overall %></p>
+  <p><strong>Einsätze/Stück: </strong><%= format_number_with_precision( @item.rentals_per_piece, 3 ) %></p>
+  <p><strong>Umsatz gesamt: </strong><%= format_currency @item.revenue_overall %></p>
+  <p><strong>Umsatz/Stück: </strong><%= format_currency @item.revenue_per_piece %></p>  
 </div>
 
 <div class="showbox left w100">

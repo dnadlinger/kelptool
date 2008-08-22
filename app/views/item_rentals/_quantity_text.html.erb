@@ -2,7 +2,7 @@
   item_rental = quantity_text
 -%>
 
-<%=h item_rental.quantity %>
+<%=n item_rental.quantity %>
 <% unless item_rental.available? -%>
-  <%= icon( :warning ) %>
+  <%= icon( :warning, :alt => "Nur #{item_rental.item.num_available_for( item_rental.rental_action )} Stück verfügbar." ) %>
 <% end -%>

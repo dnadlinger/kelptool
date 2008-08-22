@@ -4,8 +4,12 @@ module FormattingHelper
   end
   alias_method :n, :format_number
   
+  def format_number_with_precision( number, precision = 2 )
+    number_with_precision( number, precision ).gsub(  '.', ',' )
+  end
+  
   def format_percent( factor )
-    format_number( factor * 100 )
+    format_number( factor * 100 ) + '&thinsp;%'
   end
   
   def format_currency( number )

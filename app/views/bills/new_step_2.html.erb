@@ -1,0 +1,22 @@
+<% @page_title = "#{@bill.rental_action.name} – Rechnung hinzufügen" -%>
+<p><em>Wählen Sie eine laufende Nummer für die Rechnung.</em></p>
+
+<%= show_errors @bill, 'die Rechnung zu erzeugen' %>
+<% pretty_form_for [ @bill.rental_action, @bill ] do |f| %>
+  <fieldset>
+    <legend>Rechnung</legend>
+    <ol>
+      <li>
+        <%= f.label :type_key, 'Art: ' %>
+        <%= f.hidden_field :type_key, :value => @bill.bill_type.key %>
+        <%=h @bill.bill_type.name %>
+      </li>
+      <li id="bill_serial_number">
+        <%= f.label :serial_number, 'Laufende Nummer: ' %>
+        <%= f.text_field :serial_number, :size => 4 %>
+        <%= link_to_remote 'Automatisch erzeugen', :url => { :controller => :bills, :action => :generate_serial_number, :type_key => @bill.bill_type.key }, :method => :get %>
+      </li>
+    </ol>
+  </fieldset>
+  <p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück', new_rental_action_bill_path, { :class => 'navlink' } %></p>
+<% end %>

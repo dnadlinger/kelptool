@@ -1,0 +1,1 @@
+page[ :bill_serial_number ].select( 'input' ).first.value = @serial_number

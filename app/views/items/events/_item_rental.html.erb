@@ -1,5 +1,5 @@
 <li class="item_rental">
   <span class="date"><%= format_date item_rental.event_date %></span>
   <span class="icon"><%= icon :rental_action %></span>
-  <span><%=h item_rental.quantity %> Stück für <%= link_to h( item_rental.rental_action.name ), item_rental.rental_action %></span>
+  <span><%=n item_rental.quantity %> Stück für <%= link_to h( item_rental.rental_action.name ), item_rental.rental_action %></span>
 </li>

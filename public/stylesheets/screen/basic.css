@@ -131,27 +131,36 @@ em.deactivated {
 
 
 div.showbox {
-  
+  margin: 0 0 10px 0;
+}
+
+div.showbox.w30 {
+  width: 233px;
 }
 
 div.showbox.w40 {
-  width: 40%;
+  width: 314px;
 }
 
 div.showbox.w50 {
-  width: 50%;
+  width: 395px;
 }
 
 div.showbox.w60 {
-  width: 60%;
+  width: 476px;
+}
+
+div.showbox.w70 {
+  width: 557px;
 }
 
 div.showbox.w100 {
-  width: 100%;
+  width: 810px;
 }
 
 div.showbox.left {
   float: left;
+  margin-right: 10px;
 }
 
 div.showbox.right {
