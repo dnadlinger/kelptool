@@ -10,18 +10,18 @@ module ChoosingHelper
   end
   
   private
-  def build_link( mode, useIcon, *params, &block )
-    unless mode == current_choosing_mode
-      return nil
+    def build_link( mode, useIcon, *params, &block )
+      unless mode == current_choosing_mode
+        return nil
+      end
+      
+      options = {}
+      if mode.choose_method != :get
+        options[ :method ] = mode.choose_method
+      end
+      
+      result = link_to( ( useIcon ? icon( :choose ) : 'Auswählen' ), build_choose_path( mode, *params ), options )
+      
+      yield result
     end
-    
-    options = {}
-    if mode.choose_method != :get
-      options[ :method ] = mode.choose_method
-    end
-    
-    result = link_to( ( useIcon ? icon( :choose ) : 'Auswählen' ), build_choose_path( mode, *params ), options )
-    
-    yield result
-  end
 end

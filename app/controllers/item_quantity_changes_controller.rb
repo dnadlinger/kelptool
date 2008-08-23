@@ -24,7 +24,7 @@ class ItemQuantityChangesController < ApplicationController
   end
 
   def edit
-     @item_quantity_change = ItemQuantityChange.find( params[ :id ] )
+    @item_quantity_change = ItemQuantityChange.find( params[ :id ] )
   end
 
   def update
@@ -35,18 +35,18 @@ class ItemQuantityChangesController < ApplicationController
       redirect_to item_category_item_item_quantity_changes_url
     else
       render :action => 'edit'
-    end   
+    end
   end
 
   def destroy
-     @item_quantity_change = ItemQuantityChange.find( params[ :id ] )
-     @item_quantity_change.destroy
-     flash[ :notice ] = 'Bestandsänderung gelöscht.'
-     redirect_to item_category_item_item_quantity_changes_url
+    @item_quantity_change = ItemQuantityChange.find( params[ :id ] )
+    @item_quantity_change.destroy
+    flash[ :notice ] = 'Bestandsänderung gelöscht.'
+    redirect_to item_category_item_item_quantity_changes_url
   end
 
   private
-  def get_item
-    @item = Item.find( params[ :item_id ] )
-  end
+    def get_item
+      @item = Item.find( params[ :item_id ] )
+    end
 end

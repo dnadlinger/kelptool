@@ -22,13 +22,12 @@ class ItemQuantityChange < ActiveRecord::Base
     
   end
   
-  protected
-  
-  def update_item_count
-    delta = self.amount - @old_amount
-    debugger
-    self.item.total_count += delta
-    self.item.num_in_stock += delta
-    self.item.save!
-  end
+  private
+    def update_item_count
+      delta = self.amount - @old_amount
+      debugger
+      self.item.total_count += delta
+      self.item.num_in_stock += delta
+      self.item.save!
+    end
 end

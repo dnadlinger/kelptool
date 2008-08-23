@@ -13,11 +13,9 @@ module SearchConditions
   end
   
   def conditions_parts
-    condition_methods = protected_methods( false ).grep( /_conditions$/ )
-    if condition_methods.nil?
-      return nil
-    else
-      condition_methods.collect { |m| send(m) }.compact
-    end 
+    condition_methods = private_methods( false ).grep( /_conditions$/ )
+    return nil if condition_methods.nil?
+    
+    condition_methods.collect { |m| send(m) }.compact
   end
 end

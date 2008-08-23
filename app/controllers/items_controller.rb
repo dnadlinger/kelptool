@@ -61,8 +61,8 @@ class ItemsController < ApplicationController
     end
   end
   
-  protected
-  def get_item_category
-    @category = ItemCategory.find( params[ :item_category_id ] )
-  end
+  private
+    def get_item_category
+      @category = ItemCategory.find( params[ :item_category_id ] )
+    end
 end

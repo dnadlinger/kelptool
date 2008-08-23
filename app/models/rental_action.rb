@@ -41,21 +41,20 @@ class RentalAction < ActiveRecord::Base
   end
   
   
-  protected
-  
-  def calculate_overall_price
-    sum = 0
-    self.item_rentals.each do |item_rental|
-      sum += item_rental.price
+  private
+    def calculate_overall_price
+      sum = 0
+      self.item_rentals.each do |item_rental|
+        sum += item_rental.price
+      end
+      return sum
     end
-    return sum
-  end
-  
-  def calculate_overall_price_without_discount
-    sum = 0
-    self.item_rentals.each do |item_rental|
-      sum += item_rental.price_without_discount
+    
+    def calculate_overall_price_without_discount
+      sum = 0
+      self.item_rentals.each do |item_rental|
+        sum += item_rental.price_without_discount
+      end
+      return sum
     end
-    return sum
-  end
 end

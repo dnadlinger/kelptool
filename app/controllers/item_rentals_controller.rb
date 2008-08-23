@@ -123,9 +123,8 @@ class ItemRentalsController < ApplicationController
   end
   
   
-  protected
-  
-  def get_rental_action
-    @rental_action = RentalAction.find( params[ :rental_action_id ] )
-  end
+  private
+    def get_rental_action
+      @rental_action = RentalAction.find( params[ :rental_action_id ] )
+    end
 end

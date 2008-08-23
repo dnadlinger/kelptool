@@ -45,8 +45,8 @@ class ItemNotesController < ApplicationController
     redirect_to item_category_item_item_notes_url
   end
   
-  protected
-  def get_item
-    @item = Item.find( params[ :item_id ] )
-  end
+  private
+    def get_item
+      @item = Item.find( params[ :item_id ] )
+    end
 end

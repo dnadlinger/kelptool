@@ -82,21 +82,21 @@ module ListHelper
   end
   
   private
-  def parse_locals_option( option, element )
-    return nil if option.nil?
-    
-    locals_hash = {}
-    
-    option.each do |key, value|
-      if value.class == Hash
-        locals_hash[ key ] = parse_locals_option( value, element )
-      elsif value.class == Proc
-        locals_hash[ key ] = value.call( element )
-      else
-        locals_hash[ key ] = value
+    def parse_locals_option( option, element )
+      return nil if option.nil?
+      
+      locals_hash = {}
+      
+      option.each do |key, value|
+        if value.class == Hash
+          locals_hash[ key ] = parse_locals_option( value, element )
+        elsif value.class == Proc
+          locals_hash[ key ] = value.call( element )
+        else
+          locals_hash[ key ] = value
+        end
       end
+      
+      return locals_hash
     end
-    
-    return locals_hash
-  end
 end

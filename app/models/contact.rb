@@ -37,11 +37,10 @@ class Contact < ActiveRecord::Base
     end
   end
   
-  protected
-  
-  def save_phone_numbers
-    phone_numbers.each do |number|
-      number.save( false )
+  private
+    def save_phone_numbers
+      phone_numbers.each do |number|
+        number.save( false )
+      end
     end
-  end
 end

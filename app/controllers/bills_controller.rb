@@ -87,13 +87,12 @@ class BillsController < ApplicationController
     @serial_number = maximum + 1
   end
   
-  protected
-  
-  def get_rental_action
-    @rental_action = RentalAction.find( params[ :rental_action_id ] )
-  end
-  
-  def generate_document
-    ''
-  end
+  private
+    def get_rental_action
+      @rental_action = RentalAction.find( params[ :rental_action_id ] )
+    end
+    
+    def generate_document
+      ''
+    end
 end

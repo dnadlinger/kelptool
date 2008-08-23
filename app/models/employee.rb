@@ -33,8 +33,8 @@ class Employee < ActiveRecord::Base
     end
   end
   
-  protected
-  def save_contact
-    self.contact.save!
-  end
+  private
+    def save_contact
+      self.contact.save!
+    end
 end
