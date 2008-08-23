@@ -9,7 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080820214626) do
+ActiveRecord::Schema.define(:version => 20080821131641) do
+
+  create_table "bills", :force => true do |t|
+    t.integer  "serial_number"
+    t.string   "type_key"
+    t.integer  "rental_action_id"
+    t.string   "filename"
+    t.string   "content_type"
+    t.integer  "size"
+    t.integer  "db_file_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
@@ -28,6 +40,10 @@ ActiveRecord::Schema.define(:version => 20080820214626) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "price_factor"
+  end
+
+  create_table "db_files", :force => true do |t|
+    t.binary "data"
   end
 
   create_table "employees", :force => true do |t|
