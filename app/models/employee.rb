@@ -5,6 +5,7 @@ class Employee < ActiveRecord::Base
   validates_associated :contact, :message => 'Kontaktinformationen sind ungültig.'
 
   after_update :save_contact
+  before_destroy :destroy_contact
   
   named_scope :with_skills, lambda { |skills|
     skills = [ skills ] if skills.class == Skill
@@ -19,8 +20,12 @@ class Employee < ActiveRecord::Base
   }
   
   def contact_attributes=( attributes )
-    build_contact if self.contact.nil?
-    self.contact.attributes = attributes
+    if attributes[ :id ]
+      self.contact = Contact.find( attributes[ :id ] )
+    else
+      build_contact if self.contact.nil?
+      self.contact.attributes = attributes      
+    end
   end
   
   def skills_attributes=( skill_attributes )
@@ -37,4 +42,10 @@ class Employee < ActiveRecord::Base
     def save_contact
       self.contact.save!
     end
+    
+    def destroy_contact
+      unless self.contact.employee
+        self.contact.destroy
+      end
+    end  
 end

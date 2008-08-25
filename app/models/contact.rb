@@ -5,9 +5,7 @@ class Contact < ActiveRecord::Base
   
   has_many :phone_numbers
   
-  validates_presence_of :name, :message => 'Bitte geben Sie einen Namen ein.'
-  validates_uniqueness_of :name, :message => 'Kontaktinformationen mit diesem Namen existieren bereits.'
-  
+  validates_presence_of :name, :message => 'Bitte geben Sie einen Namen ein.'  
   validates_presence_of :adress, :message => 'Bitte geben Sie eine Adresse ein.'
   validates_presence_of :postcode, :message => 'Bitte geben Sie eine Postleitzahl ein.'
   validates_presence_of :place, :message => 'Bitte geben Sie einen Ort (nur den Namen) ein.'

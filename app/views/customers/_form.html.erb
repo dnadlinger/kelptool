@@ -1,11 +1,22 @@
 <%
   display ||= {}
   display[ :contact_choose_link ] ||= false
+  display[ :contact_fields ] = true if display[ :contact_fields ].nil?
+  display[ :contact_detach_link ] ||= false
 -%>
 
-<%= render :partial => 'contacts/contact_fields', :object => @customer.contact, :locals => { :path => 'customer[contact_attributes]' } %>
+<% if display[ :contact_fields ] -%>
+  <%= render :partial => 'contacts/contact_fields', :object => @customer.contact, :locals => { :path => 'customer[contact_attributes]' } %>
+<% else -%>
+  <%= render :partial => 'contacts/contact_form_text', :object => @customer.contact, :locals => { :path => 'customer[contact_attributes]' } %>
+<% end -%>
+
 <% if display[ :contact_choose_link ] -%>
   <p><%= link_to 'Kontaktinformationen von Mitarbeiter übernehmen', choose_contact_template_customers_path %></p>
+<% end -%>
+
+<% if display[ :contact_detach_link ] -%>
+  <p>Die Kontaktinformationen sind mit dem gleichnamigen Mitarbeiter verbunden. <%= link_to 'Trennen', detach_contact_customer_path, :method => :put %></p>
 <% end -%>
 
 <fieldset>

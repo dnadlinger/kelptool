@@ -51,7 +51,7 @@ class ItemsController < ApplicationController
   
   def destroy
     @item = @category.items.find( params[ :id ] )
-    if @item.rental_actions.count > 0
+    unless @item.rental_actions.empty?
       flash[ :error ] = 'Das Gerät wurde bereits vermietet und kann deswegen nicht mehr gelöscht werden!'
       redirect_to item_category_items_url( @category )
     else

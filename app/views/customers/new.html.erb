@@ -3,6 +3,7 @@
 <%= show_errors @customer.contact, 'die Kontaktinformationen zu speichern' %>
 <%= show_errors @customer, 'den Kunden anzulegen' %>
 <% pretty_form_for @customer do |f| %>
-  <%= render :partial => f, :locals => { :display => { :contact_choose_link => true } } %>
+  <% new_contact = @customer.contact.new_record? -%>
+  <%= render :partial => f, :locals => { :display => { :contact_choose_link => new_contact, :contact_fields => new_contact } } %>
   <p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück zur Übersicht', customers_path, { :class => 'navlink' } %></p>
 <% end %>

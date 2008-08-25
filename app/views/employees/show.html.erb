@@ -23,6 +23,7 @@
 
 <div class="navlinks">
   <%= choose_link ChoosingMode::CustomersChooseContactTemplate, @employee.contact %>
-  <p><%= link_to 'Mitarbeiter bearbeiten', edit_employee_path %></p> 
+  <p><%= link_to 'Bearbeiten', edit_employee_path %></p> 
+  <p><%= link_to 'Löschen', @employee, :confirm => 'Soll dieser Mitarbeiter wirklich unwiderruflich gelöscht werden?', :method => :delete %></p>
   <p><%= link_to 'Zurück zur Übersicht', employees_path %></p>
 </div>

@@ -3,6 +3,6 @@
 <%= show_errors @employee.contact, 'die Kontaktinformationen zu ändern' %>
 <%= show_errors @employee, 'den Mitarbeiter abzuändern' %>
 <% edit_form_for @employee do |f| %>
-  <%= render :partial => f %>
+  <%= render :partial => f, :locals => { :display => { :contact_detach_link => !@employee.contact.customer.nil? } } %>
   <p><%= f.submit 'Ändern' %> <%= link_to 'Zurück zur Übersicht', employees_path, { :class => 'navlink' } %></p>
 <% end %>

@@ -64,6 +64,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :employees,
     :collection => {
       :choose_contact_template => :get
+    }, :member => {
+      :detach_contact => :put
     }
   
   
@@ -75,6 +77,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :customers,
     :collection => {
       :choose_contact_template => :get
+    }, :member => {
+      :detach_contact => :put
     }
   
   

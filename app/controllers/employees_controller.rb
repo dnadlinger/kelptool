@@ -46,14 +46,36 @@ class EmployeesController < ApplicationController
     @employee = Employee.find( params[ :id ] ) 
     if @employee.update_attributes( params[ :employee ] )
       flash[ :notice ] = 'Änderungen gespeichert.'
-      redirect_to employee_path
+      redirect_to @employee
     else
       render :action => 'edit'
     end
   end
   
+  def destroy
+    @employee = Employee.find( params[ :id] )
+    @employee.destroy
+    flash[ :notice ] = 'Mitarbeiter gelöscht.'
+    redirect_to employees_url
+  end
+  
   def choose_contact_template
     start_choosing ChoosingMode::EmployeesChooseContactTemplate
     redirect_to customers_url
+  end
+  
+  def detach_contact
+    @employee = Employee.find( params[ :id ] )
+    
+    if @employee.contact.customer
+      @employee.contact = @employee.contact.clone
+      @employee.save!
+      
+      flash[ :notice ] = 'Die Kontaktinformationen sind jetzt nicht mehr mit dem gleichnamigen Kunden verbunden.'
+    else
+      flash[ :error ] = 'Die Kontaktinformationen sind bereits getrennt.'
+    end
+    
+    redirect_to edit_employee_url
   end
 end

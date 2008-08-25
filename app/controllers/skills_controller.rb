@@ -22,7 +22,7 @@ class SkillsController < ApplicationController
     @skill = Skill.new( params[ :skill ] )
     if @skill.save
       flash[ :notice ] = 'Fähigkeit definiert.'
-      redirect_to skills_path
+      redirect_to skills_url
     else
       render :action => 'new'
     end

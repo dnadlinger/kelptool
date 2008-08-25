@@ -1,6 +1,7 @@
 <% @page_title = 'Neues Gerät hinzufügen' -%>
 
 <%= show_errors @item, 'das Gerät hinzuzufügen' %>
+<%= show_errors @item.price, 'den Preis zu speichern' %>
 <% pretty_form_for [ @item.item_category, @item ] do |f| %>
   <fieldset>
     <legend>Gerät</legend>

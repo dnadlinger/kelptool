@@ -11,7 +11,7 @@ class CustomersController < ApplicationController
     end_choosing ChoosingMode::CustomersChooseContactTemplate
     
     @customer = Customer.new
-    @customer.discount = 1000
+    @customer.price_factor = 1
     
     begin
       @customer.contact = Contact.find( params[ :contact_id ] )
@@ -39,7 +39,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find( params[ :id ] ) 
     if @customer.update_attributes( params[ :customer ] )
       flash[ :notice ] = 'Änderungen gespeichert.'
-      redirect_to customer_path( @customer )
+      redirect_to @customer
     else
       render :action => 'edit'
     end
@@ -47,10 +47,34 @@ class CustomersController < ApplicationController
   
   def destroy
     @customer = Customer.find( params[ :id ] )
+    unless @customer.rental_actions.empty?
+      flash[ :error ] = 'Diesem Kunden wurden schon Mietaktionen zugeordnet. Er kann daher nicht mehr gelöscht werden.'
+      redirect_to @customer
+    else
+      @customer.destroy
+      flash[ :notice ] = 'Kunde gelöscht.'
+      redirect_to customers_url
+    end
   end
  
   def choose_contact_template
     start_choosing ChoosingMode::CustomersChooseContactTemplate
     redirect_to employees_url
   end
+  
+  def detach_contact
+    @customer = Customer.find( params[ :id ] )
+    
+    if @customer.contact.employee
+      @customer.contact = @customer.contact.clone
+      @customer.save!
+      
+      flash[ :notice ] = 'Kontaktinformationen werden nicht mehr mit dem gleichnamigen Mitarbeiter geteilt.'
+    else
+      flash[ :error ] = 'Die Kontaktinformationen sind bereits getrennt.'
+    end
+    
+    redirect_to edit_customer_url
+  end
+  
 end

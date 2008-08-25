@@ -15,7 +15,8 @@
   <% end -%>
 
   <div class="navlinks">
-      <p><%= link_to 'Kunden bearbeiten', edit_customer_path %></p>
+      <p><%= link_to 'Bearbeiten', edit_customer_path %></p>
+      <p><%= link_to 'Löschen', @customer, :confirm => 'Soll dieser Kunde wirklich unwiderruflich gelöscht werden?', :method => :delete %></p>
   </div>
 </div>
 
