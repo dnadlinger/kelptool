@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
     
     if @item.save
       flash[ :notice ] = 'Gerät hinzugefügt.'
-      redirect_to item_category_item_url( @item.item_category_id, @item )
+      redirect_to @item
     else
       render :action => 'new'
     end
@@ -42,7 +42,7 @@ class ItemsController < ApplicationController
     @item = Item.find( params[ :id ] )
     if @item.update_attributes( params[ :item ] ) && @item.price.update_attributes( params[ :simple_price ] )
       flash[ :notice ] = 'Änderungen gespeichert.'
-      redirect_to item_category_item_url( @item.item_category_id, @item )
+      redirect_to :action => 'show'
     else
       @categories = ItemCategory.find( :all )
       render :action => 'edit'
@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
     @item = @category.items.find( params[ :id ] )
     unless @item.rental_actions.empty?
       flash[ :error ] = 'Das Gerät wurde bereits vermietet und kann deswegen nicht mehr gelöscht werden!'
-      redirect_to item_category_items_url( @category )
+      redirect_to :action => 'show'
     else
       @item.destroy
       flash[ :notice ] = 'Gerät gelöscht.'

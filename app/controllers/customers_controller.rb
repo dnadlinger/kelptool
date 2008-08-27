@@ -39,7 +39,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find( params[ :id ] ) 
     if @customer.update_attributes( params[ :customer ] )
       flash[ :notice ] = 'Änderungen gespeichert.'
-      redirect_to @customer
+      redirect_to :action => 'show'
     else
       render :action => 'edit'
     end
@@ -49,11 +49,11 @@ class CustomersController < ApplicationController
     @customer = Customer.find( params[ :id ] )
     unless @customer.rental_actions.empty?
       flash[ :error ] = 'Diesem Kunden wurden schon Mietaktionen zugeordnet. Er kann daher nicht mehr gelöscht werden.'
-      redirect_to @customer
+      redirect_to :action => 'show'
     else
       @customer.destroy
       flash[ :notice ] = 'Kunde gelöscht.'
-      redirect_to customers_url
+      redirect_to :action => 'index'
     end
   end
  
@@ -74,7 +74,7 @@ class CustomersController < ApplicationController
       flash[ :error ] = 'Die Kontaktinformationen sind bereits getrennt.'
     end
     
-    redirect_to edit_customer_url
+    redirect_to :action => 'edit'
   end
   
 end

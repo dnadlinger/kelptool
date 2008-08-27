@@ -11,7 +11,7 @@ class BillsController < ApplicationController
     
     unless @bill.db_file
       flash[ :error ] = 'Zu dieser Rechnung ist noch keine Datei gespeichert!'
-      redirect_to edit_rental_action_bill_url( @rental_action, @bill )      
+      redirect_to :action => 'edit'
     else
       unless @bill.content_type == request.format.to_s
         redirect_to formatted_rental_action_bill_url( @rental_action, @bill, @bill.extension )
@@ -36,7 +36,7 @@ class BillsController < ApplicationController
     
     unless key
       flash[ :error ] = 'Wählen Sie die Art der Rechnung.'
-      redirect_to new_rental_action_bill_url
+      redirect_to :action => 'new'
     end
     
     @bill.bill_type = key
@@ -48,7 +48,7 @@ class BillsController < ApplicationController
     
     if @bill.save
       flash[ :notice ] = 'Rechnung erzeugt. Laden Sie jetzt die Datei für die Rechnung hoch.'
-      redirect_to edit_rental_action_bill_url( @rental_action, @bill )
+      redirect_to :action => 'edit'
     else
       render :action => 'new_step_2'
     end
@@ -69,7 +69,7 @@ class BillsController < ApplicationController
     
     if @bill.update_attributes( params[ :bill ] )
       flash[ :notice ] = 'Rechnung gespeichert.'
-      redirect_to rental_action_bills_url
+      redirect_to :action => 'index'
     else
       render :action => 'edit'
     end
@@ -79,7 +79,7 @@ class BillsController < ApplicationController
     @bill = Bill.find( params[ :id ] )
     @bill.destroy
     flash[ :notice ] = 'Rechnung gelöscht.'
-    redirect_to rental_action_bills_url
+    redirect_to :action => 'index'
   end
   
   def generate_serial_number

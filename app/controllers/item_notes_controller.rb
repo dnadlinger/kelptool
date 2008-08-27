@@ -17,7 +17,7 @@ class ItemNotesController < ApplicationController
     
     if @item_note.save
       flash[ :notice ] = 'Notiz gespeichert.'
-      redirect_to item_category_item_item_notes_url
+      redirect_to :action => 'index'
     else
       render :action => 'new'
     end
@@ -32,7 +32,7 @@ class ItemNotesController < ApplicationController
     
     if @item_note.update_attributes( params[ :item_note ] )
       flash[ :notice ] = 'Notiz gespeichert.'
-      redirect_to item_category_item_item_notes_url
+      redirect_to :action => 'index'
     else
       render :actin => 'edit'
     end
@@ -42,7 +42,7 @@ class ItemNotesController < ApplicationController
     @item_note = ItemNote.find( params[ :id ] )
     @item_note.destroy
     flash[ :notice ] = 'Notiz gelöscht.'
-    redirect_to item_category_item_item_notes_url
+    redirect_to :action => 'index'
   end
   
   private

@@ -31,7 +31,7 @@ class ItemRentalsController < ApplicationController
     
     if @item_rental.save
       flash[ :notice ] = 'Gerät zur Liste hinzugefügt.'
-      redirect_to rental_action_item_rentals_url
+      redirect_to :action => 'index'
     else
       render :action => 'new'
     end
@@ -55,12 +55,12 @@ class ItemRentalsController < ApplicationController
     if @item_rental.update_attributes( params[ :item_rental ] )
       respond_to do |format|
         format.html do
-          redirect_to rental_action_item_rentals_url
+          redirect_to :action => 'index'
         end
         format.js
       end
     else
-      redirect_to edit_rental_action_item_rental_url
+      redirect_to :action => 'edit'
     end
   end
   
@@ -68,7 +68,7 @@ class ItemRentalsController < ApplicationController
     @item_rental = ItemRental.find( params[ :id ] )
     @item_rental.destroy
     flash[ :notice ] = 'Gerät aus der Liste entfernt.'
-    redirect_to rental_action_item_rentals_url
+    redirect_to :action => 'index'
   end
   
   def handed_out
@@ -80,7 +80,7 @@ class ItemRentalsController < ApplicationController
       flash[ :error ] = 'Das Gerät war bereits als ausgegeben gekennzeichnet.'
     end
     
-    redirect_to rental_action_item_rentals_url
+    redirect_to :action => 'index'
   end
   
   def all_handed_out
@@ -89,7 +89,7 @@ class ItemRentalsController < ApplicationController
     end
     
     flash[ :notice ] = 'Alle Geräte als ausgegeben gekennzeichnet.'
-    redirect_to rental_action_item_rentals_url
+    redirect_to :action => 'index'
   end
   
   def returned
@@ -101,7 +101,7 @@ class ItemRentalsController < ApplicationController
       flash[ :error ] = 'Das Gerät war bereits als zurückgebracht gekennzeichnet.'
     end
     
-    redirect_to rental_action_item_rentals_url
+    redirect_to :action => 'index'
   end
   
   def all_returned
@@ -110,7 +110,7 @@ class ItemRentalsController < ApplicationController
     end
     
     flash[ :notice ] = 'Alle Geräte als zurückgebracht gekennzeichnet.'
-    redirect_to rental_action_item_rentals_url
+    redirect_to :action => 'index'
   end
   
   def reset_state
@@ -119,7 +119,7 @@ class ItemRentalsController < ApplicationController
     @item_rental.reset_state!
     
     flash[ :notice ] = 'Zustand des Gerätes zurückgesetzt.'
-    redirect_to rental_action_item_rentals_url
+    redirect_to :action => 'index'
   end
   
   

@@ -38,7 +38,7 @@ class ItemCategoriesController < ApplicationController
     @category = ItemCategory.find( params[ :id ] ) 
     if @category.update_attributes( params[ :item_category ] )
       flash[ :notice ] = 'Änderungen gespeichert.'
-      redirect_to item_category_items_url( @category )
+      redirect_to :action => 'show'
     else
       render :action => 'edit'
     end
@@ -48,22 +48,22 @@ class ItemCategoriesController < ApplicationController
     @category = ItemCategory.find( params[ :id ] ) 
     if @category.items.count > 0
       flash[ :error ] = 'Kategorien können nur gelöscht werden, wenn sie leer sind!'
-      redirect_to item_category_url( @category )
+      redirect_to :action => 'show'
     else
       @category.destroy
       flash[ :notice ] = 'Kategorie gelöscht.'
-      redirect_to item_categories_url
+      redirect_to :action => 'index'
     end
   end
   
   def move_up
     ItemCategory.find( params[ :id ] ).move_higher
-    redirect_to item_categories_url
+    redirect_to :action => 'index'
   end
   
   def move_down
     ItemCategory.find( params[ :id ] ).move_lower
-    redirect_to item_categories_url
+    redirect_to :action => 'index'
   end
 
   def auto_complete_for_item_name

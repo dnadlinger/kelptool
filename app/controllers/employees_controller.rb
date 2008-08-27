@@ -46,7 +46,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.find( params[ :id ] ) 
     if @employee.update_attributes( params[ :employee ] )
       flash[ :notice ] = 'Änderungen gespeichert.'
-      redirect_to @employee
+      redirect_to :action => 'show'
     else
       render :action => 'edit'
     end
@@ -56,7 +56,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.find( params[ :id] )
     @employee.destroy
     flash[ :notice ] = 'Mitarbeiter gelöscht.'
-    redirect_to employees_url
+    redirect_to :acion => 'index'
   end
   
   def choose_contact_template
@@ -76,6 +76,6 @@ class EmployeesController < ApplicationController
       flash[ :error ] = 'Die Kontaktinformationen sind bereits getrennt.'
     end
     
-    redirect_to edit_employee_url
+    redirect_to :action => 'edit'
   end
 end

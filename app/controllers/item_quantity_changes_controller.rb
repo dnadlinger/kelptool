@@ -17,7 +17,7 @@ class ItemQuantityChangesController < ApplicationController
     
     if @item_quantity_change.save
       flash[ :notice ] = 'Bestandsänderung registiert.'
-      redirect_to item_category_item_item_quantity_changes_url
+      redirect_to :action => 'index'
     else
       render :action => 'new'
     end
@@ -32,7 +32,7 @@ class ItemQuantityChangesController < ApplicationController
     
     if @item_quantity_change.update_attributes( params[ :item_quantity_change ] )
       flash[ :notice ] = 'Änderung gespeichert.'
-      redirect_to item_category_item_item_quantity_changes_url
+      redirect_to :action => 'index'
     else
       render :action => 'edit'
     end
@@ -42,7 +42,7 @@ class ItemQuantityChangesController < ApplicationController
     @item_quantity_change = ItemQuantityChange.find( params[ :id ] )
     @item_quantity_change.destroy
     flash[ :notice ] = 'Bestandsänderung gelöscht.'
-    redirect_to item_category_item_item_quantity_changes_url
+    redirect_to :action => 'index'
   end
 
   private

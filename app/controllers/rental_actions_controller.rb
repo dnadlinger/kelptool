@@ -33,7 +33,7 @@ class RentalActionsController < ApplicationController
     
     if @rental_action.save
       flash[ :notice ] = 'Mietvorgang angelegt. Sie können jetzt die Details bearbeiten.'
-      redirect_to rental_action_url( @rental_action )
+      redirect_to @rental_action
     else
       render :action => 'new'
     end
@@ -48,7 +48,7 @@ class RentalActionsController < ApplicationController
     
     if @rental_action.update_attributes( params[ :rental_action ] )
       flash[ :notice ] = ''
-      redirect_to rental_action_url( @rental_action )
+      redirect_to :action => 'show'
     else
       render :action => 'edit'
     end
@@ -64,7 +64,7 @@ class RentalActionsController < ApplicationController
       flash[ :error ] = 'Der Mietvorgang ist bereits deaktiviert.'
     end
     
-    redirect_to rental_action_url
+    redirect_to :action => 'show'
   end
   
   def activate
@@ -77,7 +77,7 @@ class RentalActionsController < ApplicationController
       flash[ :error ] = 'Der Mietvorgang ist bereits aktiviert.'
     end
     
-    redirect_to rental_action_url
+    redirect_to :action => 'show'
   end  
   
   def choose_customer
@@ -98,6 +98,6 @@ class RentalActionsController < ApplicationController
 
   def choose_template
     start_choosing ChoosingMode::RentalActionsChooseTemplate
-    redirect_to rental_actions_url
+    redirect_to :action => 'index'
   end
 end
