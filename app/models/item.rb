@@ -80,9 +80,6 @@ class Item < ActiveRecord::Base
     
     available = self.num_in_stock
     
-    # The "|| 0"-clause on this and the following sum call should not be needed.
-    # But due to a bug in Rails 2.1.0, which is already fixed in edge, calling
-    # sum on an association returns nil instead of 0.
     available += self.item_rentals.active.sum(
       :quantity,
       :include => [ :rental_action ],
@@ -90,7 +87,7 @@ class Item < ActiveRecord::Base
         'handed_out = ? AND returned = ? AND rental_actions.end_date < ?' + exclude_condition,
         true, false, start_date
       ]
-    ) || 0
+    )
     
     if ( available > self.total_count )
       available = total_count
@@ -105,7 +102,7 @@ class Item < ActiveRecord::Base
         'handed_out = ? AND rental_actions.start_date <= ? AND rental_actions.end_date >= ?' + exclude_condition,
         false, end_date, start_date
       ]
-    ) || 0
+    )
     
     if ( available < 0 )
       available = 0
