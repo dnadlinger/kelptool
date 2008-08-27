@@ -3,10 +3,10 @@
   path ||= contact
 -%>
 
-<% fields_for path, contact do |c| %>
+<% fields_for path, contact do |c| -%>
 <fieldset>
   <legend>Kontaktdaten</legend>
   <%= c.hidden_field :id %>
   <%= render :partial => contact %>
 </fieldset>
-<% end %>
+<% end -%>

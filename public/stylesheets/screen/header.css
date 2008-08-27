@@ -9,11 +9,14 @@ div#header h1.title {
   top: 30px;
   
   color: #000;
-  font-family: "Myriad Pro", Tahoma, sans-serif;
   font-size: 60px;
 }
 
-div#header h1.title span.light {
+div#header h1.title span.kelp {
+  font-family: "Myriad Pro", Tahoma, sans-serif;
+}
+
+div#header h1.title span.tool {
   font-family: "Myriad Pro Light", Tahoma, sans-serif;
 }
 

@@ -7,7 +7,7 @@
 -%>
 
 <li class="skill">
-<% fields_for_collection_element skill, path, 'skills', list_position do |f, id_prefix| %>
+<% fields_for_collection_element skill, path, 'skills', list_position do |f, id_prefix| -%>
   <% unless use_select_menu -%>
     <%= f.label :name, 'Fähigkeit: ' %>
     <%= f.text_field :name %>
@@ -18,5 +18,5 @@
     <%= f.collection_select :name, Skill.all, :name, :name %>
     <%= link_to_function 'entfernen', "this.up( '.skill' ).remove()" %>
   <% end -%>
-<% end %>
+<% end -%>
 </li>

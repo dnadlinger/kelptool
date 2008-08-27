@@ -1,11 +1,12 @@
 class Employee < ActiveRecord::Base
-  has_and_belongs_to_many :skills
   belongs_to :contact
-  
-  validates_associated :contact, :message => 'Kontaktinformationen sind ungültig.'
-
-  after_update :save_contact
   before_destroy :destroy_contact
+  validates_associated :contact, :message => 'Kontaktinformationen sind ungültig.'  
+  
+  has_and_belongs_to_many :skills
+  attribute_for_collection :skills,
+    :build_new => lambda { |this, attributes| this.send( :add_skill, attributes ) },
+    :update_existing => lambda { |this, attributes, element| this.send( :add_skill, attributes, element ) }
   
   named_scope :with_skills, lambda { |*skills|
     skill_ids = skills.flatten.uniq.collect( &:id )
@@ -18,9 +19,7 @@ class Employee < ActiveRecord::Base
     }
   }
   
-  attribute_for_collection :skills,
-    :build_new => lambda { |this, attributes| this.send( :add_skill, attributes ) },
-    :update_existing => lambda { |this, attributes, element| this.send( :add_skill, attributes, element ) }
+  after_update :save_contact
   
   def contact_attributes=( attributes )
     if attributes[ :id ]
