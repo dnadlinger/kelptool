@@ -7,9 +7,8 @@ class Employee < ActiveRecord::Base
   after_update :save_contact
   before_destroy :destroy_contact
   
-  named_scope :with_skills, lambda { |skills|
-    skills = [ skills ] if skills.class == Skill
-    skill_ids = skills.collect( &:id )
+  named_scope :with_skills, lambda { |*skills|
+    skill_ids = skills.flatten.uniq.collect( &:id )
     return {
       :select => 'employees.*',
       :readonly => false,
