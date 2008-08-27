@@ -5,15 +5,19 @@
 <% edit_form_for [ @item.item_category, @item ] do |f| %>
   <fieldset>
     <legend>Gerät:</legend>
-    <ol>
-      <li><%= f.label :name, 'Name: <em>*</em>' %><%= f.text_field :name %></li>
+    <ol id="item">
       <li><%= f.label :item_category_id, 'Kategorie: <em>*</em>' %><%= f.collection_select :item_category_id, @categories, :id, :name %></li>
+      <li><%= f.label :name, 'Name: <em>*</em>' %><%= f.text_field :name %></li>
+      <div id="item_descriptions">
+        <%= collection_fields @item, :item_descriptions %>
+      </div>
+      <%= link_to_function 'Beschreibung hinzufügen', "itemDescriptionFields.addChild()" %>
     </ol>
   </fieldset>
   
-  <% fields_for @item.price do |price_fields| %>
+  <% fields_for @item.price do |price_fields| -%>
     <%= render :partial => 'items/prices/simple_price_fields', :locals => { :f => price_fields } %>
-  <% end %>
+  <% end -%>
   
   <p><%= f.submit 'Ändern' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
 <% end %>

@@ -8,6 +8,9 @@
   <h2>Gerät</h2>
   <p><strong>Kategorie: </strong><%=h @item.item_category.name %></p>
   <p><strong>Bezeichnung: </strong><%=h @item.full_name %></p>
+  <% for item_description in @item.item_descriptions -%>
+  <p><strong>Beschreibung: </strong><%=h item_description.text %></p>
+  <% end -%>
   <p><strong>Anzahl gesamt: </strong><%=n @item.total_count %></p>
   <p><strong>Derzeit lagernd: </strong><%=n @item.num_in_stock %></p>
   <p><strong>Preis: </strong> <%= render :partial => 'items/prices/' + @item.price_type.tableize.singularize, :object => @item.price %></p>

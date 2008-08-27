@@ -6,14 +6,20 @@
   <fieldset>
     <legend>Gerät</legend>
     <ol>
+      <li>
+        <%= f.label :item_category_id, 'Kategorie: ' %><%= f.hidden_field :item_category_id, :value => @item.item_category.id %>
+        <%= @item.item_category.name %>
+      </li>
       <li><%= f.label :name, 'Name: <em>*</em>' %><%= f.text_field :name %></li>
-      <li><%= f.label :item_category_id, 'Kategorie: ' %><%= f.hidden_field :item_category_id, :value => @item.item_category.id %>
-        <%= @item.item_category.name %></li>
-      <li><%= f.label :total_count, 'Anzahl: <em>*</em>' %><%= f.text_field :total_count %></li>
+      <div id="item_descriptions">
+        <%= collection_fields @item, :item_descriptions %>
+      </div>
+      <%= link_to_function 'Beschreibung hinzufügen', "itemDescriptionFields.addChild()" %>
+      <li><%= f.label :total_count, 'Anzahl: <em>*</em>' %><%= f.text_field :total_count, :size => 3 %></li>
     </ol>
   </fieldset>
-  <% fields_for @item.price do |price_fields| %>
-    <%= render :partial => 'simple_price_fields', :locals => { :f => price_fields } %>
-  <% end %>
+  <% fields_for @item.price do |price_fields| -%>
+    <%= render :partial => 'items/prices/simple_price_fields', :locals => { :f => price_fields } %>
+  <% end -%>
   <p><%= f.submit 'Hinzufügen' %> <%= link_to 'Zurück', :back, { :class => 'navlink' } %></p>
 <% end %>

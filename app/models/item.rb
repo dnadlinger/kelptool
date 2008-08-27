@@ -1,6 +1,9 @@
 class Item < ActiveRecord::Base
   belongs_to :item_category
   
+  has_many :item_descriptions, :dependent => :destroy
+  attribute_for_collection :item_descriptions
+  
   has_many :item_rentals, :dependent => :destroy
   has_many :rental_actions, :through => :item_rentals
   

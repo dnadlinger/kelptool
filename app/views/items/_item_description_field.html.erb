@@ -1,0 +1,10 @@
+<%
+  item_description = item_description_field
+-%>
+
+<li class="item_description">
+<% fields_for_collection_element item_description, 'item', 'item_descriptions', list_position do |f, id_prefix| -%>
+  <%= f.label :text, 'Beschreibung: <em>*</em>' %><%= f.text_field :text %>  
+  <%= link_to_function 'entfernen', "this.up( '.item_description' ).remove()" %>
+<% end -%>
+</li>
