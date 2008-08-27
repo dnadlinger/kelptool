@@ -1,4 +1,7 @@
 <p><strong>Name: </strong><%=h contact.name %></p>
+<% unless contact.staffer.blank? -%>
+  <p><strong>Zuhanden: </strong><%=h contact.staffer %>
+<% end -%>
 <p><strong>Adresse: </strong><%=h contact.adress %></p>
 <p><strong>Ort: </strong><%=h contact.place %></p>
 <p><strong>E-Mail-Adresse: </strong><%= mail_to contact.email %></p>
@@ -8,7 +11,7 @@
   <% unless contact.phone_numbers.empty? -%>
     <ul>
     <% for phone_number in contact.phone_numbers %>
-      <li><%= h phone_number.number %> <em>(<%= phone_number.type.name %>)</em></li>
+      <li><%=h phone_number.number %> <em>(<%=h phone_number.type.name %>)</em></li>
     <% end %>
     </ul>
   <% else -%>

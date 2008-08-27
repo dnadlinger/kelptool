@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080821131641) do
+ActiveRecord::Schema.define(:version => 20080827202855) do
 
   create_table "bills", :force => true do |t|
     t.integer  "serial_number"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20080821131641) do
     t.datetime "updated_at"
     t.string   "uid"
     t.string   "postcode"
+    t.string   "staffer"
   end
 
   create_table "customers", :force => true do |t|

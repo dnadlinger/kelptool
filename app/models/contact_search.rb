@@ -1,5 +1,5 @@
 class ContactSearch < ActiveRecord::BaseWithoutTable
-  attr_accessor :name, :adress, :postcode, :place, :email, :uid
+  attr_accessor :name, :staffer, :adress, :postcode, :place, :email, :uid
   
   def contacts
     find_contacts
@@ -17,6 +17,10 @@ class ContactSearch < ActiveRecord::BaseWithoutTable
     
     def name_conditions
       [ "contacts.name LIKE ?", "%#{ name }%" ] unless name.blank?
+    end
+    
+    def staffer_conditions
+      [ "contacts.staffer LIKE ?", "%#{ staffer }%" ] unless staffer.blank?
     end
     
     def adress_conditions
