@@ -1,6 +1,8 @@
 class ChoosingMode
+  class << self
+    protected :new
+  end  
   def initialize( name, message, build_choose_path, choose_method, get_source_by_id = nil, source_name = nil, build_source_path = nil, source_method = :get )
-    # TODO: How to make this private?
     @name = name
     @message = message
     
@@ -11,6 +13,9 @@ class ChoosingMode
     @source_name = source_name
     @build_source_path = build_source_path
     @source_method = source_method
+    
+    @@modes ||= []
+    @@modes << self
   end
   
   attr_accessor :name, :message, :source_name, :choose_method, :source_method
@@ -34,14 +39,7 @@ class ChoosingMode
   end
   
   def self.find_by_name( name )
-    result = nil
-    ObjectSpace.each_object( ChoosingMode ) do |mode|
-      if mode.name == name
-        result = mode
-        break
-      end
-    end
-    return result
+    @@modes.detect { |m| m.name == name }
   end
   
   ItemRentalsChooseItem = ChoosingMode.new(
