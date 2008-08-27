@@ -13,8 +13,8 @@ class BillsController < ApplicationController
       flash[ :error ] = 'Zu dieser Rechnung ist noch keine Datei gespeichert!'
       redirect_to :action => 'edit'
     else
-      unless @bill.content_type == request.format.to_s
-        redirect_to formatted_rental_action_bill_url( @rental_action, @bill, @bill.extension )
+      unless params[ :format ] == @bill.extension
+        redirect_to :action => 'show', :format => @bill.extension
       else
         send_data( @bill.current_data, :filename => @bill.reference + '.' + @bill.extension, :type => @bill.content_type )
       end
