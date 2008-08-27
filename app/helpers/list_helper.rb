@@ -1,23 +1,11 @@
 module ListHelper
   include ActionView::Helpers::RecordIdentificationHelper
   
-  def render_biglist( collection, name, *args )    
+  def render_biglist( collection, name, options = {} )    
     if collection.empty?
-      return "<p><em>Keine #{name} gefunden.</em></p>"
+      return "<p><em>Keine #{ name } gefunden.</em></p>"
     end
     
-    options = args.extract_options!
-    
-#    content_tag :div, :class => 'biglist' do
-#      content_tag :ol do
-#        collection.each do |element|
-#          content_tag :li, element do
-#            render :partial => element 
-#          end
-#        end
-#      end
-#    end
-
     if options[ :filter ]
       filter = options[ :filter ]
     else
@@ -37,10 +25,8 @@ module ListHelper
     end
   end
   
-  def render_sublist( object, collection_attribute, name, *args )
-    options = args.extract_options!
-    
-    container_id = "#{dom_class( object )}_#{collection_attribute}"
+  def render_sublist( object, collection_attribute, name, options = {} )    
+    container_id = "#{ dom_class( object ) }_#{ collection_attribute }"
     collection = options[ :collection ] || object.send( collection_attribute )
     
     content_tag :div, :class => 'sub_list', :id => container_id do
@@ -52,7 +38,7 @@ module ListHelper
             end
           end
         else
-          content_tag( :li, "<em>Keine #{name} gefunden.</em>" )
+          content_tag( :li, "<em>Keine #{ name } gefunden.</em>" )
         end
       end
     end
@@ -60,7 +46,7 @@ module ListHelper
   
   def show_sublist_for( object, collection_attribute, name )
     container_id = "#{dom_class( object )}_#{collection_attribute}"
-    content = object.send collection_attribute
+    content = object.send( collection_attribute )
     
     # The try/catch block is needed because a JS error is raised if the
     # container element does not exist.
@@ -70,7 +56,7 @@ module ListHelper
     
     page.insert_html :bottom, dom_id( object ), :inline => '<%= render_sublist( object, collection_attribute, name ) %>', :locals => { :object => object, :collection_attribute => collection_attribute, :name => name }
     #page.insert_html :bottom, dom_id( object ), :text => render_sublist( object, collection_attribute, name )
-    page[ container_id ].select( "ol" ).first.visual_effect( :blind_down, :duration => appear_duration_for( content ) )
+    page[ container_id ].select( 'ol' ).first.visual_effect( :blind_down, :duration => appear_duration_for( content ) )
   end
   
   def appear_duration_for( array )
