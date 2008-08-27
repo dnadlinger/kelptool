@@ -1,11 +1,11 @@
 module FormattingHelper
   def format_number( number )
-    number_with_delimiter( number, '&thinsp;', ',' )
+    number_with_delimiter( number, :separator => ',', :delimiter => '&thinsp;' )
   end
   alias_method :n, :format_number
   
   def format_number_with_precision( number, precision = 2 )
-    number_with_precision( number, precision ).gsub(  '.', ',' )
+    number_with_precision( number, :precision => precision, :separator => ',', :delimiter => '&thinsp;' )
   end
   
   def format_percent( factor )
