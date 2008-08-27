@@ -22,9 +22,9 @@
   <fieldset>
     <legend>Telefonnummern</legend>
     <ol id="phone_numbers">
-      <%= render :partial => 'contacts/phone_number', :collection => contact.phone_numbers, :locals => { :path => path } %>
+      <%= collection_fields contact, :phone_numbers, :partial_name => 'contacts/phone_number_field', :partial_locals => { :path => path } %>
     </ol>
-    <%= add_phone_number_link( path ) %>
+    <%= link_to_function 'Telefonnummer hinzufügen', "phoneNumberFields.addChild()" %>
   </fieldset>
   <% end -%>
 </fieldset>

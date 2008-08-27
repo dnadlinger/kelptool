@@ -1,17 +1,21 @@
 <%
   use_select_menu ||= false
+  list_position ||= nil
+  path ||= 'employee'
+
+  skill = skill_field
 -%>
 
 <li class="skill">
-<% fields_for 'employee[skills_attributes][]', skill_field do |skill_form| %>
+<% fields_for_collection_element skill, path, 'skills', list_position do |f, id_prefix| %>
   <% unless use_select_menu -%>
-    <% id_string = generate_unique_id( 'employee_skill_attributes_' ) + '_name' -%>
-    <%= label_tag id_string, 'Fähigkeit: ' %><%= skill_form.text_field :name, { :id => id_string, :index => nil } %>
+    <%= f.label :name, 'Fähigkeit: ' %>
+    <%= f.text_field :name %>
     <%= link_to_function 'entfernen', "this.up( '.skill' ).remove()" %>
-    <div class="auto_complete" id="<%= id_string %>_auto_complete"></div>
-    <%= auto_complete_field( id_string, { :url => { :controller => 'skills', :action => 'auto_complete_for_skill_name' }, :method => :get } ) %>
+    <%= content_tag :div, nil, :class => 'auto_complete', :id => "#{ id_prefix }name_auto_complete" %>
+    <%= auto_complete_field "#{ id_prefix }name", :param_name => 'search_query', :url => { :controller => 'skills', :action => 'auto_complete_for_skill_name' }, :method => :get %>
   <% else -%>
-    <%= skill_form.collection_select :name, Skill.all, :name, :name %>
+    <%= f.collection_select :name, Skill.all, :name, :name %>
     <%= link_to_function 'entfernen', "this.up( '.skill' ).remove()" %>
   <% end -%>
 <% end %>

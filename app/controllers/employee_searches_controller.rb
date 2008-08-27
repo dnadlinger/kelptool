@@ -16,12 +16,6 @@ class EmployeeSearchesController < ApplicationController
   def create
     @search_model = EmployeeSearch.new( params[ :employee_search ] )
     @search_model.contact = ContactSearch.new( params[ :contact_search ] )
-    @search_model.skills = []
-    if params[ :employee ]
-      params[ :employee ][ :skills_attributes ].each do |attributes|
-        @search_model.skills << Skill.find_by_name( attributes[ :name ] )
-      end
-    end
   end
 
   def auto_complete_for_contact_name

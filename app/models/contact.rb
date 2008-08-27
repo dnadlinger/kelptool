@@ -3,7 +3,7 @@ class Contact < ActiveRecord::Base
   has_one :customer
   has_one :employee
   
-  has_many :phone_numbers
+  has_many :phone_numbers, :dependent => :destroy
   
   validates_presence_of :name, :message => 'Bitte geben Sie einen Namen ein.'  
   validates_presence_of :adress, :message => 'Bitte geben Sie eine Adresse ein.'
@@ -12,33 +12,9 @@ class Contact < ActiveRecord::Base
   
   validates_associated :phone_numbers, :message => 'Nicht alle Telefonnummern sind gültig.'
   
-  after_update :save_phone_numbers
+  attribute_for_collection :phone_numbers
   
   def full_place
     return postcode + " " + place
   end
-  
-  def new_phone_numbers_attributes=( phone_numbers_attributes )
-    phone_numbers_attributes.each do |attributes|
-      phone_numbers.build( attributes )
-    end
-  end
-  
-  def existing_phone_numbers_attributes=( phone_numbers_attributes )
-    phone_numbers.reject( &:new_record? ).each do |phone_number|
-      attributes = phone_numbers_attributes[ phone_number.id.to_s ]
-      if attributes
-        phone_number.attributes = attributes
-      else
-        phone_numbers.delete( phone_number )
-      end
-    end
-  end
-  
-  private
-    def save_phone_numbers
-      phone_numbers.each do |number|
-        number.save( false )
-      end
-    end
 end

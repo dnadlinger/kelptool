@@ -49,13 +49,9 @@ class SkillsController < ApplicationController
     redirect_to skills_url
   end
   
-  def generate_skill_field
-    # Only render RJS template.
-  end
-  
   def auto_complete_for_skill_name
     @skills = Skill.find( :all,
-      :conditions => [ 'LOWER(name) LIKE ?', '%' + params[ :employee ][ :skills_attributes ][0][ :name ].downcase + '%' ], 
+      :conditions => [ 'LOWER(name) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
       :order => 'name ASC',
       :limit => 10
     )

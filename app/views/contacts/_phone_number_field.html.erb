@@ -1,0 +1,14 @@
+<%
+  path ||= 'phone_number'
+
+  phone_number = phone_number_field
+-%>
+
+<li class="phone_number">
+<% fields_for_collection_element phone_number, path, 'phone_numbers', list_position do |f, id_prefix| %>
+  <%= f.collection_select :type_id, PhoneNumberType.all, :id, :name %>
+  <%= f.text_field :number %>
+  
+  <%= link_to_function 'entfernen', "this.up( '.phone_number' ).remove()" %>
+<% end %>
+</li>

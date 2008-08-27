@@ -6,6 +6,11 @@ class EmployeeSearch < ActiveRecord::BaseWithoutTable
     find_employees
   end
   
+  attribute_for_collection :skills,
+    :build_new => lambda { |this, attributes| this.skills ||= []; this.skills << Skill.find_by_name( attributes[ :name ] ) }
+    # We don't need to provide a custom update_existing hook, because due to
+    # the non-persistent nature of this class, it would never be called.
+    
   private
     include SearchConditions
     def find_employees

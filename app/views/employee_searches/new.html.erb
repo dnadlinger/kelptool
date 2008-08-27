@@ -6,9 +6,9 @@
   <fieldset>
     <legend>Fähigkeiten</legend>
     <ol id="skills">
-      <%= render :partial => 'skills/skill_field', :collection => @search_model.skills, :locals => { :use_select_menu => true } %>
+      <%= collection_fields @search_model, :skills, :new_object => Skill.new, :partial_name => 'skills/skill_field', :partial_locals => { :path => 'employee_search', :use_select_menu => true } %>
     </ol>
-    <%= add_skill_link( true ) %>
+    <%= link_to_function 'Fähigkeit hinzufügen', 'skillFields.addChild()' %>
   </fieldset>
   <fieldset>
     <legend>Zusätzliche Informationen</legend>

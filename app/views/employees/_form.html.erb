@@ -22,9 +22,9 @@
 <fieldset>
   <legend>Fähigkeiten</legend>
   <ol id="skills">
-    <%= render :partial => 'skills/skill_field', :collection => @employee.skills %>
+    <%= collection_fields @employee, :skills, :partial_name => 'skills/skill_field' %>
   </ol>
-  <%= add_skill_link %>
+  <%= link_to_function 'Fähigkeit hinzufügen', "skillFields.addChild()" %>
 </fieldset>
 
 <fieldset>

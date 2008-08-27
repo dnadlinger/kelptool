@@ -52,7 +52,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :skills, :path_prefix => '/employees',
     :collection => {
-      :generate_skill_field => :get,
       :auto_complete_for_skill_name => :get
     }
     

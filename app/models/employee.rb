@@ -19,6 +19,10 @@ class Employee < ActiveRecord::Base
     }
   }
   
+  attribute_for_collection :skills,
+    :build_new => lambda { |this, attributes| this.send( :add_skill, attributes ) },
+    :update_existing => lambda { |this, attributes, element| this.send( :add_skill, attributes, element ) }
+  
   def contact_attributes=( attributes )
     if attributes[ :id ]
       self.contact = Contact.find( attributes[ :id ] )
@@ -28,15 +32,6 @@ class Employee < ActiveRecord::Base
     end
   end
   
-  def skills_attributes=( skill_attributes )
-    self.skills.clear
-    skill_attributes.each do |attributes|
-      unless attributes[ 'name' ].blank?
-        skill = Skill.find_or_create_by_name( attributes[ 'name' ] )
-        self.skills << skill unless self.skills.include?( skill )
-      end
-    end
-  end
   
   private
     def save_contact
@@ -47,5 +42,13 @@ class Employee < ActiveRecord::Base
       unless self.contact.employee
         self.contact.destroy
       end
-    end  
+    end
+    
+    def add_skill( attributes, element = nil )
+      self.skills.delete( element ) if element
+      unless attributes[ 'name' ].blank?
+        skill = Skill.find_or_create_by_name( attributes[ 'name' ] )
+        self.skills << skill unless self.skills.include?( skill )
+      end
+    end
 end
