@@ -4,9 +4,8 @@
     <title><%= @section_title %> – <%= @page_title %></title>
     <%= stylesheet_link_tag 'reset.css' %>
     <%= stylesheet_link_tag 'screen.css' %>
-    <%= javascript_include_tag :defaults %>
-    <%= javascript_include_tag 'dynamic_forms' %>
-    <%= yield :head %>
+    <%= javascript_include_tag :all, :cache => true %>
+    <%= yield :head -%>
   </head>
   <body>
     <div id="wrapper">
