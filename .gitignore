@@ -2,6 +2,7 @@ log/*.log
 tmp/**/*
 config/database.yml
 config/deploy.rb
+Capfile
 db/*.sqlite*
 doc
 resource
