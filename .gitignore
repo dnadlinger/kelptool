@@ -8,4 +8,4 @@ resource
 .loadpath
 .project
 .settings
-
+public/javascripts/cache

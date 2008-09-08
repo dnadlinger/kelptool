@@ -4,7 +4,7 @@
     <title><%= @section_title %> – <%= @page_title %></title>
     <%= stylesheet_link_tag 'reset.css' %>
     <%= stylesheet_link_tag 'screen.css' %>
-    <%= javascript_include_tag :all, :cache => true %>
+    <%= javascript_include_tag :all, :cache => 'cache/global' %>
     <%= yield :head -%>
   </head>
   <body>
