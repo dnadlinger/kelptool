@@ -4,8 +4,13 @@ class CustomerSearchesController < ApplicationController
     
     if params[ :search_query ]
       @search_model.contact = ContactSearch.new( :name => params[ :search_query ] )
+      
       unless params[ :advanced_search ]
-        render :action => 'create'
+        if @search_model.customers.size == 1
+          redirect_to @search_model.customers.first
+        else
+          render :action => 'create'
+        end
       end
     end
     
@@ -18,13 +23,14 @@ class CustomerSearchesController < ApplicationController
   end
 
   def auto_complete_for_contact_name
-    @customers = Customer.find( :all,
+    customers = Customer.find( :all,
       :include => :contact,
       :conditions => [ 'LOWER(contacts.name) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
       :order => 'contacts.name ASC',
       :limit => 10 )
     
-    @contacts = []
-    @customers.each { |customer| @contacts << customer.contact }
+    @contacts = customers.collect &:contact
+    render :inline => '<%= auto_complete_result contacts, :name, query, 25 %>',
+      :locals => { :contacts => @contacts, :query => params[ :search_query ] }
   end
 end

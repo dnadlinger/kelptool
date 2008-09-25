@@ -58,10 +58,28 @@ module FormHelper
   end
   
   # Use this method in your view to generate a return for the AJAX autocomplete requests.
-  def auto_complete_result(entries, field, phrase = nil)
+  def auto_complete_result( entries, field, phrase = nil, char_limit = 30 )
     return unless entries
-    items = entries.map { |entry| content_tag("li", phrase ? highlight(entry[field], phrase) : h(entry[field])) }
-    content_tag("ul", items.uniq)
+    
+    items = entries.collect do |e|
+      value = e[ field ].to_s
+      if value.length > char_limit
+        value = value[ 0, char_limit - 3 ] + "..."
+      end
+      value
+    end
+    
+    content_tag :ul do
+      if phrase
+        items.collect do |item|
+          content_tag :li, highlight( item, phrase )
+        end
+      else
+        items.collect do |item|
+          content_tag :li, h( item )
+        end
+      end      
+    end
   end
   
   # Wrapper for text_field with added AJAX autocompletion functionality.

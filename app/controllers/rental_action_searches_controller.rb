@@ -8,7 +8,11 @@ class RentalActionSearchesController < ApplicationController
       @search_model.name = params[ :search_query ]
       
       unless params[ :advanced_search ]
-        render :action => 'create'
+        if @search_model.rental_actions.size == 1
+          redirect_to @search_model.rental_actions.first
+        else
+          render :action => 'create'
+        end
       end
     end
     
@@ -26,10 +30,13 @@ class RentalActionSearchesController < ApplicationController
   end
 
   def auto_complete_for_rental_action_name
-    @rental_actions = RentalAction.find( :all,
+    rental_actions = RentalAction.find( :all,
       :conditions => [ 'LOWER( name ) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
       :order => 'name ASC',
       :limit => 10 )
+     
+    render :inline => '<%= auto_complete_result rental_actions, :name, query, 25 %>',
+      :locals => { :rental_actions => rental_actions, :query => params[ :search_query ] }
   end
   
   def choose_customer

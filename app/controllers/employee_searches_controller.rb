@@ -4,8 +4,13 @@ class EmployeeSearchesController < ApplicationController
     
     if params[ :search_query ]
       @search_model.contact = ContactSearch.new( :name => params[ :search_query ] )
+      
       unless params[ :advanced_search ]
-        render :action => 'create'
+        if @search_model.employees.size == 1
+          redirect_to @search_model.employees.first
+        else
+          render :action => 'create'
+        end
       end
     end
     
@@ -19,13 +24,14 @@ class EmployeeSearchesController < ApplicationController
   end
 
   def auto_complete_for_contact_name
-    @employees = Employee.find( :all,
+    employees = Employee.find( :all,
       :include => :contact,
       :conditions => [ 'LOWER(contacts.name) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
       :order => 'contacts.name ASC',
       :limit => 10 )
     
-    @contacts = []
-    @employees.each { |employee| @contacts << employee.contact }
+    @contacts = employees.collect &:contact
+    render :inline => '<%= auto_complete_result contacts, :name, query, 25 %>',
+      :locals => { :contacts => @contacts, :query => params[ :search_query ] }
   end
 end

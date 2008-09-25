@@ -46,7 +46,7 @@ class ItemCategoriesController < ApplicationController
   
   def destroy
     @category = ItemCategory.find( params[ :id ] ) 
-    if @category.items.count > 0
+    unless @category.empty?
       flash[ :error ] = 'Kategorien können nur gelöscht werden, wenn sie leer sind!'
       redirect_to :action => 'show'
     else
@@ -72,13 +72,20 @@ class ItemCategoriesController < ApplicationController
       :order => 'name ASC',
       :limit => 10
     )
+    
+    render :inline => '<%= auto_complete_result items, :name, query, 25 %>',
+      :locals => { :items => @items, :query => params[ :search_query ] }
   end
   
   def search
     @search_results = Item.search( params[ :search_query ] )
     
-    if choosing_mode_active?( ChoosingMode::ItemRentalsChooseItem ) && @search_results.size == 1
-      redirect_to build_choose_path( current_choosing_mode, @search_results.first )
+    if @search_results.size == 1
+      if choosing_mode_active?( ChoosingMode::ItemRentalsChooseItem )
+        redirect_to build_choose_path( current_choosing_mode, @search_results.first )
+      else
+        redirect_to @search_results.first
+      end
     end
   end
 end
