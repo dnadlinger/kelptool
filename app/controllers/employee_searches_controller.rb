@@ -1,9 +1,10 @@
 class EmployeeSearchesController < ApplicationController
   def new
     @search_model = EmployeeSearch.new
+    query = prepare_auto_completion_query( params[ :search_query ] )
     
-    if params[ :search_query ]
-      @search_model.contact = ContactSearch.new( :name => params[ :search_query ] )
+    if query
+      @search_model.contact = ContactSearch.new( :name => query )
       
       unless params[ :advanced_search ]
         if @search_model.employees.size == 1
@@ -24,14 +25,16 @@ class EmployeeSearchesController < ApplicationController
   end
 
   def auto_complete_for_contact_name
+    query = params[ :search_query ]
+    
     employees = Employee.find( :all,
       :include => :contact,
-      :conditions => [ 'LOWER(contacts.name) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
+      :conditions => [ 'LOWER(contacts.name) LIKE ?', '%' + query.downcase + '%' ], 
       :order => 'contacts.name ASC',
       :limit => 10 )
     
-    @contacts = employees.collect &:contact
+    contacts = employees.collect &:contact
     render :inline => '<%= auto_complete_result contacts, :name, query, 25 %>',
-      :locals => { :contacts => @contacts, :query => params[ :search_query ] }
+      :locals => { :contacts => contacts, :query => query }
   end
 end

@@ -13,4 +13,14 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   
   include ChoosingSystem
+  
+  def prepare_auto_completion_query( query )
+    prepared = query
+    
+    if prepared[ -3..-1 ] == '...'
+      prepared = query[ 0..-4 ]
+    end
+    
+    return prepared
+  end
  end

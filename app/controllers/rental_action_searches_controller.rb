@@ -3,9 +3,10 @@ class RentalActionSearchesController < ApplicationController
     end_choosing ChoosingMode::RentalActionSearchesChooseCustomer
     
     @search_model = RentalActionSearch.new
+    query = prepare_auto_completion_query( params[ :search_query ] )
     
-    if params[ :search_query ]
-      @search_model.name = params[ :search_query ]
+    if query
+      @search_model.name = query
       
       unless params[ :advanced_search ]
         if @search_model.rental_actions.size == 1
@@ -30,13 +31,15 @@ class RentalActionSearchesController < ApplicationController
   end
 
   def auto_complete_for_rental_action_name
+    query = params[ :search_query ]
+    
     rental_actions = RentalAction.find( :all,
-      :conditions => [ 'LOWER( name ) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
+      :conditions => [ 'LOWER( name ) LIKE ?', '%' + query.downcase + '%' ], 
       :order => 'name ASC',
       :limit => 10 )
      
     render :inline => '<%= auto_complete_result rental_actions, :name, query, 25 %>',
-      :locals => { :rental_actions => rental_actions, :query => params[ :search_query ] }
+      :locals => { :rental_actions => rental_actions, :query => query }
   end
   
   def choose_customer

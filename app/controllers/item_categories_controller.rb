@@ -67,24 +67,26 @@ class ItemCategoriesController < ApplicationController
   end
 
   def auto_complete_for_item_name
-    @items = Item.find( :all,
-      :conditions => [ 'LOWER(name) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
+    query = params[ :search_query ]
+    items = Item.find( :all,
+      :conditions => [ 'LOWER(name) LIKE ?', '%' + query.downcase + '%' ], 
       :order => 'name ASC',
       :limit => 10
     )
     
     render :inline => '<%= auto_complete_result items, :name, query, 25 %>',
-      :locals => { :items => @items, :query => params[ :search_query ] }
+      :locals => { :items => items, :query => query }
   end
   
   def search
-    @search_results = Item.search( params[ :search_query ] )
+    query = prepare_auto_completion_query( params[ :search_query ] )
+    @search_results = Item.search( query )
     
     if @search_results.size == 1
       if choosing_mode_active?( ChoosingMode::ItemRentalsChooseItem )
         redirect_to build_choose_path( current_choosing_mode, @search_results.first )
       else
-        redirect_to @search_results.first
+        redirect_to [ @search_results.first.item_category, @search_results.first ]
       end
     end
   end

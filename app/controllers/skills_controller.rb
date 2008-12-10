@@ -50,12 +50,14 @@ class SkillsController < ApplicationController
   end
   
   def auto_complete_for_skill_name
+    query = params[ :search_query ]
+    
     skills = Skill.find( :all,
-      :conditions => [ 'LOWER(name) LIKE ?', '%' + params[ :search_query ].downcase + '%' ], 
+      :conditions => [ 'LOWER(name) LIKE ?', '%' + query.downcase + '%' ], 
       :order => 'name ASC',
       :limit => 10
     )
     render :inline => '<%= auto_complete_result skills, :name, query, 25 %>',
-      :locals => { :skills => skills, :query => params[ :search_query ] }
+      :locals => { :skills => skills, :query => query }
   end  
 end
