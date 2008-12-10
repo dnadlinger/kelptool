@@ -1,16 +1,11 @@
 begin
-  require 'openssl'
-rescue LoadError
-end
-
-begin
   require 'securerandom'
 rescue LoadError
 end
 
 module ActiveSupport
   if defined?(::SecureRandom)
-    # Use Ruby 1.9's SecureRandom library whenever possible.
+    # Use Ruby's SecureRandom library if available.
     SecureRandom = ::SecureRandom # :nodoc:
   else
     # = Secure random number generator interface.
@@ -63,6 +58,13 @@ module ActiveSupport
       # NotImplementedError is raised.
       def self.random_bytes(n=nil)
         n ||= 16
+
+        unless defined? OpenSSL
+          begin
+            require 'openssl'
+          rescue LoadError
+          end
+        end
 
         if defined? OpenSSL::Random
           return OpenSSL::Random.random_bytes(n)
@@ -164,13 +166,13 @@ module ActiveSupport
           hex = n.to_s(16)
           hex = '0' + hex if (hex.length & 1) == 1
           bin = [hex].pack("H*")
-          mask = bin[0].ord
+          mask = bin[0]
           mask |= mask >> 1
           mask |= mask >> 2
           mask |= mask >> 4
           begin
             rnd = SecureRandom.random_bytes(bin.length)
-            rnd[0] = (rnd[0].ord & mask).chr
+            rnd[0] = rnd[0] & mask
           end until rnd < bin
           rnd.unpack("H*")[0].hex
         else

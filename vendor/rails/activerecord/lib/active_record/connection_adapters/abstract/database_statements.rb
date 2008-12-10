@@ -31,13 +31,13 @@ module ActiveRecord
       # Returns an array of arrays containing the field values.
       # Order is the same as that returned by +columns+.
       def select_rows(sql, name = nil)
-        raise NotImplementedError, "select_rows is an abstract method"
       end
+      undef_method :select_rows
 
       # Executes the SQL statement in the context of this connection.
-      def execute(sql, name = nil)
-        raise NotImplementedError, "execute is an abstract method"
+      def execute(sql, name = nil, skip_logging = false)
       end
+      undef_method :execute
 
       # Returns the last auto-generated ID from the affected table.
       def insert(sql, name = nil, pk = nil, id_value = nil, sequence_name = nil)
@@ -98,8 +98,14 @@ module ActiveRecord
         add_limit_offset!(sql, options) if options
       end
 
-      # Appends +LIMIT+ and +OFFSET+ options to an SQL statement.
+      # Appends +LIMIT+ and +OFFSET+ options to an SQL statement, or some SQL
+      # fragment that has the same semantics as LIMIT and OFFSET.
+      #
+      # +options+ must be a Hash which contains a +:limit+ option (required)
+      # and an +:offset+ option (optional).
+      #
       # This method *modifies* the +sql+ parameter.
+      #
       # ===== Examples
       #  add_limit_offset!('SELECT * FROM suppliers', {:limit => 10, :offset => 50})
       # generates
@@ -112,10 +118,6 @@ module ActiveRecord
           end
         end
         sql
-      end
-
-      def sanitize_limit(limit)
-        limit.to_s[/,/] ? limit.split(',').map{ |i| i.to_i }.join(',') : limit.to_i
       end
 
       # Appends a locking clause to an SQL statement.
@@ -161,8 +163,8 @@ module ActiveRecord
         # Returns an array of record hashes with the column names as keys and
         # column values as values.
         def select(sql, name = nil)
-          raise NotImplementedError, "select is an abstract method"
         end
+        undef_method :select
 
         # Returns the last auto-generated ID from the affected table.
         def insert_sql(sql, name = nil, pk = nil, id_value = nil, sequence_name = nil)
@@ -178,6 +180,21 @@ module ActiveRecord
         # Executes the delete statement and returns the number of rows affected.
         def delete_sql(sql, name = nil)
           update_sql(sql, name)
+        end
+
+        # Sanitizes the given LIMIT parameter in order to prevent SQL injection.
+        #
+        # +limit+ may be anything that can evaluate to a string via #to_s. It
+        # should look like an integer, or a comma-delimited list of integers.
+        #
+        # Returns the sanitized limit parameter, either as an integer, or as a
+        # string which contains a comma-delimited list of integers.
+        def sanitize_limit(limit)
+          if limit.to_s =~ /,/
+            limit.to_s.split(',').map{ |i| i.to_i }.join(',')
+          else
+            limit.to_i
+          end
         end
     end
   end

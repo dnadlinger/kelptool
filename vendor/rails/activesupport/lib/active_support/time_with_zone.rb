@@ -1,4 +1,5 @@
 require 'tzinfo'
+
 module ActiveSupport
   # A Time-like class that can represent a time in any time zone. Necessary because standard Ruby Time instances are
   # limited to UTC and the system's <tt>ENV['TZ']</tt> zone.
@@ -277,9 +278,9 @@ module ActiveSupport
     end
     alias_method :kind_of?, :is_a?
 
-    # Neuter freeze because freezing can cause problems with lazy loading of attributes.
     def freeze
-      self
+      period; utc; time # preload instance variables before freezing
+      super
     end
 
     def marshal_dump

@@ -15,7 +15,8 @@ class Employee < ActiveRecord::Base
       :readonly => false,
       :joins => 'INNER JOIN employees_skills ON employees_skills.employee_id = employees.id',
       :conditions => "employees_skills.skill_id IN ( #{ skill_ids.join( ', ' ) } )",
-      :group => "employees_skills.employee_id HAVING count(*)=#{ skill_ids.size }"
+      :group => "employees_skills.employee_id",
+      :having => "count(*)=#{ skill_ids.size }"
     }
   }
   

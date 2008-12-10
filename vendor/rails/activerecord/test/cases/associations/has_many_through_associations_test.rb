@@ -3,9 +3,12 @@ require 'models/post'
 require 'models/person'
 require 'models/reader'
 require 'models/comment'
+require 'models/tag'
+require 'models/tagging'
+require 'models/author'
 
 class HasManyThroughAssociationsTest < ActiveRecord::TestCase
-  fixtures :posts, :readers, :people, :comments
+  fixtures :posts, :readers, :people, :comments, :authors
 
   def test_associate_existing
     assert_queries(2) { posts(:thinking);people(:david) }
@@ -82,6 +85,17 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     end
     
     assert posts(:welcome).reload.people(true).empty?
+  end
+
+  def test_deleting_updates_counter_cache
+    taggable = Tagging.first.taggable
+    taggable.taggings.push(Tagging.new)
+    taggable.reload
+    assert_equal 1, taggable.taggings_count
+
+    taggable.taggings.delete(taggable.taggings.first)
+    taggable.reload
+    assert_equal 0, taggable.taggings_count
   end
 
   def test_replace_association
@@ -228,5 +242,20 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
         # nothing
       end
     end
+  end
+
+  def test_has_many_association_through_a_belongs_to_association_where_the_association_doesnt_exist
+    author = authors(:mary)
+    post = Post.create!(:title => "TITLE", :body => "BODY")
+    assert_equal [], post.author_favorites
+  end
+
+  def test_has_many_association_through_a_belongs_to_association
+    author = authors(:mary)
+    post = Post.create!(:author => author, :title => "TITLE", :body => "BODY")
+    author.author_favorites.create(:favorite_author_id => 1)
+    author.author_favorites.create(:favorite_author_id => 2)
+    author.author_favorites.create(:favorite_author_id => 3)
+    assert_equal post.author.author_favorites, post.author_favorites
   end
 end

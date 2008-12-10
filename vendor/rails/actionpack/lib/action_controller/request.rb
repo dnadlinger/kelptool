@@ -9,10 +9,11 @@ module ActionController
   class AbstractRequest
     extend ActiveSupport::Memoizable
 
-    def self.relative_url_root=(*args)
+    def self.relative_url_root=(relative_url_root)
       ActiveSupport::Deprecation.warn(
         "ActionController::AbstractRequest.relative_url_root= has been renamed." +
         "You can now set it with config.action_controller.relative_url_root=", caller)
+      ActionController::Base.relative_url_root=relative_url_root
     end
 
     HTTP_METHODS = %w(get head put post delete options)
@@ -120,9 +121,19 @@ module ActionController
     end
 
     # Check response freshness (Last-Modified and ETag) against request
-    # If-Modified-Since and If-None-Match conditions.
+    # If-Modified-Since and If-None-Match conditions. If both headers are
+    # supplied, both must match, or the request is not considered fresh.
     def fresh?(response)
-      not_modified?(response.last_modified) || etag_matches?(response.etag)
+      case
+      when if_modified_since && if_none_match 
+        not_modified?(response.last_modified) && etag_matches?(response.etag) 
+      when if_modified_since 
+        not_modified?(response.last_modified) 
+      when if_none_match 
+        etag_matches?(response.etag) 
+      else 
+        false 
+      end 
     end
 
     # Returns the Mime type for the \format used in the request.
@@ -167,7 +178,7 @@ module ActionController
       parameter_format = parameters[:format]
 
       if parameter_format
-        parameter_format.to_sym
+        parameter_format
       elsif xhr?
         :js
       else
@@ -176,8 +187,7 @@ module ActionController
     end
 
     def cache_format
-      parameter_format = parameters[:format]
-      parameter_format && parameter_format.to_sym
+      parameters[:format]
     end
 
     # Returns true if the request's "X-Requested-With" header contains
@@ -199,7 +209,7 @@ module ActionController
     # delimited list in the case of multiple chained proxies; the last
     # address which is not trusted is the originating IP.
     def remote_ip
-      remote_addr_list = @env['REMOTE_ADDR'] && @env['REMOTE_ADDR'].split(',').collect(&:strip)
+      remote_addr_list = @env['REMOTE_ADDR'] && @env['REMOTE_ADDR'].scan(/[^,\s]+/)
 
       unless remote_addr_list.blank?
         not_trusted_addrs = remote_addr_list.reject {|addr| addr =~ TRUSTED_PROXIES}
@@ -208,7 +218,7 @@ module ActionController
       remote_ips = @env['HTTP_X_FORWARDED_FOR'] && @env['HTTP_X_FORWARDED_FOR'].split(',')
 
       if @env.include? 'HTTP_CLIENT_IP'
-        if remote_ips && !remote_ips.include?(@env['HTTP_CLIENT_IP'])
+        if ActionController::Base.ip_spoofing_check && remote_ips && !remote_ips.include?(@env['HTTP_CLIENT_IP'])
           # We don't know which came from the proxy, and which from the user
           raise ActionControllerError.new(<<EOM)
 IP spoofing attack?!
@@ -359,11 +369,9 @@ EOM
     # Returns the interpreted \path to requested resource after all the installation
     # directory of this application was taken into account.
     def path
-      path = (uri = request_uri) ? uri.split('?').first.to_s : ''
-
-      # Cut off the path to the installation directory if given
-      path.sub!(%r/^#{ActionController::Base.relative_url_root}/, '')
-      path || ''
+      path = request_uri.to_s[/\A[^\?]*/]
+      path.sub!(/\A#{ActionController::Base.relative_url_root}/, '')
+      path
     end
     memoize :path
 

@@ -1,4 +1,6 @@
+# encoding: utf-8
 require 'singleton'
+require 'iconv'
 
 module ActiveSupport
   # The Inflector transforms words from singular to plural, class names to table names, modularized class names to ones without,
@@ -132,7 +134,6 @@ module ActiveSupport
     #   "octopus".pluralize          # => "octopi"
     #   "sheep".pluralize            # => "sheep"
     #   "words".pluralize            # => "words"
-    #   "the blue mailman".pluralize # => "the blue mailmen"
     #   "CamelOctopus".pluralize     # => "CamelOctopi"
     def pluralize(word)
       result = word.to_s.dup
@@ -152,7 +153,6 @@ module ActiveSupport
     #   "octopi".singularize           # => "octopus"
     #   "sheep".singluarize            # => "sheep"
     #   "word".singularize             # => "word"
-    #   "the blue mailmen".singularize # => "the blue mailman"
     #   "CamelOctopi".singularize      # => "CamelOctopus"
     def singularize(word)
       result = word.to_s.dup
@@ -254,16 +254,42 @@ module ActiveSupport
     #   @person = Person.find(1)
     #   # => #<Person id: 1, name: "Donald E. Knuth">
     #
-    #   <%= link_to(@person.name, person_path %>
+    #   <%= link_to(@person.name, person_path(@person)) %>
     #   # => <a href="/person/1-donald-e-knuth">Donald E. Knuth</a>
     def parameterize(string, sep = '-')
       re_sep = Regexp.escape(sep)
-      string.mb_chars.normalize(:kd).       # Decompose accented characters
-        gsub(/[^\x00-\x7F]+/, '').          # Remove anything non-ASCII entirely (e.g. diacritics).
-        gsub(/[^a-z0-9\-_\+]+/i, sep).      # Turn unwanted chars into the separator.
-        squeeze(sep).                       # No more than one of the separator in a row.
-        gsub(/^#{re_sep}|#{re_sep}$/i, ''). # Remove leading/trailing separator.
-        downcase
+      # replace accented chars with ther ascii equivalents
+      parameterized_string = transliterate(string)
+      # Turn unwanted chars into the seperator
+      parameterized_string.gsub!(/[^a-z0-9\-_\+]+/i, sep)
+      # No more than one of the separator in a row.
+      parameterized_string.squeeze!(sep)
+      # Remove leading/trailing separator.
+      parameterized_string.gsub!(/^#{re_sep}|#{re_sep}$/i, '')
+      parameterized_string.downcase
+    end
+
+
+    # Replaces accented characters with their ascii equivalents.
+    def transliterate(string)
+      Iconv.iconv('ascii//ignore//translit', 'utf-8', string).to_s
+    end
+
+    if RUBY_VERSION >= '1.9'
+      undef_method :transliterate
+      def transliterate(string)
+        warn "Ruby 1.9 doesn't support Unicode normalization yet"
+        string.dup
+      end
+
+    # The iconv transliteration code doesn't function correctly
+    # on some platforms, but it's very fast where it does function.
+    elsif "foo" != Inflector.transliterate("föö")
+      undef_method :transliterate
+      def transliterate(string)
+        string.mb_chars.normalize(:kd). # Decompose accented characters
+          gsub(/[^\x00-\x7F]+/, '')     # Remove anything non-ASCII entirely (e.g. diacritics).
+      end
     end
 
     # Create the name of a table like Rails does for models to table names. This method

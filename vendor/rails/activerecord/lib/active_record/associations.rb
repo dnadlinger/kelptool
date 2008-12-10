@@ -1,13 +1,3 @@
-require 'active_record/associations/association_proxy'
-require 'active_record/associations/association_collection'
-require 'active_record/associations/belongs_to_association'
-require 'active_record/associations/belongs_to_polymorphic_association'
-require 'active_record/associations/has_one_association'
-require 'active_record/associations/has_many_association'
-require 'active_record/associations/has_many_through_association'
-require 'active_record/associations/has_and_belongs_to_many_association'
-require 'active_record/associations/has_one_through_association'
-
 module ActiveRecord
   class HasManyThroughAssociationNotFoundError < ActiveRecordError #:nodoc:
     def initialize(owner_class_name, reflection)
@@ -75,6 +65,18 @@ module ActiveRecord
 
   # See ActiveRecord::Associations::ClassMethods for documentation.
   module Associations # :nodoc:
+    # These classes will be loaded when associatoins are created.
+    # So there is no need to eager load them.
+    autoload :AssociationCollection, 'active_record/associations/association_collection'
+    autoload :AssociationProxy, 'active_record/associations/association_proxy'
+    autoload :BelongsToAssociation, 'active_record/associations/belongs_to_association'
+    autoload :BelongsToPolymorphicAssociation, 'active_record/associations/belongs_to_polymorphic_association'
+    autoload :HasAndBelongsToManyAssociation, 'active_record/associations/has_and_belongs_to_many_association'
+    autoload :HasManyAssociation, 'active_record/associations/has_many_association'
+    autoload :HasManyThroughAssociation, 'active_record/associations/has_many_through_association'
+    autoload :HasOneAssociation, 'active_record/associations/has_one_association'
+    autoload :HasOneThroughAssociation, 'active_record/associations/has_one_through_association'
+
     def self.included(base)
       base.extend(ClassMethods)
     end
@@ -507,6 +509,14 @@ module ActiveRecord
     #
     # will load posts and eager load the +approved_comments+ association, which contains only those comments that have been approved.
     #
+    # If you eager load an association with a specified <tt>:limit</tt> option, it will be ignored, returning all the associated objects:
+    #
+    #   class Picture < ActiveRecord::Base
+    #     has_many :most_recent_comments, :class_name => 'Comment', :order => 'id DESC', :limit => 10
+    #   end
+    #
+    #   Picture.find(:first, :include => :most_recent_comments).most_recent_comments # => returns all associated comments.
+    #
     # When eager loaded, conditions are interpolated in the context of the model class, not the model instance.  Conditions are lazily interpolated
     # before the actual model exists.
     #
@@ -624,7 +634,8 @@ module ActiveRecord
       #   Adds one or more objects to the collection by setting their foreign keys to the collection's primary key.
       # [collection.delete(object, ...)]
       #   Removes one or more objects from the collection by setting their foreign keys to +NULL+.
-      #   This will also destroy the objects if they're declared as +belongs_to+ and dependent on this model.
+      #   Objects will be in addition destroyed if they're associated with <tt>:dependent => :destroy</tt>,
+      #   and deleted if they're associated with <tt>:dependent => :delete_all</tt>.
       # [collection=objects]
       #   Replaces the collections content by deleting and adding objects as appropriate.
       # [collection_singular_ids]
@@ -713,6 +724,8 @@ module ActiveRecord
       #   Specify second-order associations that should be eager loaded when the collection is loaded.
       # [:group]
       #   An attribute name by which the result should be grouped. Uses the <tt>GROUP BY</tt> SQL-clause.
+      # [:having]
+      #   Combined with +:group+ this can be used to filter the records that a <tt>GROUP BY</tt> returns. Uses the <tt>HAVING</tt> SQL-clause.
       # [:limit]
       #   An integer determining the limit on the number of rows that should be returned.
       # [:offset]
@@ -955,8 +968,6 @@ module ActiveRecord
       #   destroyed. This requires that a column named <tt>#{table_name}_count</tt> (such as +comments_count+ for a belonging Comment class)
       #   is used on the associate class (such as a Post class). You can also specify a custom counter cache column by providing
       #   a column name instead of a +true+/+false+ value to this option (e.g., <tt>:counter_cache => :my_custom_counter</tt>.)
-      #   When creating a counter cache column, the database statement or migration must specify a default value of <tt>0</tt>, failing to do 
-      #   this results in a counter with +NULL+ value, which will never increment.
       #   Note: Specifying a counter cache will add it to that model's list of readonly attributes using +attr_readonly+.
       # [:include]
       #   Specify second-order associations that should be eager loaded when this object is loaded.
@@ -1172,6 +1183,8 @@ module ActiveRecord
       #   Specify second-order associations that should be eager loaded when the collection is loaded.
       # [:group]
       #   An attribute name by which the result should be grouped. Uses the <tt>GROUP BY</tt> SQL-clause.
+      # [:having]
+      #   Combined with +:group+ this can be used to filter the records that a <tt>GROUP BY</tt> returns. Uses the <tt>HAVING</tt> SQL-clause.
       # [:limit]
       #   An integer determining the limit on the number of rows that should be returned.
       # [:offset]
@@ -1237,7 +1250,7 @@ module ActiveRecord
 
             association = instance_variable_get(ivar) if instance_variable_defined?(ivar)
 
-            if association.nil? || !association.loaded? || force_reload
+            if association.nil? || force_reload
               association = association_proxy_class.new(self, reflection)
               retval = association.reload
               if retval.nil? and association_proxy_class == BelongsToAssociation
@@ -1248,6 +1261,11 @@ module ActiveRecord
             end
 
             association.target.nil? ? nil : association
+          end
+
+          define_method("loaded_#{reflection.name}?") do
+            association = instance_variable_get(ivar) if instance_variable_defined?(ivar)
+            association && association.loaded?
           end
 
           define_method("#{reflection.name}=") do |new_value|
@@ -1263,17 +1281,6 @@ module ActiveRecord
             else
               association.replace(new_value)
               instance_variable_set(ivar, new_value.nil? ? nil : association)
-            end
-          end
-
-          if association_proxy_class == BelongsToAssociation
-            define_method("#{reflection.primary_key_name}=") do |target_id|
-              if instance_variable_defined?(ivar)
-                if association = instance_variable_get(ivar)
-                  association.reset
-                end
-              end
-              write_attribute(reflection.primary_key_name, target_id)
             end
           end
 
@@ -1303,7 +1310,7 @@ module ActiveRecord
           end
 
           define_method("#{reflection.name.to_s.singularize}_ids") do
-            if send(reflection.name).loaded?
+            if send(reflection.name).loaded? || reflection.options[:finder_sql]
               send(reflection.name).map(&:id)
             else
               send(reflection.name).all(:select => "#{reflection.quoted_table_name}.#{reflection.klass.primary_key}").map(&:id)
@@ -1479,6 +1486,8 @@ module ActiveRecord
           end
         end
 
+        # Creates before_destroy callback methods that nullify, delete or destroy
+        # has_one associated objects, according to the defined :dependent rule.
         def configure_dependency_for_has_one(reflection)
           if reflection.options.include?(:dependent)
             case reflection.options[:dependent]
@@ -1492,6 +1501,10 @@ module ActiveRecord
               when :delete
                 method_name = "has_one_dependent_delete_for_#{reflection.name}".to_sym
                 define_method(method_name) do
+                  # Retrieve the associated object and delete it. The retrieval
+                  # is necessary because there may be multiple associated objects
+                  # with foreign keys pointing to this object, and we only want
+                  # to delete the correct one, not all of them.
                   association = send(reflection.name)
                   association.delete unless association.nil?
                 end
@@ -1544,7 +1557,7 @@ module ActiveRecord
         @@valid_keys_for_has_many_association = [
           :class_name, :table_name, :foreign_key, :primary_key,
           :dependent,
-          :select, :conditions, :include, :order, :group, :limit, :offset,
+          :select, :conditions, :include, :order, :group, :having, :limit, :offset,
           :as, :through, :source, :source_type,
           :uniq,
           :finder_sql, :counter_sql,
@@ -1597,16 +1610,19 @@ module ActiveRecord
           reflection
         end
 
+        mattr_accessor :valid_keys_for_has_and_belongs_to_many_association
+        @@valid_keys_for_has_and_belongs_to_many_association = [
+          :class_name, :table_name, :join_table, :foreign_key, :association_foreign_key,
+          :select, :conditions, :include, :order, :group, :having, :limit, :offset,
+          :uniq,
+          :finder_sql, :counter_sql, :delete_sql, :insert_sql,
+          :before_add, :after_add, :before_remove, :after_remove,
+          :extend, :readonly,
+          :validate
+        ]
+
         def create_has_and_belongs_to_many_reflection(association_id, options, &extension)
-          options.assert_valid_keys(
-            :class_name, :table_name, :join_table, :foreign_key, :association_foreign_key,
-            :select, :conditions, :include, :order, :group, :limit, :offset,
-            :uniq,
-            :finder_sql, :delete_sql, :insert_sql,
-            :before_add, :after_add, :before_remove, :after_remove,
-            :extend, :readonly,
-            :validate
-          )
+          options.assert_valid_keys(valid_keys_for_has_and_belongs_to_many_association)
 
           options[:extend] = create_extension_modules(association_id, extension, options[:extend])
 
@@ -1646,7 +1662,7 @@ module ActiveRecord
           add_conditions!(sql, options[:conditions], scope)
           add_limited_ids_condition!(sql, options, join_dependency) if !using_limitable_reflections?(join_dependency.reflections) && ((scope && scope[:limit]) || options[:limit])
 
-          add_group!(sql, options[:group], scope)
+          add_group!(sql, options[:group], options[:having], scope)
           add_order!(sql, options[:order], scope)
           add_limit!(sql, options, scope) if using_limitable_reflections?(join_dependency.reflections)
           add_lock!(sql, options, scope)
@@ -1702,7 +1718,7 @@ module ActiveRecord
           end
 
           add_conditions!(sql, options[:conditions], scope)
-          add_group!(sql, options[:group], scope)
+          add_group!(sql, options[:group], options[:having], scope)
 
           if order && is_distinct
             connection.add_order_by_for_association_limiting!(sql, :order => order)
@@ -1721,6 +1737,7 @@ module ActiveRecord
             case cond
               when nil   then all
               when Array then all << cond.first
+              when Hash  then all << cond.keys
               else            all << cond
             end
           end

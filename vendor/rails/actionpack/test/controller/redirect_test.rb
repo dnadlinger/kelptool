@@ -73,6 +73,10 @@ class RedirectController < ActionController::Base
     redirect_to "http://dev.rubyonrails.org/query?status=new"
   end
 
+  def redirect_to_url_with_complex_scheme
+    redirect_to "x-test+scheme.complex:redirect"
+  end
+
   def redirect_to_back
     redirect_to :back
   end
@@ -99,12 +103,8 @@ class RedirectController < ActionController::Base
     end
 end
 
-class RedirectTest < Test::Unit::TestCase
-  def setup
-    @controller = RedirectController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
+class RedirectTest < ActionController::TestCase
+  tests RedirectController
 
   def test_simple_redirect
     get :simple_redirect
@@ -198,6 +198,12 @@ class RedirectTest < Test::Unit::TestCase
     assert_redirected_to "http://dev.rubyonrails.org/query?status=new"
   end
 
+  def test_redirect_to_url_with_complex_scheme
+    get :redirect_to_url_with_complex_scheme
+    assert_response :redirect
+    assert_equal "x-test+scheme.complex:redirect", redirect_to_url
+  end
+
   def test_redirect_to_back
     @request.env["HTTP_REFERER"] = "http://www.example.com/coming/from"
     get :redirect_to_back
@@ -246,12 +252,8 @@ module ModuleTest
     end
   end
 
-  class ModuleRedirectTest < Test::Unit::TestCase
-    def setup
-      @controller = ModuleRedirectController.new
-      @request    = ActionController::TestRequest.new
-      @response   = ActionController::TestResponse.new
-    end
+  class ModuleRedirectTest < ActionController::TestCase
+    tests ModuleRedirectController
 
     def test_simple_redirect
       get :simple_redirect

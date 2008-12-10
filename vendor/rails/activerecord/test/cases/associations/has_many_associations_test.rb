@@ -255,6 +255,11 @@ class HasManyAssociationsTest < ActiveRecord::TestCase
     assert_equal 2, companies(:first_firm).clients_grouped_by_name.length
   end
 
+  def test_find_scoped_grouped_having
+    assert_equal 1, authors(:david).popular_grouped_posts.length
+    assert_equal 0, authors(:mary).popular_grouped_posts.length
+  end
+
   def test_adding
     force_signal37_to_load_all_clients_of_firm
     natural = Client.new("name" => "Natural Company")
@@ -547,6 +552,18 @@ class HasManyAssociationsTest < ActiveRecord::TestCase
     assert_equal 0, companies(:first_firm).clients_of_firm(true).size
   end
 
+  def test_deleting_updates_counter_cache
+    post = Post.first
+
+    post.comments.delete(post.comments.first)
+    post.reload
+    assert_equal post.comments(true).size, post.comments_count
+
+    post.comments.delete(post.comments.first)
+    post.reload
+    assert_equal 0, post.comments_count
+  end
+
   def test_deleting_before_save
     new_firm = Firm.new("name" => "A New Firm, Inc.")
     new_client = new_firm.clients_of_firm.build("name" => "Another Client")
@@ -598,6 +615,14 @@ class HasManyAssociationsTest < ActiveRecord::TestCase
     assert_nothing_raised do
       assert Client.find(client_id).firm.nil?
     end
+  end
+
+  def test_clearing_updates_counter_cache
+    post = Post.first
+
+    post.comments.clear
+    post.reload
+    assert_equal 0, post.comments_count
   end
 
   def test_clearing_a_dependent_association_collection
@@ -853,6 +878,13 @@ class HasManyAssociationsTest < ActiveRecord::TestCase
     assert !company.clients.loaded?
   end
 
+  def test_get_ids_for_unloaded_finder_sql_associations_loads_them
+    company = companies(:first_firm)
+    assert !company.clients_using_sql.loaded?
+    assert_equal [companies(:second_client).id], company.clients_using_sql_ids
+    assert company.clients_using_sql.loaded?
+  end
+
   def test_assign_ids
     firm = Firm.new("name" => "Apple")
     firm.client_ids = [companies(:first_client).id, companies(:second_client).id]
@@ -1080,4 +1112,15 @@ class HasManyAssociationsTest < ActiveRecord::TestCase
     end
   end
 
+  def test_sending_new_to_association_proxy_should_have_same_effect_as_calling_new
+    client_association = companies(:first_firm).clients
+    assert_equal client_association.new.attributes, client_association.send(:new).attributes
+  end
+
+  def test_respond_to_private_class_methods
+    client_association = companies(:first_firm).clients
+    assert !client_association.respond_to?(:private_method)
+    assert client_association.respond_to?(:private_method, true)
+  end
 end
+

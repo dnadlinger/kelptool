@@ -100,6 +100,18 @@ class TestJSONEncoding < Test::Unit::TestCase
     ActiveSupport.use_standard_json_time_format = false
   end
 
+  def test_nested_hash_with_float
+    assert_nothing_raised do
+      hash = {
+        "CHI" => {
+          :dislay_name => "chicago",
+          :latitude => 123.234
+        }
+      }
+      result = hash.to_json
+    end
+  end
+
   protected
 
     def object_keys(json_object)
@@ -114,15 +126,13 @@ class TestJSONEncoding < Test::Unit::TestCase
     end
 end
 
-uses_mocha 'JsonOptionsTests' do
-  class JsonOptionsTests < Test::Unit::TestCase
-    def test_enumerable_should_passthrough_options_to_elements
-      json_options = { :include => :posts }
-      ActiveSupport::JSON.expects(:encode).with(1, json_options)
-      ActiveSupport::JSON.expects(:encode).with(2, json_options)
-      ActiveSupport::JSON.expects(:encode).with('foo', json_options)
+class JsonOptionsTests < Test::Unit::TestCase
+  def test_enumerable_should_passthrough_options_to_elements
+    json_options = { :include => :posts }
+    ActiveSupport::JSON.expects(:encode).with(1, json_options)
+    ActiveSupport::JSON.expects(:encode).with(2, json_options)
+    ActiveSupport::JSON.expects(:encode).with('foo', json_options)
 
-      [1, 2, 'foo'].to_json(json_options)
-    end
+    [1, 2, 'foo'].to_json(json_options)
   end
 end

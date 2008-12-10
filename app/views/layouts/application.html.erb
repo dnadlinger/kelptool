@@ -11,21 +11,21 @@
     <div id="wrapper">
       <div id="content">
         <div id="topmessage">
-          <%= render 'layout_helpers/login_status_message' -%>
+          <%= render :file => 'layout_helpers/login_status_message' -%>
         </div>
         <div id="header">
           <h1 class="title"><span class="kelp">kelp</span><span class="tool">Tool</span></h1>
           <div id="searchbox">
-            <%= render 'layout_helpers/search_box' -%>
+            <%= render :file => 'layout_helpers/search_box' -%>
           </div>
         </div>
         <div id="menubar">
-          <%= render 'layout_helpers/top_menu' -%>
+          <%= render :file => 'layout_helpers/top_menu' -%>
         </div>
         <div id="main">
-          <%= render 'layout_helpers/choose_message' -%>
+          <%= render :file => 'layout_helpers/choose_message' -%>
           <h1><%=h @page_title -%></h1>
-          <%= render 'layout_helpers/flash_boxes' -%>
+          <%= render :file => 'layout_helpers/flash_boxes' -%>
           <%= yield %>
         </div>
       </div>

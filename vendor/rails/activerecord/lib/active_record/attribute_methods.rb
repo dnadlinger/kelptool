@@ -233,7 +233,7 @@ module ActiveRecord
       method_name = method_id.to_s
 
       if self.class.private_method_defined?(method_name)
-        raise NoMethodError("Attempt to call private method", method_name, args)
+        raise NoMethodError.new("Attempt to call private method", method_name, args)
       end
 
       # If we haven't generated any methods yet, generate them, then
@@ -342,7 +342,9 @@ module ActiveRecord
       method_name = method.to_s
       if super
         return true
-      elsif self.private_methods.include?(method_name) && !include_private_methods
+      elsif !include_private_methods && super(method, true)
+        # If we're here than we haven't found among non-private methods
+        # but found among all methods. Which means that given method is private.
         return false
       elsif !self.class.generated_methods?
         self.class.define_attribute_methods

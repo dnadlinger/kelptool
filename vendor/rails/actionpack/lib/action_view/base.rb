@@ -5,7 +5,7 @@ module ActionView #:nodoc:
   class MissingTemplate < ActionViewError #:nodoc:
     def initialize(paths, path, template_format = nil)
       full_template_path = path.include?('.') ? path : "#{path}.erb"
-      display_paths = paths.join(':')
+      display_paths = paths.compact.join(":")
       template_type = (path =~ /layouts/i) ? 'layout' : 'template'
       super("Missing #{template_type} #{full_template_path} in view path #{display_paths}")
     end
@@ -157,7 +157,7 @@ module ActionView #:nodoc:
   #
   # See the ActionView::Helpers::PrototypeHelper::GeneratorMethods documentation for more details.
   class Base
-    include ERB::Util
+    include Helpers, Partials, ::ERB::Util
     extend ActiveSupport::Memoizable
 
     attr_accessor :base_path, :assigns, :template_extension
@@ -172,18 +172,6 @@ module ActionView #:nodoc:
       delegate :logger, :to => 'ActionController::Base'
     end
 
-    def self.cache_template_loading=(*args)
-      ActiveSupport::Deprecation.warn(
-        "config.action_view.cache_template_loading option has been deprecated" +
-        "and has no effect. Please remove it from your config files.", caller)
-    end
-
-    def self.cache_template_extensions=(*args)
-      ActiveSupport::Deprecation.warn(
-        "config.action_view.cache_template_extensions option has been" +
-        "deprecated and has no effect. Please remove it from your config files.", caller)
-    end
-
     # Templates that are exempt from layouts
     @@exempt_from_layout = Set.new([/\.rjs$/])
 
@@ -195,13 +183,17 @@ module ActionView #:nodoc:
       @@exempt_from_layout.merge(regexps)
     end
 
+    @@debug_rjs = false
+    ##
+    # :singleton-method:
     # Specify whether RJS responses should be wrapped in a try/catch block
     # that alert()s the caught exception (and then re-raises it).
-    @@debug_rjs = false
     cattr_accessor :debug_rjs
 
-    # A warning will be displayed whenever an action results in a cache miss on your view paths.
     @@warn_cache_misses = false
+    ##
+    # :singleton-method:
+    # A warning will be displayed whenever an action results in a cache miss on your view paths.
     cattr_accessor :warn_cache_misses
 
     attr_internal :request
@@ -234,6 +226,7 @@ module ActionView #:nodoc:
     def initialize(view_paths = [], assigns_for_first_render = {}, controller = nil)#:nodoc:
       @assigns = assigns_for_first_render
       @assigns_added = nil
+      @_render_stack = []
       @controller = controller
       @helpers = ProxyModule.new(self)
       self.view_paths = view_paths
@@ -245,24 +238,25 @@ module ActionView #:nodoc:
       @view_paths = self.class.process_view_paths(paths)
     end
 
-    # Renders the template present at <tt>template_path</tt> (relative to the view_paths array).
-    # The hash in <tt>local_assigns</tt> is made available as local variables.
+    # Returns the result of a render that's dictated by the options hash. The primary options are:
+    # 
+    # * <tt>:partial</tt> - See ActionView::Partials.
+    # * <tt>:update</tt> - Calls update_page with the block given.
+    # * <tt>:file</tt> - Renders an explicit template file (this used to be the old default), add :locals to pass in those.
+    # * <tt>:inline</tt> - Renders an inline template similar to how it's done in the controller.
+    # * <tt>:text</tt> - Renders the text passed in out.
+    #
+    # If no options hash is passed or :update specified, the default is to render a partial and use the second parameter
+    # as the locals hash.
     def render(options = {}, local_assigns = {}, &block) #:nodoc:
       local_assigns ||= {}
 
-      if options.is_a?(String)
-        render(:file => options, :locals => local_assigns)
-      elsif options == :update
-        update_page(&block)
-      elsif options.is_a?(Hash)
+      case options
+      when Hash
         options = options.reverse_merge(:locals => {})
         if options[:layout]
           _render_with_layout(options, local_assigns, &block)
         elsif options[:file]
-          if options[:use_full_path]
-            ActiveSupport::Deprecation.warn("use_full_path option has been deprecated and has no affect.", caller)
-          end
-
           _pick_template(options[:file]).render_template(self, options[:locals])
         elsif options[:partial]
           render_partial(options)
@@ -271,6 +265,10 @@ module ActionView #:nodoc:
         elsif options[:text]
           options[:text]
         end
+      when :update
+        update_page(&block)
+      else
+        render_partial(:partial => options, :locals => local_assigns)
       end
     end
 
@@ -281,27 +279,33 @@ module ActionView #:nodoc:
       if defined? @template_format
         @template_format
       elsif controller && controller.respond_to?(:request)
-        @template_format = controller.request.template_format
+        @template_format = controller.request.template_format.to_sym
       else
         @template_format = :html
       end
     end
 
-    private
-      attr_accessor :_first_render, :_last_render
+    # Access the current template being rendered.
+    # Returns a ActionView::Template object.
+    def template
+      @_render_stack.last
+    end
 
-      # Evaluate the local assigns and pushes them to the view.
+    private
+      # Evaluates the local assigns and controller ivars, pushes them to the view.
       def _evaluate_assigns_and_ivars #:nodoc:
         unless @assigns_added
           @assigns.each { |key, value| instance_variable_set("@#{key}", value) }
-
-          if @controller
-            variables = @controller.instance_variables
-            variables -= @controller.protected_instance_variables if @controller.respond_to?(:protected_instance_variables)
-            variables.each {|name| instance_variable_set(name, @controller.instance_variable_get(name)) }
-          end
-
+          _copy_ivars_from_controller
           @assigns_added = true
+        end
+      end
+
+      def _copy_ivars_from_controller #:nodoc:
+        if @controller
+          variables = @controller.instance_variable_names
+          variables -= @controller.protected_instance_variables if @controller.respond_to?(:protected_instance_variables)
+          variables.each { |name| instance_variable_set(name, @controller.instance_variable_get(name)) }
         end
       end
 
@@ -322,14 +326,10 @@ module ActionView #:nodoc:
         end
 
         # OPTIMIZE: Checks to lookup template in view path
-        if template = self.view_paths["#{template_file_name}.#{template_format}"]
+        if template = self.view_paths.find_template(template_file_name, template_format)
           template
-        elsif template = self.view_paths[template_file_name]
-          template
-        elsif _first_render && template = self.view_paths["#{template_file_name}.#{_first_render.format_and_extension}"]
-          template
-        elsif template_format == :js && template = self.view_paths["#{template_file_name}.html"]
-          @template_format = :html
+        elsif (first_render = @_render_stack.first) && first_render.respond_to?(:format_and_extension) &&
+            (template = self.view_paths["#{template_file_name}.#{first_render.format_and_extension}"])
           template
         else
           template = Template.new(template_path, view_paths)

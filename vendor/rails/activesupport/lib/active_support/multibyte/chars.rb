@@ -321,7 +321,7 @@ module ActiveSupport #:nodoc:
       # character.
       #
       # Example:
-      #   'こにちわ'.mb_chars.slice(2..3).to_s #=> "ちわ"
+      #   'こんにちは'.mb_chars.slice(2..3).to_s #=> "にち"
       def slice(*args)
         if args.size > 2
           raise ArgumentError, "wrong number of arguments (#{args.size} for 1)" # Do as if we were native
@@ -343,6 +343,14 @@ module ActiveSupport #:nodoc:
         result.nil? ? nil : chars(result)
       end
       alias_method :[], :slice
+
+      # Converts first character in the string to Unicode value
+      #
+      # Example:
+      #   'こんにちは'.mb_chars.ord #=> 12371
+      def ord
+        self.class.u_unpack(@wrapped_string)[0]
+      end
 
       # Convert characters in the string to uppercase.
       #

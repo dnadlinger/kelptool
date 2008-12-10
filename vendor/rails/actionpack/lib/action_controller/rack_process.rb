@@ -1,5 +1,4 @@
 require 'action_controller/cgi_ext'
-require 'action_controller/session/cookie_store'
 
 module ActionController #:nodoc:
   class RackRequest < AbstractRequest #:nodoc:
@@ -56,14 +55,7 @@ module ActionController #:nodoc:
     end
 
     def cookies
-      return {} unless @env["HTTP_COOKIE"]
-
-      unless @env["rack.request.cookie_string"] == @env["HTTP_COOKIE"]
-        @env["rack.request.cookie_string"] = @env["HTTP_COOKIE"]
-        @env["rack.request.cookie_hash"] = CGI::Cookie::parse(@env["rack.request.cookie_string"])
-      end
-
-      @env["rack.request.cookie_hash"]
+      Rack::Request.new(@env).cookies
     end
 
     def server_port
@@ -165,7 +157,7 @@ end_msg
       @status || super
     end
 
-    def out(output = $stdout, &block)
+    def out(&block)
       # Nasty hack because CGI sessions are closed after the normal
       # prepare! statement
       set_cookies!

@@ -202,6 +202,8 @@ module ActiveResource
   # sets the <tt>read_timeout</tt> of the internal Net::HTTP instance to the same value. The default
   # <tt>read_timeout</tt> is 60 seconds on most Ruby implementations.
   class Base
+    ##
+    # :singleton-method:
     # The logger for diagnosing and tracing Active Resource calls.
     cattr_accessor :logger
 
@@ -704,6 +706,7 @@ module ActiveResource
     def new?
       id.nil?
     end
+    alias :new_record? :new?
 
     # Gets the <tt>\id</tt> attribute of the resource.
     def id
@@ -854,6 +857,42 @@ module ActiveResource
     #
     #   my_group.to_xml(:skip_instruct => true)
     #   # => <subsidiary_group> [...] </subsidiary_group>
+    def to_xml(options={})
+      attributes.to_xml({:root => self.class.element_name}.merge(options))
+    end
+
+    # Returns a JSON string representing the model. Some configuration is
+    # available through +options+.
+    #
+    # ==== Options
+    # The +options+ are passed to the +to_json+ method on each
+    # attribute, so the same options as the +to_json+ methods in
+    # Active Support.
+    #
+    # * <tt>:only</tt> - Only include the specified attribute or list of
+    #   attributes in the serialized output. Attribute names must be specified
+    #   as strings.
+    # * <tt>:except</tt> - Do not include the specified attribute or list of
+    #   attributes in the serialized output. Attribute names must be specified
+    #   as strings.
+    #
+    # ==== Examples
+    #   person = Person.new(:first_name => "Jim", :last_name => "Smith")
+    #   person.to_json
+    #   # => {"first_name": "Jim", "last_name": "Smith"}
+    #
+    #   person.to_json(:only => ["first_name"])
+    #   # => {"first_name": "Jim"}
+    #
+    #   person.to_json(:except => ["first_name"])
+    #   # => {"last_name": "Smith"}
+    def to_json(options={})
+      attributes.to_json(options)
+    end
+
+    # Returns the serialized string representation of the resource in the configured
+    # serialization format specified in ActiveResource::Base.format. The options
+    # applicable depend on the configured encoding format.
     def encode(options={})
       case self.class.format
         when ActiveResource::Formats[:xml]
@@ -884,6 +923,7 @@ module ActiveResource
     #
     # ==== Examples
     #   my_attrs = {:name => 'J&J Textiles', :industry => 'Cloth and textiles'}
+    #   my_attrs = {:name => 'Marty', :colors => ["red", "green", "blue"]}
     #
     #   the_supplier = Supplier.find(:first)
     #   the_supplier.name # => 'J&M Textiles'
@@ -906,7 +946,7 @@ module ActiveResource
           case value
             when Array
               resource = find_or_create_resource_for_collection(key)
-              value.map { |attrs| resource.new(attrs) }
+              value.map { |attrs| attrs.is_a?(String) ? attrs.dup : resource.new(attrs) }
             when Hash
               resource = find_or_create_resource_for(key)
               resource.new(value)

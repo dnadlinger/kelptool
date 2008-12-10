@@ -1,4 +1,5 @@
 require 'abstract_unit'
+require 'builder'
 
 class HashExtTest < Test::Unit::TestCase
   def setup
@@ -358,12 +359,10 @@ class HashExtTest < Test::Unit::TestCase
     assert_nothing_raised { original.except(:a) }
   end
 
-  uses_mocha 'except with expectation' do
-    def test_except_with_mocha_expectation_on_original
-      original = { :a => 'x', :b => 'y' }
-      original.expects(:delete).never
-      original.except(:a)
-    end
+  def test_except_with_mocha_expectation_on_original
+    original = { :a => 'x', :b => 'y' }
+    original.expects(:delete).never
+    original.except(:a)
   end
 end
 
@@ -402,6 +401,13 @@ class HashToXmlTest < Test::Unit::TestCase
     assert_equal "<person>", xml.first(8)
     assert xml.include?(%(<street-name>Paulina</street-name>))
     assert xml.include?(%(<name>David</name>))
+  end
+
+  def test_one_level_camelize_true
+    xml = { :name => "David", :street_name => "Paulina" }.to_xml(@xml_options.merge(:camelize => true))
+    assert_equal "<Person>", xml.first(8)
+    assert xml.include?(%(<StreetName>Paulina</StreetName>))
+    assert xml.include?(%(<Name>David</Name>))
   end
 
   def test_one_level_with_types

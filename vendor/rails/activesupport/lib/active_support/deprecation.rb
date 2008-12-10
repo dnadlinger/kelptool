@@ -51,8 +51,8 @@ module ActiveSupport
 
       private
         def deprecation_message(callstack, message = nil)
-          message ||= "You are using deprecated behavior which will be removed from Rails 2.0."
-          "DEPRECATION WARNING: #{message}  See http://www.rubyonrails.org/deprecation for details. #{deprecation_caller_message(callstack)}"
+          message ||= "You are using deprecated behavior which will be removed from the next major or minor release."
+          "DEPRECATION WARNING: #{message}. #{deprecation_caller_message(callstack)}"
         end
 
         def deprecation_caller_message(callstack)
@@ -111,37 +111,6 @@ module ActiveSupport
       def deprecation_horizon
         '2.3'
       end
-    end
-
-    module Assertions #:nodoc:
-      def assert_deprecated(match = nil, &block)
-        result, warnings = collect_deprecations(&block)
-        assert !warnings.empty?, "Expected a deprecation warning within the block but received none"
-        if match
-          match = Regexp.new(Regexp.escape(match)) unless match.is_a?(Regexp)
-          assert warnings.any? { |w| w =~ match }, "No deprecation warning matched #{match}: #{warnings.join(', ')}"
-        end
-        result
-      end
-
-      def assert_not_deprecated(&block)
-        result, deprecations = collect_deprecations(&block)
-        assert deprecations.empty?, "Expected no deprecation warning within the block but received #{deprecations.size}: \n  #{deprecations * "\n  "}"
-        result
-      end
-
-      private
-        def collect_deprecations
-          old_behavior = ActiveSupport::Deprecation.behavior
-          deprecations = []
-          ActiveSupport::Deprecation.behavior = Proc.new do |message, callstack|
-            deprecations << message
-          end
-          result = yield
-          [result, deprecations]
-        ensure
-          ActiveSupport::Deprecation.behavior = old_behavior
-        end
     end
 
     class DeprecationProxy #:nodoc:
@@ -219,25 +188,4 @@ end
 
 class Module
   include ActiveSupport::Deprecation::ClassMethods
-end
-
-require 'test/unit/error'
-
-module Test
-  module Unit
-    class TestCase
-      include ActiveSupport::Deprecation::Assertions
-    end
-
-    class Error # :nodoc:
-      # Silence warnings when reporting test errors.
-      def message_with_silenced_deprecation
-        ActiveSupport::Deprecation.silence do
-          message_without_silenced_deprecation
-        end
-      end
-
-      alias_method_chain :message, :silenced_deprecation
-    end
-  end
 end
