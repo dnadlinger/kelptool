@@ -6,7 +6,7 @@
   items ||= item_category.items
 -%>
 
-<%= link_to_remote item_category.name, :url => item_category_path( item_category ), :method => :get %>
+<span><%= link_to_remote item_category.name, :url => item_category_path( item_category ), :method => :get %></span>
 
 <% if display[ :links ] -%>
   <span class="alignright">

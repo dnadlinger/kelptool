@@ -1,4 +1,5 @@
-<%= link_to rental_action.name, rental_action_path( rental_action ) %>
+<span class="date"><%=format_date rental_action.start_date %></span>
+<span><%= link_to rental_action.name, rental_action_path( rental_action ) %>&nbsp;(<%=h rental_action.customer.contact.name %>)</span>
 <% if rental_action.deactivated -%>
   <span class="tag"><em class="deactivated">[gestorben]</em></span>
 <% end -%>
