@@ -92,12 +92,12 @@ div#menubar ul li a {
   display: block;
   float: left;
   
-  background-color: #b4c0d3;
-  border-bottom: 2px solid #002f76;
+  background-color: #bbb;
+  border-bottom: 2px solid #111;
   
   font-family: Georgia, serif;
   font-size: 20px;
-  color: #002f76;
+  color: #444;
   
   text-align: center;
   text-decoration: none;

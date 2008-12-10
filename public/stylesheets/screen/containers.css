@@ -44,7 +44,7 @@ div#topmessage p {
   margin: 0;
   padding: 0 10px;
   
-  background-color: #002f76;
+  background-color: #111;
   
   color: #fff;  
   font-size: 10px;
@@ -97,7 +97,7 @@ div#menubar {
   float: left;
   clear: both;
   
-  background-color: #002f76;
+  background-color: #111;
 }
 
 
@@ -112,7 +112,7 @@ div#footer {
   float: left;
   clear: both;
   
-  background-color: #002f76;
+  background-color: #111;
 }
 
 div#footer p {
